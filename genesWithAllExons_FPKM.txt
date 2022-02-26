@@ -1,0 +1,11 @@
+::::::::::::::
+quantifyAllExons
+::::::::::::::
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage quantifyAllExons CPM_exon_file_from_HOMER.txt > genesWithAllExons_FPKM.txt"
+else
+	java -Xmx16G -cp /dev/gpfs/tools/scripts quantifyAllExons $@
+fi
+

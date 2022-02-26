@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage samToSortedBam file1.sam [file2.sam] ..."
+else
+	for i in $@
+	do
+		echo "Processing: $i"	
+		samtools view -bS $i | samtools sort - -@ 12 > ${i%.sam}.bam
+	done
+fi

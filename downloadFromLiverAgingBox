@@ -1,0 +1,55 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage:downloadFromLiverAgingBox Dir1 [Dir2] ... [DirN]"
+	echo "Will download all files from the liver aging P01 dirs recursively"
+else
+	TIMEOUT=600 #10 mins before restart is forced
+	function processDir () {
+		local dir=${1%/}
+		echo "Processing $dir"
+                curl -s -S --stderr - -u liveraging@salk.edu:Pass4L1ver@ging -l ftp://ftp.box.com/${dir}/ | grep 'curl: (9)' > temp
+                local out=$(wc -l temp | cut -f 1 -d ' ' )
+		rm temp
+		if [[ $out -gt 0 ]]
+		then 
+			echo "Downloading file $dir"
+
+		  	while :
+			do	
+				curl --stderr - --create-dirs -m $TIMEOUT -u liveraging@salk.edu:Pass4L1ver@ging --output ${dir} ftp://ftp.box.com/${dir} | grep 'curl:' > temp
+	                	local out=$(wc -l temp | cut -f 1 -d ' ' )
+				if [[ $out -eq 0 ]]
+				then
+					echo "Download of ${dir##*/} finished successfully!"
+					rm temp
+					break
+				else
+					rm temp
+					echo "An error occured while downloading ${dir##*/} from $dir. Trying again"
+				fi
+			done
+			
+		else
+			#echo "$dir is not a file"
+			list=$(curl -l -u liveraging@salk.edu:Pass4L1ver@ging ftp://ftp.box.com/${dir}/)
+			for l in $list
+			do
+				if [[ $l != *. ]] && [[ $l != *.. ]]
+				then
+					#echo "$l is not a dot or dotdot"
+					processDir "${dir}/${l}"
+				fi
+			done
+		fi
+	}
+	for dir in $@
+	do
+		# process each
+		processDir $dir	
+	done
+	if [[ -e temp ]]
+	then
+		rm temp
+	fi
+fi

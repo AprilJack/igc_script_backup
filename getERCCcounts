@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+	echo "Usage getERCCcounts dirWithTagDirs"
+else
+	DIR=$1
+	for j in `seq 2 174`;
+	do
+		echo 
+		for i in */tagInfo.txt
+		do
+			TEXT=$(printf ERCC-%05d $j)
+			COUNT=$(grep $TEXT $i| cut -f3)
+			echo -en "\t$COUNT"
+		done		
+		echo "";
+	done
+fi

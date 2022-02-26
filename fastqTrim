@@ -1,0 +1,22 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "Runs trim_galore. Will output to same directory "
+	echo "ex: fastqTrim Read1.fastq.gz [Read2.fastq.gz]"
+else
+	if [ $# -eq 2 ]
+	then
+		echo "Paired end trimming"
+		R1=$1
+		R2=$2
+		trim_galore --gzip --paired $R1 $R2
+		mv ${R1%.fastq.gz}_val_1.fq.gz Tr_${R1}
+		mv ${R2%.fastq.gz}_val_2.fq.gz Tr_${R2}
+	else
+		echo "Single end trimming"
+		R1=$1
+		trim_galore --gzip  $R1
+		mv ${R1%.fastq.gz}_trimmed.fq.gz Tr_${R1}
+	fi
+	
+fi

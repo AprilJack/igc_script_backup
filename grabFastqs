@@ -1,0 +1,44 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: grabFastqs SRR_list.txt [R1_only]"
+	echo "Will use grabFastq to download gzipped files in SRR_list.txt"
+	echo "If list contains two columns, assumes SRRs are first and labels are second. Will append label to SRR in fastq name."
+else
+	count=0
+	total=$(wc -l $1)
+	while IFS= read -r a; do
+		count=$((count+1))
+		label=""
+		if [[ "$a" == *$'\t'* ]]
+		then
+			echo -e $a
+			srr=$(echo -e $a | awk '{print $1;}')
+			ll=$(echo -e $a | awk '{print $2;}')
+			label=$(echo ${srr}_${ll})
+			a=$srr
+		else
+			label=$a
+		fi	
+		echo "Processing $label (${count}/$total)"
+		if [[ -e ${label}_R1.fastq.gz ]]
+		then
+			echo "$label already downloaded. If you want to redownload, please delete the fastqs first"
+		else
+			if [ $# -lt 2 ]
+			then
+				grabFastq $a
+			else
+				grabFastqR1 $a
+			fi
+			if [ "$a" != "$label" ]
+			then
+				mv ${a}_R1.fastq.gz ${label}_R1.fastq.gz;
+				if [ -e ${a}_R2.fastq.gz ]
+				then
+					mv ${a}_R2.fastq.gz ${label}_R2.fastq.gz;
+				fi
+			fi
+		fi
+	done < $1
+fi

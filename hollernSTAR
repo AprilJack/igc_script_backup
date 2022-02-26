@@ -1,0 +1,181 @@
+#!/bin/bash
+# Ling Hunag Salk IGC 07-14-2021. This is the script to run STAR and salmon pipeline for Hollern Lab. It is modified from justSTAR
+# we would need to output unmapped reads, so changed the STAR parameters.
+# also changed the output to BAM Unsorted to save the process to convert sam to bam
+# we would need to trim the adpater sequences before running mixcr
+# the pipeline also outputs a salmon_summary.csv file that summarizes the mapping results from STAR and salmon
+# because salmon output transcript quantification, we would need to add one more step to convert them to gene quantification
+# summarized output files: salmon_count.tsv, salmon_tpm.tsv, virus_count.tsv, virus_tpm.tsv, summary_salmon.tsv, and other mixcr output
+# hard code the nThread = 8 if we consider the pipeline will be run on igc5.
+# example: hollernSTAR mm10.hollern.star ./ virus.hollern.star > run.log 2>&1
+# for salmon: "--gencode -g <annotation>" is new but not available in the most recent version of salmon, and "fld_params = "--fldMean 50 --fld 5" for single-end reads. it should not affect the previous test runs.# NOTE: fld is no longer valid, change it to fldSD 5. But actually these values should come from bioAnalyzer or some sort of experiment values that are specific to each of the dataset. Let's just remove those and keep default values for now.
+# NOTE: in the virus detection pipeline, STAR quant mode provides very similar outputs to previous salmon output that both are about half of the original number. When I used the previous java script provided with the nextflow folder, the numbers are much more similar to the original number. So we have to use the previous java scripts for counting viral reads. It requires SAM input.
+
+
+if [ $# -lt 3 ]
+then
+	echo "Runs STAR alignment and outputs to current directory, then run Salmon for quantification, mixcr for TCR assembly"
+	echo "mixcr only works for hsa and mmu for now. Also only runs on RNA-Seq."
+	echo "trims adapters before running mixcr"
+	echo "viral reads count by custom script provided by UNC, directory hard coded"
+	echo "Usage: hollernSTAR [genomeDir] [dirWith_R1.fastq.gz] [virusSTAR_genomeDir] [STAR command]"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	VIRUS=$3
+	nThread=4 # hard code the threads
+	nMem=24G
+	SCRIPT=/gpfs/tools/scripts/hollernLab/picard-1.92.jar:/gpfs/tools/scripts/hollernLab/sam-1.92.jar:/gpfs/tools/scripts/hollernLab/countStarViralAlignments.jar # hard code the viral count java scripts
+	TRANSCRIPTOME=/gpfs/genomes/${GENOME}/transcriptome.fa
+	shift 3
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null 2> /dev/null
+	if [[ $GENOME == *"mm10"* ]]
+	then
+		echo "set species to mmu."
+		SPECIES="mmu"
+	elif [[ $GENOME == *"hg38"* ]]
+	then
+		echo "set species to hsa."
+		SPECIES="hsa"
+	else
+		echo "unknown species! stop"
+		exit
+	fi
+	# first lets combine all of the R1 and R2 reads across lanes and multiple files
+	#for L in $(seq 99)
+	#do
+#		for i in ${DIR}/*_R1_*0${L}*fastq.gz
+#		do
+#			if [ -e $i ]
+#			then
+#				echo "Combining $i"
+#				COMBINED=${i%_*0${L}.fastq.gz}.fastq.gz
+#				R2=${i//_R1_/_R2_}
+#				#rm $COMBINED > /dev/null 2> /dev/null
+#				cat $i >> $COMBINED
+#				rm $i
+#				if [ -e $R2 ]
+#				then
+#					echo "Combining R2: $R2"
+#					cat $R2 >> ${COMBINED//_R1/_R2}
+#					rm $R2
+#				fi
+#			fi
+#		done
+#	done
+	# now lets align and analyze
+	for i in $( ls ${DIR}/*_R1*.fastq.gz )
+	do
+		# start_time="$(date -u +%M)"
+		start_time=`date`
+		R1=$i
+		R2=${i/_R1/_R2}
+		#echo $R2
+		PREFIX=${R1%_R1*}
+		echo "start time $start_time for $PREFIX"
+		if [ -e $R2 ]
+		then
+			echo "Processing paired reads: $R1 and $R2 using genome $GENOME and outputing to $PREFIX"
+			
+			STAR --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN $nThread --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outSAMtype BAM Unsorted --outReadsUnmapped Fastx --quantMode TranscriptomeSAM --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif --outFilterMultimapNmax 1080 --limitOutSAMoneReadBytes 432000 > ${PREFIX}.star.log
+
+			transcriptomeSAM=${PREFIX}Aligned.toTranscriptome.out.bam
+			transcriptomeSortBam=${transcriptomeSAM%.bam}.sortByName.bam
+			
+			echo "Sorting transcriptome.bam by read name, the purpose is to make salmon output deterministic"
+			# copy the below code from encode pipeline https://github.com/ENCODE-DCC/long-rna-seq-pipeline/blob/master/DAC/STAR_RSEM.sh
+			# paired-end data, merge mates into one line before sorting, and un-merge after sorting
+			cat <( samtools view -H $transcriptomeSAM ) <( samtools view -@ $nThread $transcriptomeSAM | awk '{printf "%s", $0 " "; getline; print}' | sort -S $nMem -T ./ | tr ' ' '\n' ) | samtools view -@ $nThread -bS - > $transcriptomeSortBam
+			# samtools sort -@ 16 -n $transcriptomeSAM -o > $transcriptomeSortBam ## It doesn't work. a lot of error likelihood:inf
+			# NOTE: samtools sort -n can sort by read name, but read pairs are not necessarily next to each other.  
+			# compared the unsorted bam and encode sortbyname bam, the cor=0.9998. so it is just a very minor (deterministic?) problem.
+			# NOTE: I checked the transcritpomeSAM alignment, it seems to put read pair together, which is sufficent for most downstream analyses (https://github.com/alexdobin/STAR/issues/585). the only thing is that multi-mapper might be output in some random orders, that might cause the difference in EM algorithm estimation process.
+			# I have seen people using the transcriptomeSAM output with RSEM directly if deterministic is not a concern.
+			# for example: https://github.com/komalsrathi/rnaseq-star-rsem-pipeline/blob/master/Snakefile 
+			# or https://groups.google.com/g/rsem-users/c/Mv3eNjSxCRU 
+			
+			# with and without --validateMappings has no effect on true positive controls.
+			echo "Processing aligned reads to $GENOME transcriptome by salmon and outputing to ${PREFIX}_salmon"
+			salmon quant -t $TRANSCRIPTOME -l A -a $transcriptomeSortBam -p $nThread -o ${PREFIX}_salmon > ${PREFIX}.salmon.log 2>&1
+			
+			
+			
+			####################### virus detection
+			# the STAR alignment has slightly different parameters: --outStd SAM --outFilterMultimapNmax 1080  --limitOutSAMoneReadBytes 432000 
+			echo "Processing the virus detection pipeline, reference is $VIRUS and outputing to ${PREFIX}_virus"
+			
+			mv ${PREFIX}Unmapped.out.mate1 ${PREFIX}.unmapped.R1.fastq
+			mv ${PREFIX}Unmapped.out.mate2 ${PREFIX}.unmapped.R2.fastq
+			unmappedR1=${PREFIX}.unmapped.R1.fastq
+			unmappedR2=${PREFIX}.unmapped.R2.fastq
+			
+			mkdir ${PREFIX}_virus
+			STAR --genomeDir /gpfs/genomes/$VIRUS --readFilesCommand cat --runThreadN $nThread --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $unmappedR1 $unmappedR2 --outReadsUnmapped Within --outFileNamePrefix ${PREFIX}_virus/${PREFIX}_virus $@ --genomeLoad LoadAndKeep --outFilterMismatchNmax 4 --outFilterMultimapNmax 52 --limitOutSAMoneReadBytes 1000000 --quantMode GeneCounts > ${PREFIX}.virusSTAR.log
+			
+			echo "Counting viral reads by custom scripts"
+			java -Xmx4G -cp $SCRIPT countStarViralAlignments ${PREFIX} ${PREFIX}_virus/${PREFIX}_virusAligned.out.sam ${PREFIX}_virus/${PREFIX}_viral_read_counts.txt > ${PREFIX}_viral_counts.log 2>&1
+
+			
+			############## mixcr 
+			#echo "Trimming reads by trim_galore"
+			#trim_galore -fastqc -paired $R1 $R2 > ${PREFIX}.trimgalore.log 2>&1
+			#trimR1=${R1%.fastq.gz}_val_1.fq.gz
+			#trimR2=${R2%.fastq.gz}_val_2.fq.gz
+			
+			#echo "Assembling trimmed reads $trimR1 $trimR2 by mixcr to $SPECIES and outputing to ${PREFIX}_tcr"
+			#mixcr analyze shotgun --starting-material rna --species $SPECIES --only-productive $trimR1 $trimR2 ${PREFIX}_tcr > ${PREFIX}.tcr.log 2>&1
+		else
+			echo "Processing single-end reads: $R1 using genome $GENOME and outputing to $PREFIX"
+			
+			STAR --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /gpfs/genomes/$GENOME --runThreadN $nThread --readFilesIn $R1 --outSAMtype BAM Unsorted --outReadsUnmapped Fastx --quantMode TranscriptomeSAM --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif --outFilterMultimapNmax 1080 --limitOutSAMoneReadBytes 432000 > ${PREFIX}.log
+
+			transcriptomeSAM=${PREFIX}Aligned.toTranscriptome.out.bam
+			transcriptomeSortBam=${transcriptomeSAM%.bam}.sortByName.bam
+			
+			echo "Sorting transcriptome.bam by read name the purpose is to make salmon output deterministic"
+			# copy the below code from encode pipeline https://github.com/ENCODE-DCC/long-rna-seq-pipeline/blob/master/DAC/STAR_RSEM.sh
+			cat <( samtools view -H $transcriptomeSAM ) <( samtools view -@ $nThread $transcriptomeSAM | sort -S $nMem -T ./ ) | samtools view -@ $nThread -bS - > $transcriptomeSortBam
+			
+			echo "Processing aligned reads to $GENOME transcriptome by salmon and outputing to ${PREFIX}_salmon"
+			salmon quant -t $TRANSCRIPTOME -l A -a $transcriptomeSAM -p $nThread -o ${PREFIX}_salmon > ${PREFIX}.salmon.log 2>&1
+			
+			
+			########### virus detection
+			echo "Processing the virus detection pipeline, reference is $VIRUS and outputing to ${PREFIX}_virus"
+			
+			mv ${PREFIX}Unmapped.out.mate1 ${PREFIX}.unmapped.R1.fastq
+			unmappedR1=${PREFIX}.unmapped.R1.fastq
+			
+			mkdir ${PREFIX}_virus
+			STAR --genomeDir /gpfs/genomes/$VIRUS --readFilesCommand cat --runThreadN $nThread --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $unmappedR1 --outReadsUnmapped Within --outFileNamePrefix ${PREFIX}_virus/${PREFIX}_virus $@ --genomeLoad LoadAndKeep --outFilterMismatchNmax 4 --outFilterMultimapNmax 52 --limitOutSAMoneReadBytes 1000000 --quantMode GeneCounts > ${PREFIX}.virusSTAR.log
+			
+			echo "Counting viral reads by custom scripts"
+			java -Xmx4G -cp $SCRIPT countStarViralAlignments ${PREFIX} ${PREFIX}_virus/${PREFIX}_virusAligned.out.sam ${PREFIX}_virus/${PREFIX}_viral_read_counts.txt > ${PREFIX}_viral_counts.log 2>&1
+			
+			########### Mixcr
+			#echo "Trimming reads by trim_galore"
+			#trim_galore -fastqc $R1 > ${PREFIX}.trimgalore.log 2>&1
+			#trimR1=${R1%.fastq.gz}_trimmed.fq.gz
+			
+			#echo "Assembling trimmed reads $trimR1 $trimR2 by mixcr to $SPECIES and outputing to ${PREFIX}_tcr"
+			#mixcr analyze shotgun --starting-material rna --species $SPECIES --only-productive $trimR1 ${PREFIX}_tcr > ${PREFIX}.tcr.log 2>&1
+		fi
+		#end_time="$(date -u +%M)"
+		end_time=`date`
+		#elapsed="$((10#$end_time-10#$start_time))"
+		#echo "Took $elapsed minutes to process $PREFIX"
+		echo "end time $end_time for $PREFIX"
+	done
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null
+	rm Aligned.out.sam
+	rm -rf *_tmp *_STARtmp
+	summarizeHollernSTAR
+	collectHollernCounts.R $DIR $GENOME $VIRUS
+fi

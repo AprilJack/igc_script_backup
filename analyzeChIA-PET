@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: analyzeChIA-PET fastq_file genome.star"
+	echo "Will parse SE fastq, align, create tagDirs, create bedFiles, and create bigBed files which it will upload to igc2 /genomics/www/maxsh/bigBed"
+else
+	FASTQ=$1
+	GENOME=$2
+	##########
+	parseChIA-Pet-se.pl $FASTQ 
+	STAR --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outReadsUnmapped Fastx --genomeDir /sanger/nfs_data/maxsh/genomes/$GENOME --runThreadN 24 --readFilesIn ${FASTQ}.R1.match.fq --outFileNamePrefix ${FASTQ}R1-Match	
+	STAR --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outReadsUnmapped Fastx --genomeDir /sanger/nfs_data/maxsh/genomes/$GENOME --runThreadN 24 --readFilesIn ${FASTQ}.R2.match.fq --outFileNamePrefix ${FASTQ}R2-Match	
+	STAR --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outReadsUnmapped Fastx --genomeDir /sanger/nfs_data/maxsh/genomes/$GENOME --runThreadN 24 --readFilesIn ${FASTQ}.R1.mismatch.fq --outFileNamePrefix ${FASTQ}R1-Mismatch	
+	STAR --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outReadsUnmapped Fastx --genomeDir /sanger/nfs_data/maxsh/genomes/$GENOME --runThreadN 24 --readFilesIn ${FASTQ}.R2.mismatch.fq --outFileNamePrefix ${FASTQ}R2-Mismatch	
+	createTagDirectory ${FASTQ%.fastq}_match ${FASTQ}R1-Match*.sam,${FASTQ}R2-Match*.sam -tbp 1
+	createTagDirectory ${FASTQ%.fastq}_mismatch ${FASTQ}R1-Mismatch*.sam,${FASTQ}R2-Mismatch*.sam -tbp 1
+	petags2bed.pl ${FASTQ%.fastq}_match/*.tsv >> ${FASTQ%.fastq}_match.bed
+	petags2bed.pl ${FASTQ%.fastq}_mismatch/*.tsv >> ${FASTQ%.fastq}_mismatch.bed
+	sort -k1,1 -k2,2n ${FASTQ%.fastq}_match.bed > ${FASTQ%.fastq}_Match.bed
+	sort -k1,1 -k2,2n ${FASTQ%.fastq}_mismatch.bed > ${FASTQ%.fastq}_Mismatch.bed
+	fetchChromSizes ${GENOME%.star} > ${GENOME%.star}.chrom.sizes
+	bedToBigBed ${FASTQ%.fastq}_Match.bed ${GENOME%.star}.chrom.sizes ${FASTQ%.fastq}_Match.bb
+	bedToBigBed ${FASTQ%.fastq}_Mismatch.bed ${GENOME%.star}.chrom.sizes ${FASTQ%.fastq}_Mismatch.bb
+	#now lets upload to igc2
+	scp ${FASTQ%.fastq}_M*.bb igc2.snl.salk.edu:/genomics/www/maxsh/bigBed
+	echo "http://genome.ucsc.edu/cgi-bin/hgTracks?db=${GENOME%.star}&hgct_customText=track%20type=bigBed%20name=${FASTQ%.fastq}_match%20description=%22${FASTQ%.fastq}_match%22%20visibility=full%20bigDataUrl=http://igc1.snl.salk.edu/maxsh/bigBed/${FASTQ%.fastq}_Match.bb"
+	echo "http://genome.ucsc.edu/cgi-bin/hgTracks?db=${GENOME%.star}&hgct_customText=track%20type=bigBed%20name=${FASTQ%.fastq}_mismatch%20description=%22${FASTQ%.fastq}_match%22%20visibility=full%20bigDataUrl=http://igc1.snl.salk.edu/maxsh/bigBed/${FASTQ%.fastq}_Mismatch.bb"
+fi

@@ -1,0 +1,9 @@
+if [ $# -lt 1 ]
+then
+	echo "Unlock a user's account on current system for 180 days"
+	echo "Usage: unlockUser username"
+	echo "requires sudo privillages"
+else
+	sudo chage -E `date -d "180 days" +"%Y-%m-%d"` $1
+fi
+

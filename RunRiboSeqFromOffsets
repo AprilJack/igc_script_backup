@@ -1,0 +1,241 @@
+#!/bin/bash
+echo "Starting pipeline for smORF Ribo-Seq processing"
+if [ $# -eq 0 ]
+then
+	echo "smORF RiboSeq processing pipeline from Thomas Martinez and edited by Max Shokhirev (C) Salk 2018-2020"
+	echo "Will clip adapters, align fastqs, remove contaminants, perform QC, use assembled transcripts to  generate optimally shifted reads, run RibORF pipeline, and keep only short, non-overlapping, non-similar ORFs. " 
+	echo "Usage: RunRiboseq [options] Riboseq.fastq.gz [Riboseq2.fastq]" 
+	echo ""
+	echo -e "\tOptions:"
+	echo -e "\t-----------------"
+	echo -e "\t-a)\tassembly prefix. Assumes you have prefix_ORFs.gtf.gz prefix.pep.gz and prefix.split_nuc.gz files.  Will create unzipped copies in each output directory. Run GTF2Fasta with the MtoX option on Cufflinks or MAPS output."
+	echo -e "\t-s)\tFastx clipper sequence (original:AGATCGGAAGAGCACACGTCTGAAC), illumina adapter: AGATCGGAAGAGCACACGTCT (default)"
+	echo -e "\t-g)\tGenome to use (default=hg19, hg38, mm10, mm9, rn5, and rn6 also supported)"
+	echo -e "\t-l)\tMinimum length for transcripts used by RibORF (default=12)"
+	echo -e "\t-c)\tMinimum read count for transcripts used by RibORF (default=10)"
+	echo -e "\t-m)\tMax nucleotide length for ORFs (default=451)"
+	echo -e "\t--MAPS)\tAssume MAPS naming scheme (default=FALSE, assumes Cufflinks/Stringtie default)"
+
+	
+	#fastq.gz [fastq.gz] [fastx_clipper options e.g. -c -a AGATCGGAAGAGCACACGTCTGAAC]"
+else
+	clipSeq="AGATCGGAAGAGCACACGTCT"
+	genome="hg19"
+	minLength=12
+	minReadCount=10
+	maxORFLength=451
+	output="RiboORFOut"
+	gtf=""
+	pep=""
+	nuc=""
+	PARAMS=""
+	MAPS=0
+	smORFPipe=$(which RunRiboSeq)
+	smORFPipe=${smORFPipe%/RunRiboSeq}
+	while (( "$#" )); do
+  	case "$1" in
+   	-s)
+      		clipSeq=$2
+      		shift 2
+      	;;
+   	-g)
+      		genome=$2
+      		shift 2
+      	;;
+   	-l)
+      		minLength=$2
+      		shift 2
+      	;;
+   	-c)
+      		minReadCount=$2
+      		shift 2
+      	;;
+   	-m)
+      		maxORFLength=$2
+      		shift 2
+      	;;
+   	-a)
+      		gtf=${2}_ORFs.gtf.gz
+		pep=${2}.pep.gz
+		nuc=${2}.split_nuc.gz
+      		shift 2
+      	;;
+   	--MAPS)
+		MAPS=1
+		echo "Assuming MAPS assembly"
+      		shift 1
+      	;;
+    	--) # end argument parsing
+      		shift
+      		break
+      	;;
+    	-*|--*=) # unsupported flags
+      		echo "Error: Unsupported flag $1" >&2
+      		exit 1
+      	;;
+    	*) # preserve positional arguments
+      		PARAMS="$PARAMS $1"
+      		shift
+      	;;
+  	esac
+	done
+	
+	# set positional arguments in their proper place
+	eval set -- "$PARAMS"
+	FASTQS=$PARAMS
+	for i in $FASTQS
+	do
+		
+		echo "Running RiboSeq pipeline on $i"
+		if [[ -e $i ]]
+		then
+		DIR=${i%.fastq.gz}
+		if [ -e $DIR ]
+		then
+			echo "Output directory $DIR" already exists.
+		else
+			mkdir $DIR
+		fi
+		start_timestamp=$(date +%s)
+		if [[ $gtf == *.gz ]]
+		then
+			if [[ -e $gtf ]]
+			then
+				echo "Decompressing $gtf"
+				gzip -dfc $gtf > ${DIR}/assembly.gtf
+			else 
+				gtf=${gtf%.gz}
+			        echo "Assuming gtf is decompressed"
+                        	cp $gtf ${DIR}/assembly.gtf
+			fi
+		else
+			echo "Assuming gtf is decompressed"
+			cp $gtf ${DIR}/assembly.gtf
+		fi
+		gtf=${DIR}/assembly.gtf
+		if [[ $pep == *.gz ]]
+		then
+			if [[ -e $pep ]]
+			then
+				echo "Decompressing $pep"
+				gzip -dfc $pep > ${DIR}/assembly.pep
+			else
+				pep=${pep%.gz}
+				echo "Assuming pep is decompressed"
+                        	cp $pep ${DIR}/assembly.pep
+			fi
+		else
+			echo "Assuming pep is decompressed"
+			cp $pep ${DIR}/assembly.pep
+		fi
+		pep=${DIR}/assembly.pep
+		if [[ $nuc == *.gz ]]
+		then
+			if [[ -e $nuc ]]
+			then
+				echo "Decompressing $nuc"
+				gzip -dfc $nuc > ${DIR}/assembly.nuc
+			else
+				nuc=${nuc%.gz}
+				echo "Assuming nuc is decompressed"
+				cp $nuc ${DIR}/assembly.nuc	
+			fi
+		else
+			echo "Assuming nuc is decompressed"
+			cp $nuc ${DIR}/assembly.nuc
+		fi
+		nuc=${DIR}/assembly.nuc
+		if [ -e ${gtf%.gtf}.refFlat ]
+		then
+			echo "Seems that the refFlat for $gtf already exists... moving on"
+		else
+			echo "Coverting $gtf to refFlat for use with RibORF"	
+			gtfToGenePred $gtf ${gtf%.gtf}.temp
+			echo "Fixing refFlat"
+			python ${smORFPipe}/genePred-to-refFlat-fixCoord.py ${gtf%.gtf}.temp ${gtf%.gtf}.refFlatTemp
+			python ${smORFPipe}/refFlatFix2.py ${gtf%.gtf}.refFlatTemp ${gtf%.gtf}.refFlat
+			rm ${gtf%.gtf}.temp
+			rm ${gtf%.gtf}.refFlatTemp
+		fi
+		if [ -e ${gtf%.gtf}.bed ]
+		then
+			echo "Bed file was already created from GTF... moving on"
+		else
+			echo "Creating bed from GTF"
+			gtf2bed --max-mem=16G < $gtf > ${gtf%.gtf}.bed
+		fi
+		echo "smORFPipe location: $smORFPipe, GTF is $gtf, Pep is $pep, Nuc is $nuc"
+		if [ -e ${DIR}/trimmed_R1.fastq.gz ]
+		then
+			echo "Trimmed fastq already exists... skipping"
+		else
+			echo "Trimming $i"
+			zcat $i | fastx_clipper -Q33 -l 20 -n -v -c -a $clipSeq | fastx_trimmer -Q33 -f 1 2> ${DIR}/trim.log > ${DIR}/trimmed_R1.fastq
+			curr_timestamp=$(date +%s)
+			elapsed_time=$(expr $curr_timestamp - $start_timestamp )
+			echo "Done trimming... trimming took $(expr $elapsed_time / 60 ) minutes"
+			echo "Gzipping ${DIR}/trimmed_R1.fastq"
+			gzip ${DIR}/trimmed_R1.fastq
+		fi
+		count=$(zcat ${DIR}/trimmed_R1.fastq.gz | wc -l)
+		if [ -e ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam ]
+		then
+			echo "Looks like you already have alignments for $i. Skipping alignments, QC, and bedGraph generation"
+		else
+			echo "Aligning to known $genome contaminant database (tRNA/rRNA)"
+			STAR --readFilesCommand zcat --outSAMstrandField intronMotif --outReadsUnmapped Fastx --genomeDir /gpfs/genomes/${genome}cont.star --runThreadN 8 --readFilesIn ${DIR}/trimmed_R1.fastq.gz --outFileNamePrefix ${DIR}/trimmed_cont
+			echo "Aligning unaligned to $genome with refGene annotations"
+			STAR --outSAMstrandField intronMotif  --genomeDir /gpfs/genomes/${genome}.star --runThreadN 8 --readFilesIn ${DIR}/trimmed_contUnmapped.out.mate1 --outFileNamePrefix ${DIR}/trimmed_filtered --outFilterMismatchNmax 2 --outFilterMultimapNmax 4 --chimScoreSeparation 10 --chimScoreMin 20 --chimSegmentMin 15 --outSAMattributes All
+			echo "Done aligning ${DIR}/trimmed_contAligned.out.mate1"
+			gzip ${DIR}/trimmed_contUnmapped.out.mate1
+			rm -r ${DIR}/*STARtmp
+			samtools view -h -F 0X100 ${DIR}/trimmed_filteredAligned.out.sam | samtools sort -o ${DIR}/trimmed_filteredAligned.sorted.noSecondaryAlign.bam
+			samtools view -q 10 -b ${DIR}/trimmed_filteredAligned.out.sam | samtools sort -o ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam
+			echo "Converting noSecondaryAlign to bedGraph"
+			bamToBedGraph $genome ${DIR}/trimmed_filteredAligned.sorted.noSecondaryAlign.bam 
+			echo "Converting uniqueAlign to bedGraph"
+			bamToBedGraph $genome ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam 
+			echo "Collecting RNA metrics on ${DIR} using $genome refFlat"
+			picard CollectRnaSeqMetrics REF_FLAT=/gpfs/genomes/${genome}/${genome}.refFlat.txt INPUT=${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam OUTPUT=${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.metrics.txt STRAND_SPECIFICITY=NONE CHART_OUTPUT=${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.pdf
+			echo "Generating length histograms from randomly sampled reads in $DIR"
+			samtools view ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam | grep -E '(nM:i:0)|(^@)'|awk -v v1=0.05 'BEGIN {srand()} !/^$/ { if (rand() <= v1) print length($10)}' | head -n 100000 | sort | uniq -c > ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.lengths.txt
+			echo "Converting uniquely aligned back to sam"
+			samtools view -h ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.bam > ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.sam
+		fi
+		cat ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.lengths.txt > ${DIR}/counts.log
+		echo -e "Count\tType" >> ${DIR}/counts.log
+		echo -e "$((count / 4))\tTrimmed read count" >> ${DIR}/counts.log 
+		echo -e "$(grep 'Uniquely mapped reads number' ${DIR}/trimmed_contLog.final.out  | cut -f 2)\ttRNA/rRNA reads" >> ${DIR}/counts.log
+		echo -e "$(grep 'Uniquely mapped reads number' ${DIR}/trimmed_filteredLog.final.out  | cut -f 2)\tuniquely mapping reads" >> ${DIR}/counts.log
+		echo "Generating histograms for reads of lengths 25-35"
+		if [[ -e ${i%.fastq.gz}/offset.correction.parameters.txt ]]
+		then
+			rm ${i%.fastq.gz}/offset.correction.parameters.txt
+		fi	
+		for y in {25..35}
+		do
+			#TODO make the genomes directories generic
+			perl ${smORFPipe}/readDist.pl ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.sam /gpfs/genomes/${genome}/${genome}.refFlat.txt ${DIR} $y 30 50 	
+			#shift=$(head -n 1 ${i%.fastq.gz}/read.dist.sample.${y}.txt | awk '{m=$2;l=-30;for(i=2;i<=NF;i++)if($i>m){m=$i;l=-32+i};print -l+3}')
+			#echo -e "${y}\t${shift}" >> ${i%.fastq.gz}/offset.correction.parameters.txt 
+			java -cp ${smORFPipe} ribORFCorrector $y ${DIR}/read.dist.sample.${y}.txt >> ${DIR}/offset.correction.parameters.txt 
+		done	
+		echo "Correcting the uniquely mapped sam file for $i using the offset corrections:"
+		cat ${DIR}/offset.correction.parameters.txt 
+		echo -e "Read length\tOffset used" >> ${DIR}/counts.log
+		cat ${DIR}/offset.correction.parameters.txt >> ${DIR}/counts.log
+		perl ${smORFPipe}/offsetCorrect.pl ${DIR}/trimmed_filteredAligned.sorted.uniqueAlign.sam ${DIR}/offset.correction.parameters.txt ${DIR}/trimmed_filteredAligned.sorted.corrected.sam
+		echo "Outputing the histogram for the final corrected sam file"
+		perl ${smORFPipe}/readDist.pl ${DIR}/trimmed_filteredAligned.sorted.corrected.sam /gpfs/genomes/${genome}/${genome}.refFlat.txt ${DIR} 1 30 50
+		if [ $MAPS -eq 0 ]
+		then
+			${smORFPipe}/RunRiboSeqFromCorrected -g $genome -m $maxORFLength -d ${DIR} ${DIR}/trimmed_filteredAligned.sorted.corrected.sam
+		else
+			${smORFPipe}/RunRiboSeqFromCorrected --MAPS -g $genome -m $maxORFLength -d ${DIR} ${DIR}/trimmed_filteredAligned.sorted.corrected.sam 
+		fi
+		else
+			echo "${i} doesn't seem to exist. Check your fastq names!"
+		fi
+	done
+fi
+

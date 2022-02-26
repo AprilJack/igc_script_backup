@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ ! -e $3 ]
+then
+	mkdir $3
+fi
+Rscript /gpfs/tools/scripts/ORA.R $@
+

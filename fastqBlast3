@@ -1,0 +1,22 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "Runs fastqBlast to check for contamination in your reads... will downsample the fastq first"
+	echo "ex: fastqBlast fastq1.fastq.gz fastq2.fastq.gz ..."
+else
+	unset list
+	for i in $@
+	do
+		echo "PROCESSING: $i"
+		zcat $i | head -n 40000 > ${i%.fastq.gz}_sampled.fastq
+		cat ${i%.fastq.gz}_sampled.fastq | awk '{if(NR%4==1) {printf(">%s\n",substr($0,2));} else if(NR%4==2) print;}' > ${i%.fastq.gz}_sampled.fa
+		blastn -db /gpfs/genomes/blast_databases/UniVec -query ${i%.fastq.gz}_sampled.fa -out ${i%.fastq.gz}_blast.txt -outfmt '6 qseqid sseqid evalue bitscore sgi sacc staxids sscinames scomnames stitle' -max_target_seqs 1 -num_threads 12
+		awk -F '\t' '{print $8}' ${i%.fastq.gz}_blast.txt | sort | uniq -c | sort -nr | head -n 10 > ${i%.fastq.gz}_hist.txt
+		list="${i%.fastq.gz}_hist.txt ${list}"
+		#Screen output postprocessing
+		rm  ${i%fastq.gz}_sampled.fa ${i%fastq.gz}_blast.txt ${i%fastq.gz}_sampled.fastq
+	done
+	ls $list > Top10Organisms.txt
+  	paste -d'\t' $list  >> Top10Ocontaminants.txt
+
+fi

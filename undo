@@ -1,0 +1,5 @@
+#!/bin/bash
+ls $(find . -type f -cmin -1 | grep -v ".bash-history.log")
+echo "will delete in 5 seconds"
+sleep 5
+rm $(find . -type f -cmin -1 | grep -v ".bash-history.log")

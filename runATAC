@@ -1,0 +1,266 @@
+#!/bin/bash
+# Check whether the directory is inputted
+if [[ $# -lt 2 ]]
+then
+    echo 'Usage: runATAC <genome> *_R1.fastq.gz'; 
+    echo 'Will run the pipeline on all samples and assumes you have paired data.'
+    echo 'The sample(s) should be in the current directory.'
+    echo 'Will now only call peaks using --shift -75 --extsize  150 --nomodel --call -summits --nolambda --keep-dup all -p 0.01'
+    echo 'Please specify only the R1 files. runATAC will look for the R2 file pairs.'
+    echo "Genomes:"
+    for g in $(ls -1d /gpfs/genomes/*.bwa)
+    do
+	g2=${g##*/}
+	echo ${g2%.bwa}
+    done
+    exit 1
+fi
+SECONDS=0
+genome=$1
+genome_size=$(head -n 1 /gpfs/genomes/${genome}.bwa/*.ann | cut -f 1 -d' ')
+echo "Genome $genome had a size of $genome_size"
+shift 1
+
+echo "Starting ATAC-Seq analysis pipeline V 1.1 for genome $genome on $@. "
+echo "Instead of calling broad and narrow peaks, the peak caller will now only call peaks using --shift -75 --extsize  150 --nomodel --call -summits --nolambda --keep-dup all -p 0.01 which is more in line with the ENCODE pipeline."
+for filename in $@
+do
+filename=${filename%_R1*.fastq.gz}
+echo $filename
+
+# Create new directories
+mkdir Info
+mkdir Intermediate
+mkdir BamFiles
+cd BamFiles
+mkdir ATAC-Peaks
+mkdir ATAC-tags
+mkdir ATAC-bedGraph
+cd ..
+
+cd Info
+
+# Create info file
+touch ${filename}_info.txt
+echo 'Sequence Name:' $filename >> ${filename}_info.txt
+
+## Check whether the grand info file exists. If not, create the text file
+if [[ -e info.txt ]]
+then
+    echo 'info.txt already exists. Add information to info.txt later.'
+else
+    touch info.txt
+    echo -e 'Filename' '\t' 'Total Reads' '\t' 'Reads in Peak' '\t' '#Peaks' '\t' 'Total Reads' '\t' 'Reads in Peak' '\t' '#Peaks' '\t' 'Original Reads' '\t' 'MT Reads' '\t' 'Duplicated Reads' '\t' 'Low Quality Reads' '\t' 'Unpaired Reads' '\t' 'Good Reads' >> info.txt
+fi
+
+cd ..
+
+if ls Intermediate/${filename}*.fq.gz 1> /dev/null 2>&1
+then
+	echo "Trimming already performed. Skipping..."
+else
+	echo 'Trim Adaptor sequence for sample ' $filename '...'
+	trim_galore -o ./Intermediate -fastqc -paired ${filename}_R1*.fastq.gz ${filename}_R2*.fastq.gz
+fi
+cd Intermediate
+
+# Align using BWA MEM
+# Align using BWA MEM
+if ls ${filename}.bam 1> /dev/null 2>&1
+then
+        echo "BWA alignment already exists for $filename ... skipping"
+else
+        echo 'Align to input genome for sample ' $filename '...'
+        bwa mem -M -t 16 /gpfs/genomes/${genome}.bwa/${genome}.fa ${filename}_*R1*.fq.gz ${filename}_*R2*.fq.gz > ${filename}.sam
+fi
+# Use samtools
+
+echo "Converting sam to bam and indexing\n"
+# Create sorted .bam file and index .bai file
+if ls ${filename}.bam 1> /dev/null 2>&1
+then
+        echo "$filename bam already exists... skipping"
+else
+        samToSortedBam ${filename}.sam 
+        samtools index ${filename}.bam
+fi
+
+totalReads=$(samtools idxstats ${filename}.bam | awk '{SUM += $3} END {print SUM}')
+echo 'Total Raw Reads: ' $totalReads >> ./../Info/${filename}_info.txt
+
+# Remove mitochondrial DNA reads
+echo "removing MT reads"
+if ls ${filename}_rmMT.bam 1> /dev/null 2>&1
+then
+        echo "MT reads already removed from $filename"
+else
+        samtools idxstats ${filename}.bam | cut -f 1 | grep -v M | xargs samtools view -b ${filename}.bam > ${filename}_rmMT.bam
+        samtools index ${filename}_rmMT.bam
+fi
+remainingReads1=$(samtools idxstats ${filename}_rmMT.bam | awk '{SUM += $3} END {print SUM}')
+echo 'After removing mtDNA reads: ' $remainingReads1 >> ./../Info/${filename}_info.txt
+
+# Remove duplicated reads
+echo "Removing PCR duplicates"
+if ls ${filename}_rmMT_rmDup.bam 1> /dev/null 2>&1
+then
+        echo "Deduplicated $filename already exists. Skipping"
+else
+        samtools sort -@ 16 -n -o namesort.bam ${filename}_rmMT.bam
+        samtools fixmate -m namesort.bam fixmate.bam
+        samtools sort -@ 16 -o positionsort.bam fixmate.bam
+        samtools markdup -r positionsort.bam ${filename}_rmMT_rmDup.bam
+        rm namesort.bam
+        rm positionsort.bam
+        rm fixmate.bam
+        samtools index ${filename}_rmMT_rmDup.bam
+fi
+remainingReads2=$(samtools idxstats ${filename}_rmMT_rmDup.bam | awk '{SUM += $3} END {print SUM}')
+echo 'After removing mtDNA and duplicated reads: ' $remainingReads2 >> ./../Info/${filename}_info.txt
+
+# Remove low quality reads
+if ls ${filename}_rmMT_rmDup_rmLQ.bam 1> /dev/null 2>&1
+then
+	echo "Low Quality reads already removed for $filenmae"
+else
+	echo "removing low quality (q<20) reads"
+	samtools view -b -h -q 20 -o ${filename}_rmMT_rmDup_rmLQ.bam ${filename}_rmMT_rmDup.bam
+
+	samtools index ${filename}_rmMT_rmDup_rmLQ.bam
+fi
+remainingReads3=$(samtools idxstats ${filename}_rmMT_rmDup_rmLQ.bam | awk '{SUM += $3} END {print SUM}')
+echo 'After removing mtDNA and duplicated reads and low quality reads(<20): ' $remainingReads3 >> ./../Info/${filename}_info.txt
+
+# Relabel pairedness
+
+if ls ${filename}_rmMT_rmDup_rmLQ_paired.bam 1> /dev/null 2>&1
+then
+        echo "Bams already fixed... skipping."
+else
+        samtools sort -@ 16 -n -o namesort.bam ${filename}_rmMT_rmDup_rmLQ.bam
+        samtools fixmate namesort.bam fixed.sam
+        rm namesort.bam
+        # Remove unpaired
+        samtools view -f 0x0001 fixed.sam > fixed2.sam
+        rm fixed.sam
+        # Add header
+        samtools view -H ${filename}_rmMT_rmDup_rmLQ.bam > temp.sam
+        cat fixed2.sam >> temp.sam
+        rm fixed2.sam
+        sed 1d temp.sam > temp2.sam
+        rm temp.sam
+        # Add read group
+        java -jar /gpfs/tools/picard/picard.jar AddOrReplaceReadGroups I=temp2.sam O=${filename}_rmMT_rmDup_rmLQ_paired.sam RGPU=unit1 RGID=4 RGLB=lib1 RGPL=illumina RGSM=Sample1
+        rm temp2.sam
+        samToSortedBam ${filename}_rmMT_rmDup_rmLQ_paired.sam > ${filename}_rmMT_rmDup_rmLQ_paired.bam
+        rm ${filename}_rmMT_rmDup_rmLQ_paired.sam
+        samtools index ${filename}_rmMT_rmDup_rmLQ_paired.bam
+fi
+remainingReads4=$(samtools idxstats ${filename}_rmMT_rmDup_rmLQ_paired.bam | awk '{SUM += $3} END {print SUM}')
+echo 'After removing mtDNA and duplicated reads and low quality reads(<20) and unpaired reads: ' $remainingReads4 >> ./../Info/${filename}_info.txt
+
+# Calculate percentage of overall good reads
+echo '==>; Overall Good Reads Percentage: ' $(bc <<< "scale=2;100*$remainingReads4/$totalReads")'%' >> ./../Info/${filename}_info.txt
+
+cd ..
+cd BamFiles
+
+ln -s ./../Intermediate/${filename}_rmMT_rmDup_rmLQ_paired.bam .
+echo "Making HOMER tag directory for downstream processing"
+if ls ATAC-tags/${filename} 1> /dev/null 2>&1
+then
+        echo "Tag Dir for $filename already exists. skipping."
+else
+        makeTagDirectory ATAC-tags/$filename ${filename}_rmMT_rmDup_rmLQ_paired.bam -sspe
+fi
+
+echo "Making bedgraph"
+if ls ATAC-bedGraph/${filename}.bedGraph.gz 1> /dev/null 2>&1
+then
+        echo "Bedgraph for $filename already exists. Skipping."
+else
+        makeUCSCfile ATAC-tags/${filename} -fragLength given -strand both -o ATAC-bedGraph/${filename}.bedGraph
+        #makeBigWig -g ${genome} -l ATAC_${2}_${genome} -d tags/${filename}
+        #cat /gpfs/data/bigWigs/yi_ATAC_${2}_${genome}/urls.txt >> bigwig_${genome}.txt
+fi
+
+echo "STARTING PEAK CALLING"
+if ls ATAC-Peaks/${filename}_narrow.saf 1> /dev/null 2>&1
+then
+        echo "Peaks already called for $filename"
+else
+# Use macs2
+######### anaconda environment #########
+#eval "$(conda shell.bash hook)"
+#conda activate macs2 
+echo 'Call Peaks for sample ' $filename '...'
+
+# Call Narrow Peaks
+macs2 callpeak -g $genome_size -f BAMPE -t ${filename}_rmMT_rmDup_rmLQ_paired.bam -n ${filename} --outdir ATAC-Peaks --shift -75 --extsize  150 --nomodel --call-summits --nolambda --keep-dup all -p 0.01
+cd ATAC-Peaks
+## Parse to SAF file
+awk 'OFS="\t" {print $4, $1, $2+1, $3, "+"}' ${filename}_peaks.narrowPeak > ${filename}_narrow.saf
+## Calculate FRiP
+featureCounts -p -a ${filename}_narrow.saf -F SAF -o ${filename}_narrow_out.txt ./../${filename}_rmMT_rmDup_rmLQ_paired.bam
+## Output FRiP
+totalNarrowInPeak=$(cat ${filename}_narrow_out.txt.summary | awk 'FNR == 2 {print $2}')
+totalNarrow=$(cat ${filename}_narrow_out.txt.summary | awk '{SUM += $2} END {print SUM}')
+totalNarrowPeak=$(wc -l ${filename}_peaks.narrowPeak | cut -d' ' -f1)
+echo 'Narrow Peaks:' >> ./../../Info/${filename}_info.txt
+echo 'Total # reads in peaks: ' $totalNarrowInPeak >> ./../../Info/${filename}_info.txt
+echo 'Total # reads: ' $totalNarrow >> ./../../Info/${filename}_info.txt
+echo '==>; FRiP: ' $(bc <<< "scale=2;100*$totalNarrowInPeak/$totalNarrow")'%' >> ./../../Info/${filename}_info.txt
+echo '==>; Total # peaks: ' $totalNarrowPeak >> ./../../Info/${filename}_info.txt
+cd ..
+
+# Call Enriched Peaks
+#macs2 callpeak --broad --slocal 1000 --qvalue 0.05 -g $genome_size -f BAMPE -t ${filename}_rmMT_rmDup_rmLQ_paired.bam -n ${filename} --outdir ATAC-PeakBroad
+#cd ATAC-PeakBroad
+## Parse to SAF file
+#awk 'OFS="\t" {print $4, $1, $2+1, $3, "+"}' ${filename}_peaks.gappedPeak > ${filename}_broad.saf
+## Calculate FRiP
+#echo "Calculating FRIP scores"
+#featureCounts -p -a ${filename}_broad.saf -F SAF -o ${filename}_broad_out.txt ./../${filename}_rmMT_rmDup_rmLQ_paired.bam
+## Output FRiP
+#totalBroadInPeak=$(cat ${filename}_broad_out.txt.summary | awk 'FNR == 2 {print $2}')
+#totalBroad=$(cat ${filename}_broad_out.txt.summary | awk '{SUM += $2} END {print SUM}')
+#totalBroadPeak=$(wc -l ${filename}_peaks.gappedPeak | cut -d' ' -f1)
+#echo 'Broad Peaks:' >> ./../../Info/${filename}_info.txt
+#echo 'Total # reads in peaks: ' $totalBroadInPeak >> ./../../Info/${filename}_info.txt
+#echo 'Total # reads: ' $totalBroad >> ./../../Info/${filename}_info.txt
+#echo '==>; FRiP: ' $(bc <<< "scale=2;100*$totalBroadInPeak/$totalBroad")'%' >> ./../../Info/${filename}_info.txt
+#echo '==>; Total # peaks: ' $totalBroadPeak >> ./../../Info/${filename}_info.txt
+#cd ..
+
+
+cd ..
+
+cd Info
+
+# Use samtools
+######### anaconda environment #########
+#conda activate base
+fi
+
+echo "Extracting fragment lengths"
+# Extract Fragment Length
+samtools view ./../BamFiles/${filename}_rmMT_rmDup_rmLQ_paired.bam | awk '$9>0' | cut -f 9 | sort | uniq -c | sort -b -k2,2n | sed -e 's/^[ \t]*//' > ${filename}_fragmentLength.txt
+
+echo "Plotting fragment lengths"
+# Plot Fragment Length Distribution
+Rscript --vanilla /gpfs/tools/scripts/fragLength.R ${filename}_fragmentLength.txt
+echo "Outputing final stats to info.txt"
+echo -e $filename '\t' $totalNarrow '\t' $totalNarrowInPeak '\t' $totalNarrowPeak '\t' $totalBroad '\t' $totalBroadInPeak '\t' $totalBroadPeak '\t' $totalReads '\t' $(expr $totalReads - $remainingReads1) '\t' $(expr $remainingReads1 - $remainingReads2) '\t' $(expr $remainingReads2 - $remainingReads3) '\t' $(expr $remainingReads3 - $remainingReads4) '\t' $remainingReads4 >> info.txt
+
+cd ..
+
+## Calculate run time
+duration=$SECONDS
+echo "$(($duration / 60)) mins and $(($duration % 60)) secs."  >> ./Info/${filename}_info.txt
+
+
+done
+cd Info
+
+
+

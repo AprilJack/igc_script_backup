@@ -1,0 +1,7 @@
+#!/bin/bash
+for i in $( ls *.sam)
+do
+	echo Converting $i
+	samtools view -uS $i | samtools sort - $i -@ 24
+done
+echo Done converting sams to bams

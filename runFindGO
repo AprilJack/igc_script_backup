@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: runFindGO organism_name"
+	echo "For example: runFindGO mouse"
+else
+	for i in *vs*.txt
+	do
+		findGO $i $1 -cpu 24
+		echo "Done looking for term enrichment in $i"
+	done
+	echo "Done finding term enrichment. Now run processFindGO ."
+fi

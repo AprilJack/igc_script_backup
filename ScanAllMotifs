@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Will scan all homer motifs using findMotifs.pl for a specific set of genes."
+	echo "Usage: ScanAllMotifs geneList.txt promoterSet [findMotifs.pl options] > allMotifs.txt" 
+else
+	list=$1
+	promoterSet=$2
+	shift 2;
+	echo "GeneID  PromoterID      Offset  Sequence        Motif Name      Strand  MotifScore      Unigene Refseq  Ensembl Name    Alias   Orf     Chr     Description     Type" > out.temp
+	for i in /gpfs/tools/homer/motifs/*.motif
+	do
+		findMotifs.pl $list $promoterSet temp -find $i $@ | tail -n +2 >> out.temp
+	done
+	cat out.temp
+	rm -r temp out.temp
+	echo done!
+fi

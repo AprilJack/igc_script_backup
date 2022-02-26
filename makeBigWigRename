@@ -1,0 +1,202 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Will create bigWigFiles and transfer them to igc1.salk.edu using your login (recommend to make an ssh tunnel)"
+	echo ""
+	echo "Usage: makeBigWig -d tagDirs -g HomerGenome [-l label] [-n names] -s -f  [-u options to makeUCSCfile]"
+	echo "Note: do not use -strand separate, makeBigWig will create two bigWigs with the -s option"
+	echo " -l is an extra label that will be added to the track info (default is the date and time)"
+	echo " -f means you would like to flip the strands when generating stranded bigWigs. Set this if your tagDir should have been flipped but you forgot"
+	echo " -n specify names of tracks instead of \"label tagdir\", space separated per tag dir provided with -d"
+	echo " if norm_factor.txt exists in a tagDir, the normalization factor will be used when making the bedGraph. It should just contain a multiplier"
+else
+	LABEL="$(date +%b-%d-%C%y_%H:%M)"
+	STRANDED=0
+	mode=0
+	FLIP=0
+	RENAME=0
+	USER=$(whoami)
+	while [[ $# > 0 ]]
+	do
+	key="$1"
+	case $key in
+    		-d)
+    		DIRS="$DIRS $2"
+		mode=1
+    		shift # past argument
+    		;;
+    		-n)
+    		NAMES="$2"
+		mode=3
+		RENAME=1
+    		shift # past argument
+		;;
+    		-u)
+    		UCSCOPTIONS="$UCSCOPTIONS $2"
+		mode=2
+    		shift # past argument
+    		;;
+		-g)		
+    		GENOME="$2"
+		mode=0
+    		shift # past argument
+    		;;
+		-f)
+    		FLIP=1
+		mode=0
+    		;;
+		-l)
+    		LABEL="$2"
+		mode=0
+    		shift # past argument
+    		;;
+		-s)
+		STRANDED=1
+		mode=0
+    		;;
+    		*)
+		if [ $mode -eq 1 ] 
+		then
+			DIRS="$DIRS $key"
+		else
+			if [ $mode -eq 2 ]
+			then
+				UCSCOPTIONS="$UCSCOPTIONS $key"
+			else
+				if [ $mode -eq 3 ]
+				then 
+					NAMES+=( $key )
+				fi
+			fi
+		fi
+    		;;
+	esac
+	shift # past argument or value
+	done
+	DIR="/srv/www/igc1.salk.edu/public_html/BigWig"
+	URL="http://salk:bioinf@igc1.salk.edu/BigWig/${USER}_${LABEL}"
+	echo "DIR: $DIR"
+	echo "URL: $URL"
+	if [ -z  "$GENOME" ] || [ -z "$DIRS" ]
+	then
+		echo "Please specify the tag dirs with -d AND the genome with -g"
+	else
+		if [ -e urls.txt ]
+		then
+			rm urls.txt
+		fi
+		echo -e "\tGenome: ${GENOME} Label: $LABEL FLIP?: $FLIP"
+		echo -e "\tRunning makeBigWig script on tagDirs:"
+		for i in $DIRS
+		do
+			echo $i
+		done
+		echo -e "\tAdditional makeUCSCoptions: ${UCSCOPTIONS}"
+		i=0
+		for TAGDIR in $DIRS
+		do
+			TAGDIR=${TAGDIR%/}
+			#lets clean up the tagDir bw files if they are very small 
+			if [ -e $TAGDIR/${TAGDIR##*/}_plus.bw ]
+			then
+				SIZE=$(stat -c%s $TAGDIR/${TAGDIR##*/}_plus.bw)
+				if [ $SIZE -lt 1000 ]
+				then
+					echo "Cleaning a very tiny bw file"
+					rm $TAGDIR/${TAGDIR##*/}_plus.bw
+				fi
+			fi
+			if [ -e $TAGDIR/${TAGDIR##*/}_minus.bw ]
+			then
+				SIZE=$(stat -c%s $TAGDIR/${TAGDIR##*/}_minus.bw)
+				if [ $SIZE -lt 1000 ]
+				then
+					echo "Cleaning a very tiny bw file"
+					rm $TAGDIR/${TAGDIR##*/}_minus.bw
+				fi
+			fi
+			if [[ $STRANDED -gt 0 ]]
+			then
+					normValue=1000000
+					if [[ -e $TAGDIR/norm_factor.txt ]]
+					then
+						normValue=$(cat ${TAGDIR}/norm_factor.txt)
+						echo "Using a manual normfactor of $normValue"
+					fi
+					if [[ $FLIP -gt 0 ]]
+					then
+						makeUCSCfile $TAGDIR -strand - $UCSCOPTIONS -norm $normValue > $TAGDIR/plus.bedGraph 
+						makeUCSCfile $TAGDIR -strand + $UCSCOPTIONS -norm $normValue > $TAGDIR/minus.bedGraph 
+					else
+						makeUCSCfile $TAGDIR -strand + $UCSCOPTIONS -norm $normValue > $TAGDIR/plus.bedGraph 
+						makeUCSCfile $TAGDIR -strand - $UCSCOPTIONS -norm $normValue > $TAGDIR/minus.bedGraph 
+					fi
+					tail -n +2 $TAGDIR/plus.bedGraph | grep "^chr"  > $TAGDIR/plus_trimmed.bedGraph
+					tail -n +2 $TAGDIR/minus.bedGraph | grep "^chr"  > $TAGDIR/minus_trimmed.bedGraph
+					R=$(( ( RANDOM % 155 ) ))
+					G=$(( ( RANDOM % 155 ) ))
+					B=$(( ( RANDOM % 155 ) ))
+					R2=$(( R + 50 ))
+					G2=$(( G + 50 ))
+					B2=$(( B + 50 ))
+					echo -n "track type=bigWig name=\"$LABEL ${TAGDIR##*/}+\" description=\"$LABEL ${TAGDIR##*/}+\" visibility=full maxHeightPixels=100:42:8 windowingFunction=mean+whiskers negateValues=off color=$R,$G,$B bigDataUrl=${URL}/${TAGDIR##*/}_plus.bw" > $TAGDIR/${TAGDIR##*/}_plus.txt 
+					echo -n "track type=bigWig name=\"$LABEL ${TAGDIR##*/}-\" description=\"$LABEL ${TAGDIR##*/}-\" visibility=full maxHeightPixels=100:42:8 windowingFunction=mean+whiskers negateValues=on altColor=$R2,$G2,$B2 bigDataUrl=${URL}/${TAGDIR##*/}_minus.bw" > $TAGDIR/${TAGDIR##*/}_minus.txt 
+					echo "Sorting bedGraphs"
+					sort -k1,1 -k2,2n -S 20G ${TAGDIR}/plus_trimmed.bedGraph  > $TAGDIR/plus_sorted.bedGraph
+					sort -k1,1 -k2,2n -S 20G ${TAGDIR}/minus_trimmed.bedGraph > $TAGDIR/minus_sorted.bedGraph
+					echo "Generating bigWigs"
+					bedGraphToBigWig $TAGDIR/plus_sorted.bedGraph http://hgdownload.cse.ucsc.edu/goldenPath/${GENOME}/bigZips/${GENOME}.chrom.sizes $TAGDIR/${TAGDIR##*/}_plus.bw
+					bedGraphToBigWig $TAGDIR/minus_sorted.bedGraph http://hgdownload.cse.ucsc.edu/goldenPath/${GENOME}/bigZips/${GENOME}.chrom.sizes $TAGDIR/${TAGDIR##*/}_minus.bw
+					#rm $TAGDIR/*.bedGraph
+				echo "${URL}/${TAGDIR##*/}_plus.txt" >> urls.txt
+				echo "${URL}/${TAGDIR##*/}_minus.txt" >> urls.txt
+				TOTRANSFER="$TOTRANSFER $TAGDIR/${TAGDIR##*/}_plus.txt $TAGDIR/${TAGDIR##*/}_plus.bw $TAGDIR/${TAGDIR##*/}_minus.txt $TAGDIR/${TAGDIR##*/}_minus.bw"
+			else
+				#just make one UCSC file
+					normValue=1000000
+					if [[ -e $TAGDIR/norm_factor.txt ]]
+					then
+						normValue=$(cat ${TAGDIR}/norm_factor.txt)
+						echo "Using a manual normfactor of $normValue"
+					fi
+					makeUCSCfile $TAGDIR -strand both -norm $normValue $UCSCOPTIONS > $TAGDIR/both.bedGraph 
+					tail -n +2 $TAGDIR/both.bedGraph | grep "^chr" > $TAGDIR/both_trimmed.bedGraph
+					R=$(( ( RANDOM % 155 ) ))
+					G=$(( ( RANDOM % 155 ) ))
+					B=$(( ( RANDOM % 155 ) ))
+					R2=$(( R + 50 ))
+					G2=$(( G + 50 ))
+					B2=$(( B + 50 ))
+					if [ $RENAME == 1 ]
+					then
+						echo -n "track type=bigWig name=\"${NAMES[$i]}\" visibility=full maxHeightPixels=100:32:8 windowingFunction=mean+whiskers negateValues=off description=\"$LABEL ${NAMES[$i]}\" color=$R,$G,$B bigDataUrl=${URL}/${TAGDIR##*/}_both.bw" > $TAGDIR/${TAGDIR##*/}_both.txt 
+					else
+						echo -n "track type=bigWig name=\"$LABEL ${TAGDIR##*/}\" visibility=full maxHeightPixels=100:32:8 windowingFunction=mean+whiskers negateValues=off description=\"$LABEL ${TAGDIR##*/}\" color=$R,$G,$B bigDataUrl=${URL}/${TAGDIR##*/}_both.bw" > $TAGDIR/${TAGDIR##*/}_both.txt 
+					fi
+					echo "Sorting bedGraph"
+					sort -k1,1 -k2,2n -S 20G ${TAGDIR}/both_trimmed.bedGraph  > $TAGDIR/both_sorted.bedGraph
+					echo "Generating bigWigs"
+					bedGraphToBigWig $TAGDIR/both_sorted.bedGraph http://hgdownload.cse.ucsc.edu/goldenPath/${GENOME}/bigZips/${GENOME}.chrom.sizes $TAGDIR/${TAGDIR##*/}_both.bw
+					#rm $TAGDIR/*.bedGraph
+				echo "${URL}/${TAGDIR##*/}_both.txt" >> urls.txt
+				TOTRANSFER="$TOTRANSFER $TAGDIR/${TAGDIR##*/}_both.txt $TAGDIR/${TAGDIR##*/}_both.bw"
+			fi
+			echo "Finished processing $TAGDIR"
+			i=$((i+1))
+		done
+		echo "These files will be transfered : $TOTRANSFER"
+		echo "To: /gpfs/data/bigWigs/${USER}_${LABEL}"
+		mkdir /gpfs/data/bigWigs/${USER}_${LABEL}
+		cp -v $TOTRANSFER urls.txt /gpfs/data/bigWigs/${USER}_${LABEL}
+		echo "AuthType Basic" > /gpfs/data/bigWigs/${USER}_${LABEL}/.htaccess
+		echo "AuthName \"BigWig\"" >> /gpfs/data/bigWigs/${USER}_${LABEL}/.htaccess
+		echo "AuthUserFile /gpfs/data/bigWigs/${USER}_${LABEL}/.htpasswd" >> /gpfs/data/bigWigs/${USER}_${LABEL}/.htaccess
+
+		echo "Require valid-user" >> /gpfs/data/bigWigs/${USER}_${LABEL}/.htaccess
+		echo "salk:memxbxY.9osdc" > /gpfs/data/bigWigs/${USER}_${LABEL}/.htpasswd
+		echo -e "URLS:\n"
+		cat urls.txt
+		rm urls.txt
+		echo -e "\n\nFinished!"
+	fi
+fi

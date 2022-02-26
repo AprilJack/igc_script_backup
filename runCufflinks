@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ $# -lt 3 ]
+then
+	echo "Usage runCufflinks outFolder sorted.bam genome.fa [library-type]"
+	echo ""
+	echo "Runs de novo cufflinks assembly using the provided genome.fa"
+	echo "Assumes bam files are sorted... if not use: sort -k 3,3 -k 4,4n sam_file > sorted_sam_file"
+	echo "Assumes st is working with stranded reads. Set fourth arg to ff-firststrand,ff-secondstrand,ff-unstranded,fr-firststrand,fr-secondstrand,fr-unstranded,transfrags" 
+	echo "If you specify multiple bams/sams, then it will first merge them with samtools merge and delete the bam afterward"
+else
+	echo "output=$1 inputFile=$2 genome=$3"
+	inputFile=$2
+	if [ $# -lt 4 ]
+	then
+		cufflinks -p 24 --multi-read-correct --frag-bias-correct $3 -o $1 $inputFile --library-type fr-firststrand
+		echo "cufflinks -p 24 --multi-read-correct --frag-bias-correct $3 -o $1 $inputFile --library-type fr-firststrand"
+	else
+		cufflinks -p 24 --multi-read-correct --frag-bias-correct $3 -o $1 $inputFile --library-type $4
+		echo "cufflinks -p 24 --multi-read-correct --frag-bias-correct $3 -o $1 $inputFile --library-type $4"
+	fi
+	echo "Done running cufflinks..."
+	echo "Converting gtf file to fasta format..."
+	GTFtoFasta ${1}/transcripts.gtf $3 
+	cp ${1}/transcripts.gtf ${1}/transcriptsMtoX.gtf
+	GTFtoFasta ${1}/transcriptsMtoX.gtf $3 TRUE 
+	echo "Done converting transcripts to 3frame and dna sequence files"
+fi

@@ -1,0 +1,40 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory. Keeps multimappers. "
+	echo "Usage: justSTAR-Multimappers genomeDir dirWith_R1.fastq.gz [star commands]"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	shift 2
+	echo "Starting STAR alignment of fastq.gz files in $DIR  to $GENOME and keeping all multimappers" 
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null 2> /dev/null
+	for i in $( ls ${DIR}/*_R1*.fastq.gz )
+	do
+		start_time="$(date -u +%M)"
+		R1=$i
+		R2=${i//_R1/_R2}
+		PREFIX=${R1%_R1*}
+		if [ -e $R2 ]
+		then
+			echo "Processing paired reads: $R1 and $R2 using genome $GENOME and outputing to $PREFIX"
+			STAR --outFilterMultimapNmax 99999999 --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif > ${PREFIX}.log
+		else
+			echo "Processing single-end reads: $R1 using genome $GENOME and outputing to $PREFIX"
+			STAR --outFilterMultimapNmax 99999999 --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --readFilesIn $R1 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif > ${PREFIX}.log
+		fi
+		end_time="$(date -u +%M)"
+		elapsed="$((10#$end_time-10#$start_time))"
+		echo "Took $elapsed minutes to align $PREFIX"
+	done
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null
+	rm Aligned.out.sam
+	rm -rf *_tmp *_STARtmp
+fi

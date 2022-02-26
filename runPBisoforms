@@ -1,0 +1,62 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "runPBisoforms subread.bam genome.fasta|genome.mmi"
+	echo "Will run isoseq3 then map with pbmm2 then run stringtie to generate a gtf file"
+else
+	ln -s /gpfs/pacbio/primers.fa
+	echo "Assuming primers are the default:"
+	cat primers.fa
+	i=$1
+	if [ -e ${i%.subreads.bam}.ccs.bam ]
+	then
+		echo "CCS already existed for $i. Skipping..."
+	else
+		echo "Running ccs on $i"
+		ccs $i ${i%.subreads.bam}.ccs.bam --noPolish --minPasses 1 -j 4 --maxPoaCoverage 10 --log-level INFO --reportFile=${i%.subreads.bam}.ccs_report.txt
+	fi
+	if [ -e ${i%.subreads.bam}.fl.primer_5p--primer_3p.bam ]
+	then
+		echo "Barcode demux existed for $i. Skipping..."
+	else
+		echo "Running barcode demux on $i"
+		lima ${i%.subreads.bam}.ccs.bam primers.fa ${i%.subreads.bam}.fl.bam --isoseq --no-pbi --peek-guess
+	fi
+	if [ -e ${i%.subreads.bam}.flnc.bam ]
+	then
+		echo "Isoseq3 refinement already ran on $i. Skipping..."
+	else
+		echo "Running isoseq3 refinement on the demuxed bam for $i"
+		isoseq3 refine ${i%.subreads.bam}.fl.primer_5p--primer_3p.bam primers.fa ${i%.subreads.bam}.flnc.bam
+	fi
+	if [ -e ${i%.subreads.bam}.dull.bam ]
+	then
+		echo "Isoseq3 clustering already done for $i. Skipping..."
+	else
+		echo "Clustering the cleaned up reads for $i"
+		isoseq3 cluster ${i%.subreads.bam}.flnc.bam ${i%.subreads.bam}.dull.bam --verbose 
+	fi
+	if [ -e ${i%.subreads.bam}.polished.bam ]
+	then
+		echo "Polished reads already existed for $i. Skipping..."
+	else
+		echo "polishing the dull reads for $i"
+		isoseq3 polish ${i%.subreads.bam}.dull.bam ${i%.subreads.bam}.subreadset.xml ${i%.subreads.bam}.polished.bam --verbose
+	fi
+	if [ -e ${i%.subreads.bam}.aligned.bam ]
+	then
+		echo "Mapping already run for $i. Skipping..." 
+	else	
+		echo "Running minimap2 mapping on the polished reads for $i"
+		pbmm2 align $2 ${i%.subreads.bam}.polished.bam ${i%.subreads.bam}.aligned.bam --preset ISOSEQ --sort --log-level INFO 
+	fi
+	if [ -e ${i%.subreads.bam}.aligned.bed ]
+	then
+		echo "Looks like bed conversion was already run on $i. Skipping..."
+	else
+		echo "Running bedtools on the aligned reads for $i"
+		#stringtie ${i%.subreads.bam}.aligned.bam -o ${i%.subreads.bam}.gtf -p 12 -A ${i%.subreads.bam}.abundance.txt
+		bedtools bamtobed -bed12 -i ${i%.subreads.bam}.aligned.bam > ${i%.subreads.bam}.aligned.bed
+	fi
+	
+fi

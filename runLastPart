@@ -1,0 +1,67 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory. Also makes tag dirs, produces fpkm and raw gene counts, and converts sam to sorted indexed bam"
+	echo "Usage: runSTAR genomeDir dirWithFastq.gz [homeGenome] [don'tRunSamToBam]"
+	echo "Please provide a homer genome name if genomeDir is not a typical homer genome name"
+	echo "set 4th arg if you don't want to run sam to bam conversion at the end (e.g. if you want sams only)"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	
+	#justSTAR $GENOME $DIR
+	if [ $# -gt 2 ]
+	then
+		GENOME=$3
+	fi
+	CURRENT=${pwd}
+	cd $DIR
+	#for i in *.sam
+	#do
+
+	#	paired=$(head -n 10000 $i | samtools view -S -f 0x1 - | wc -l)
+	#	if [[ $paired -gt 0 ]]
+	#	then
+	#		echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
+	#		makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+	#	else
+	#		echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
+	#		makeTagDirectory tags/${i%Aligned.out.sam} $i -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+	#	fi
+	#done 
+	analyzeRepeats.pl rna ${GENOME%.star} -d tags/* -raw -count exons -condenseGenes -strand +  > rawPlus.txt
+	analyzeRepeats.pl rna ${GENOME%.star} -d tags/* -raw -count exons -condenseGenes -strand -  > rawMinus.txt
+	plus=$(cat rawPlus.txt | cut -f 9 | tail -n +2 | paste -sd+ | bc)
+	minus=$(cat rawMinus.txt | cut -f 9 | tail -n +2 | paste -sd+ | bc)
+	comp=$(echo $plus'>'$minus | bc -l)
+	if [[ $comp -eq 1 ]]
+	then
+		mv rawPlus.txt raw.txt
+		analyzeRepeats.pl rna ${GENOME%.star} -d tags/* -tpm -count exons -condenseGenes -strand +  > tpm.txt
+		rm rawMinus.txt
+	else
+		echo "Looks like the reads are mapping to the opposite strand of genes, so using -strand -"
+		mv rawMinus.txt raw.txt
+		analyzeRepeats.pl rna ${GENOME%.star} -d tags/* -tpm -count exons -condenseGenes -strand - > tpm.txt
+		rm rawPlus.txt
+	fi
+	summarizeSTAR
+	fpkmCluster tpm.txt
+	fpkmPCA tpm.txt
+	if [ $# -eq 5 ]
+	then
+		echo "done aligning, building tag dirs, and quantifying."
+	else	
+		cleanSAMs .
+		echo "done aligning, building tag dirs, quantifying, and making sorted indexed bams"
+	fi
+	rm -rf *_tmp *_STARtmp
+	cd $CURRENT
+fi

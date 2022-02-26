@@ -1,0 +1,47 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory. Alignment is carried out keeping all multimappers and tag dirs will include all mapped reads. Instead of gene expression we will quantify individual repeats and repeat families"
+	echo "Usage: runSTAR-Repeats genomeDir dirWithFastq.gz [homergenome]"
+	echo "Set homergenome if you need to run a genome other than hg19 mm10 hg38 etc."
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	shift 2
+	justSTAR-Multimappers $GENOME $DIR $@
+	if [ $# -gt 0 ]
+        then
+		echo "Using homer genome ${1%.star}"
+                GENOME=$1
+        fi
+	for i in *.sam
+	do
+
+		paired=$(head -n 10000 $i | samtools view -S -f 0x1 - | wc -l)
+		if [[ $paired -gt 0 ]]
+		then
+			echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip -totalReads all 2> ${i%Aligned.out.sam}.tagDirectory.log
+		else
+			echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -flip -totalReads all 2> ${i%Aligned.out.sam}.tagDirectory.log
+		fi
+	done 
+	analyzeRepeats.pl repeats ${GENOME%.star} -d tags/*  > repeatsL1.txt
+	analyzeRepeats.pl repeats ${GENOME%.star} -d tags/* -condenseL2  > repeatsL2.txt
+	analyzeRepeats.pl repeats ${GENOME%.star} -d tags/* -condenseL3 > repeatsL3.txt
+	analyzeRepeats.pl repeats ${GENOME%.star} -d tags/* -noCondensing > repeats_all.txt
+	gzip repeats_all.txt
+	summarizeSTAR
+	countSummary
+	cleanSAMs .
+	echo "done aligning, building tag dirs, quantifying, and making sorted indexed bams"
+	rm -rf *_tmp *_STARtmp
+fi

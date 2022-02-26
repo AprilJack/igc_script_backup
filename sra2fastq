@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [[ $# -lt 1 ]]
+then
+	echo "Usage: sra2fastq SRAs_or_SRRACCESSIONS"
+	echo "Will output gzipped fastqs with R1 or R2 ending instead of _1 or _2"
+	echo "Will download the sras directly, convert them, and then delete the sras."
+else
+	for file in $@
+	do
+		echo "Processing: $file"
+		if [ -e $file ]
+		then
+			echo "$file file was found. Will convert directly."
+			fastq-dump --split-files --gzip -v -v $file 
+		else 
+			echo "$file seems to be an accession number... Will try to download it."
+			wget ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/$(echo $file | cut -c1-6)/$file/${file}.sra
+			fastq-dump --split-files --gzip -v -v ${file}.sra 	
+			echo "Removing ${file}.sra"
+			rm ${file}.sra
+		fi
+		BASE=${file%.sra}
+		echo "Renaming: ${BASE}_1.fastq.gz and removing third unpaired file if needed"
+		if [[ -e ${BASE}_1.fastq.gz ]]
+		then
+			mv ${BASE}_1.fastq.gz ${BASE}_R1.fastq.gz
+			mv ${BASE}_2.fastq.gz ${BASE}_R2.fastq.gz
+			rm ${BASE}.fastq.gz
+		else
+			mv ${BASE}.fastq.gz ${BASE}_R1.fastq.gz
+		fi
+	done
+fi

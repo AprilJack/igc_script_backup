@@ -1,0 +1,15 @@
+#!/bin/bash
+# Will rename Coutns.txt MIRNAs Log.txt Results.txt and ShortStack_N/D/All.gff3 to include the folder name
+
+for i in */
+do
+	echo "Renaming files in $i"
+	mv ${i}Counts.txt ${i}${i%/}_Counts.txt
+	mv ${i}MIRNAs ${i}${i%/}_MIRNAs.txt
+	mv ${i}Log.txt ${i}${i%/}_Log.txt
+	mv ${i}Results.txt ${i}${i%/}_Results.txt
+	mv ${i}ShortStack_N.gff3 ${i}${i%/}_ShortStack_N.gff3
+	mv ${i}ShortStack_D.gff3 ${i}${i%/}_ShortStack_D.gff3
+	mv ${i}ShortStack_All.gff3 ${i}${i%/}_ShortStack_All.gff3
+	
+done

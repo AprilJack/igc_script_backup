@@ -1,0 +1,46 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Bisulfite pipe will run bismark in singles or paired mode, extract methylation reports, and make bedGraphs of the methylated/unmethylated tracks"
+	echo ""
+	echo "Usage: bisulfitePipe bismarkGenomeDir folderWithFastq_R1 and _R2.gzs"
+	echo "To generate bismark genomes run: bismark_genome_preparation"
+	echo "Looks like you have the following genomes indexed:"
+	ls -d /gpfs/genomes/*.bismark
+else
+	genome=$1
+	shortName=${genome%*.bismark}
+	shortName=${shortName##*/}
+	dir=$2
+	echo "Using genome $shortName located in $genome to process fastq files in $dir"
+	for i in ${2}/*_R1*.fastq.gz
+	do
+		count=$(ls ${i%.fastq.gz}*.bam 2>/dev/null | wc -l)
+		if [ $count -gt 0 ]
+		then
+			echo "Bismark alignment already exists : ${i%.fastq.gz}*.bam"
+		else
+			R2=${i/_R1/_R2}
+			if [ -e $R2 ]
+			then 
+				echo "Running paired bismark on $i and $R2"
+				bismark -p 5 -multicore 4 $genome -1 $i -2 ${i/_R1/_R2}  
+			else
+				echo "Running singles bismark on $i"
+				bismark -p 5 -multicore 4 $genome $i
+			fi
+		fi
+	done
+	for i in ${2}/*.bam
+	do
+		echo "running methylation extractor on $i"
+		bismark_methylation_extractor -s $i --counts --buffer_size 30G --multicore 20 -s --cytosine_report --genome_folder $genome
+	done
+	for i in ${2}/*.CpG_report.txt
+	do
+		makeTagDirectory tags/${i%_bismark.CpG_report.txt} $i -format bismark -minCounts 10 -genome $shortName -checkGC
+		makeUCSCfile tags/${i%_bismark.CpG_report.txt} -style methylated -o ${i%_bismark.CpG_report.txt}_m.bedGraph
+		makeUCSCfile tags/${i%_bismark.CpG_report.txt} -style unmethylated -o ${i%_bismark.CpG_report.txt}_u.bedGraph
+	done
+	echo "Finished generating bedGraphs"
+fi

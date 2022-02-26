@@ -1,0 +1,15 @@
+#!/bin/bash
+summary=fastqcSummary.csv
+echo "File,Reads,Basic Stats,Per base seq qual,Per tile seq qual,Per sequence qual,Per base seq cont,Per seq GC,Per base N,Seq Len Dist,Seq Dup,Overrepresented,Adapter,Kmer" > $summary
+for i in $(ls *.html);
+do
+	NAME=`head -n 1 $i | cut -d' ' -f1 | cut -d'>' -f4`
+	echo -n $NAME, >> $summary
+	COUNT=$(grep -o "Total Sequences</td><td>\w*" $i | cut -d'>' -f3)
+	echo -n $COUNT >> $summary
+	for j in $(grep -o "\(FAIL\|WARNING\|PASS\)" $i | head -n 12);
+	do
+		echo -n ,$j >> $summary
+	done 
+	echo "" >> $summary
+done

@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# -lt 1 ] 
+then
+	echo "Will run DamID analysis on samples"
+	echo "Usage: analyzeDamID dir_with_fastqs genome(e.g. hg19)"
+else
+	echo "Starting DamID analysis on $1"
+	echo "First we will map all of the fastq files using STAR"
+	justSTAR ${2}.star .
+	echo "Done mapping. Now we will make appropriate tag dirs"
+	for i in *.sam
+	do
+		makeTagDirectory tags/${i%Aligned.out.sam} $i -genome $2 -checkGC -filterReads GATC 0 keep
+		rm tags/${i%Aligned.out.sam}/chrM.tags.tsv
+		makeTagDirectory tags/${i%Aligned.out.sam}_noM -d tags/${i%Aligned.out.sam}
+		makeUCSCfile tags/${i%Aligned.out.sam}_noM -fragLength 2000 -adjust -1000 
+	done
+	echo "Made tag dirs and bedGraphs. Now you can find peaks using: findPeaks Exp1-DamID -i GFP-DamID -style histone -o auto -size 2500 -minDist 2500 -tbp 0 -inputtbp 0 -fragLength 1 -inputFragLength 1 -F 2 -C 0 -ntagThreshold 50"
+fi

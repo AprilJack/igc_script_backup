@@ -1,0 +1,45 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: backupToOracleCloud Dir1 Dir2 Dir3 ... Assumes you already have a matching password file in current dir or will ask you for the pass. Will make a tar.gz" 
+	if [ -e ftmcliKeystore ]
+	then
+		java -jar /gpfs/tools/OracleCloud/ftmcli.jar list -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu igc-archive
+	else
+		java -jar /gpfs/tools/OracleCloud/ftmcli.jar list --save-auth-key -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu igc-archive
+		
+	fi
+else
+	
+	for i in $@
+	do
+		out=${i%/}
+		echo "Starting OracleCloud backup for $out"
+		echo "Checking if it already exists"
+		unset onserver
+		if [ -e ftmcliKeystore ]
+		then
+			onserver=$(java -jar /gpfs/tools/OracleCloud/ftmcli.jar list -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu igc-archive -X ${out}.tar.gz)
+		else
+			java -jar /gpfs/tools/OracleCloud/ftmcli.jar list --save-auth-key -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu igc-archive -X ${out}.tar.gz
+			onserver=$(java -jar /gpfs/tools/OracleCloud/ftmcli.jar list -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu igc-archive -X ${out}.tar.gz)
+		fi
+		#echo $onserver
+		if [ -z $onserver ]
+		then
+			echo "${out}.tar.gz does not exist in the cloud... backing it up"
+			tar -h -c --use-compress-program=pigz -f ${out}.tar.gz ${out}/
+			echo "Uploading ${out}.tar.gz to igc-archive"
+			if [ -e ftmcliKeystore ]
+			then
+				java -jar /gpfs/tools/OracleCloud/ftmcli.jar upload -a -I a429964 -auth-url https\://us2.storage.oraclecloud.com -service Storage -user igc@salk.edu -T 16 igc-archive ${out}.tar.gz -G 4096
+			else
+				java -jar /gpfs/tools/OracleCloud/ftmcli.jar upload -a -I a429964 --save-auth-key -auth-url https\://us2.storage.oraclecloud.com -service Storage  -T 16 -user igc@salk.edu igc-archive ${out}.tar.gz -G 4096
+			fi
+			echo "Removing local copy of ${out}.tar.gz"
+			rm ${out}.tar.gz
+		else
+			echo "${onserver} exists already so skipping its backup"
+		fi
+	done
+fi

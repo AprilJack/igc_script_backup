@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -Xmx24g -cp /dev/gpfs/tools/scripts/ countTagsInRegions $@

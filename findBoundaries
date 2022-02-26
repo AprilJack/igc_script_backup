@@ -1,0 +1,2 @@
+#!/bin/bash
+java -Xmx16G -cp /dev/gpfs/tools/scripts findBoundaries $@

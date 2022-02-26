@@ -1,0 +1,67 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: grabFastqR1 ACCESSION1 [ACCESSION2] ..."
+	echo "Will download the fastq.gz files directly from the EBI and only care about R1"
+else
+	count=0
+	for a in $@
+	do
+		count=$((count+1))
+		echo "Processing $a (${count}/$#)"
+		if [ -e ${a}_R1.fastq.gz ]
+		then
+			echo "$a already downloaded. If you want to redownload, please delete the fastqs first"
+		else
+
+		six=$(echo $a | cut -c1-6)
+		count=$(echo $a | wc -m)
+		echo "Downloading $a to current directory. Accession length is $count."
+		if [ $count -eq 11 ] 
+		then
+			last=$(echo $a | cut -c10)
+			prefix="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/${six}/00${last}/$a/${a}"
+		else
+			if [ $count -eq 12 ]
+			then
+				last=$(echo $a | cut -c10-11)
+				prefix="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/${six}/0${last}/$a/${a}"
+			else
+				prefix="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/${six}/$a/${a}"
+			fi
+		fi
+		#let's try to just download the basic file
+		wget -nv ${prefix}.fastq.gz
+		res=$?
+		echo "Result of wget $res"
+		if [ $res -gt 0 ]
+		then
+			echo "Trying to download R1 of paired fastq files for $a"
+			wget -nv ${prefix}_1.fastq.gz
+			mv ${a}_1.fastq.gz ${a}_R1.fastq.gz
+			#wget ${prefix}_2.fastq.gz
+			#mv ${a}_2.fastq.gz ${a}_R2.fastq.gz
+		else
+			echo "Downloaded single fastq file for $a"
+			mv ${a}.fastq.gz ${a}_R1.fastq.gz
+		fi
+		if [ -e ${a}_R1.fastq.gz ]
+		then
+			echo "Success!"
+		else
+			echo "EBI did not have the fastqs. Trying to download from SRA"
+			wget -nv "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${a}" -O temp
+			url=$(grep 'https://sra-download' temp | head -n 1 | cut -f 2 -d'>' | cut -f 2 -d '"')
+			echo "Trying to download sra from $url"
+			wget -nv $url -O temp
+			fastq-dump -v --split-files --gzip temp
+			mv temp_1.fastq.gz ${a}_R1.fastq.gz
+			if [ -e temp_2.fastq.gz ]
+			then
+				mv temp_2.fastq.gz ${a}.fastq.gz
+			fi
+			rm temp
+		fi
+		fi
+	done
+fi

@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: batchSRAtoFastq fileWithFTPLinks"
+else
+	for i in $(cat $1)
+	do
+		echo "Processing $i"
+		wget -r -nH --no-parent --accept "*.sra" --cut-dirs=100 $i/ 
+	done
+	sra2fastq *.sra
+	echo "Done downloading and processing $1"
+fi

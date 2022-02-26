@@ -1,0 +1,25 @@
+#!/bin/bash
+#wget  "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${a}" -O temp
+#url=$(grep 'https://sra-download' temp | head -n 1 | cut -f 2 -d'>' | cut -f 2 -d '"')
+#echo "Trying to download sra from $url"
+#wget $url -O temp
+
+
+for a in $@
+do
+	echo "Running Fasterq-dump on $a"
+	fasterq-dump $a -3 -p 
+	if [ -e ${a}_2.fastq ]
+	then
+		echo "Paired end fastq detected"
+		pigz ${a}_1.fastq
+		mv ${a}_1.fastq.gz ${a}_R1.fastq.gz
+		pigz ${a}_2.fastq
+		mv ${a}_2.fastq.gz ${a}_R2.fastq.gz
+	else
+		echo "Single-end fastq detected"
+		pigz ${a}.fastq
+		mv ${a}.fastq.gz ${a}_R1.fastq.gz
+	fi
+done
+ 

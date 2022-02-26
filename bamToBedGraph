@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then
+	echo "Usage bamToBedGraph genome file1.bam output.bedGraph.gz [flip?]"
+	echo ""
+	echo "Genome should be in ucsc style (e.g. mm10, or hg19)"
+else
+	GENOME=$1
+	i=$2
+	out=$3
+	flip=$4
+	wget -q http://hgdownload.cse.ucsc.edu/goldenPath/${GENOME}/bigZips/${GENOME}.chrom.sizes
+	shift 4
+	echo "Generating bedGraph for $i"
+	count=$(samtools view -c -F 4 $i)
+	scale=$(echo "1000000.0/$count" | bc -l)
+	R=$(( ( RANDOM % 155 ) ))
+        G=$(( ( RANDOM % 155 ) )) 
+        B=$(( ( RANDOM % 155 ) ))
+	genomeCoverageBed -scale $scale -ibam $i -g ${GENOME}.chrom.sizes -split -bg -strand + > ${i%.bam}_m.bedGraph 
+	awk '$4 *= -1' ${i%.bam}_m.bedGraph > tmp
+	mv tmp ${i%.bam}_m.bedGraph
+	grep -v ERCC ${i%.bam}_m.bedGraph > tmp
+	mv tmp ${i%.bam}_m.bedGraph
+	genomeCoverageBed -scale $scale -ibam $i -g ${GENOME}.chrom.sizes -split -bg -strand - > ${i%.bam}_p.bedGraph
+	grep -v ERCC ${i%.bam}_p.bedGraph > tmp
+	mv tmp ${i%.bam}_p.bedGraph
+	echo "track type=bedGraph color=$R,$G,$B name=${i%.sam} description=${i%.sam} visibility=full yLineOnOff=on autoScale=on yLineMark=\"0.0\" alwaysZero=on" > tmp
+	sort -m -k1,1 -k2,2n ${i%.bam}_m.bedGraph ${i%.bam}_p.bedGraph >> tmp
+	gzip -f tmp
+	mv tmp.gz $out
+	rm ${i%.bam}_m.bedGraph ${i%.bam}_p.bedGraph
+	echo "Done! bedGraph.gz should be in $out"
+	rm ${GENOME}.chrom.sizes
+fi

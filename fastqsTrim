@@ -1,0 +1,30 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "Runs trim_galore and autodetects if you have paired reads. Will output to trimmed/ and run fastqc at the end."
+	echo "ex: fastqTrim ."
+else
+	if [ -e $1/trimmed ]
+	then
+		echo "$1/trimmed exists!"
+	else
+		mkdir $1/trimmed
+	fi
+	for i in $1/*_R1*.fastq.gz
+	do
+		if [ -e ${i/_R1/_R2} ]
+		then
+			echo "Paired end mode detected for $i"
+			R1=$i
+			R2=${i/_R1/_R2}
+			trim_galore --paired -o $1/trimmed/ --fastqc $R1 $R2
+			mv $1/trimmed/${R1%.fastq.gz}_val_1.fq.gz $1/trimmed/${R1}
+			mv $1/trimmed/${R2%.fastq.gz}_val_2.fq.gz $1/trimmed/${R2}
+		else
+			echo "Single end mode detected for $i"
+			R1=$i
+			trim_galore -o $1/trimmed/ --fastqc $R1
+			mv $1/trimmed/${R1%.fastq.gz}_val_1.fq.gz $1/trimmed/${R1}
+		fi
+	done
+fi

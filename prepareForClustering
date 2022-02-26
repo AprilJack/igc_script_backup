@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Takes Homer-generated fpkm/rpkm files and removes all but the gene-name columns"
+echo "Usage: prepoareForClustering file_fpkm.txt > file_fpkm_cluster.txt"
+

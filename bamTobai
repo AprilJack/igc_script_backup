@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+	echo "Usage: bamTobai 1.bam 2.bam ..."
+else
+	for i in $@; do
+		filename="${i%.*}"
+		echo "Sorting $i to ${filename}_sorted.bam"
+		samtools sort -@ 24 $i ${filename}_sorted
+		echo "Indexing ${filename}_sorted.bam"
+		samtools index ${filename}_sorted.bam
+		echo "Removing ${filename}_sorted.bam"
+		rm ${filename}_sorted.bam  
+	done
+fi

@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $# -lt 1 ] 
+then
+	echo "Runs annotatePeaks and findMotifsGenome for the input genome on all *_peaks.txt files in the current dir" 
+	echo ""
+	echo "Usage: analyzePeaks genome"
+	echo "e.g. analyzePeaks hg19"
+else
+	for i in *_peaks.txt
+	do 
+		annotatePeaks.pl $i $1 -go ${i%*_peaks.txt}_GO -cpu 25 -annStats ${i%*_peaks.txt}_stats.txt > ${i%*_peaks.txt}_annotated.txt
+		findMotifsGenome.pl $i $1 ${i%*_peaks.txt}_MOTIFS -size 100  
+	done
+fi

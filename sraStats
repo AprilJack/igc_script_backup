@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ $# -lt 1 ] 
+then
+	echo "Usage: sraStats SRR1231312 [SRR12312312312] "
+else
+for i in $@
+do
+	numLines=$(fastq-dump -X 1 -Z --split-spot $i | wc -l)
+	if [ $numLines -eq 4 ]
+	then
+	  echo "$i is single-end"
+	else
+	  echo "$i is paired-end"
+	fi
+done
+fi

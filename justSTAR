@@ -1,0 +1,63 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory. "
+	echo "Usage: runSTAR genomeDir dirWith_R1.fastq.gz [star commands]"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	shift 2
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null 2> /dev/null
+	# first lets combine all of the R1 and R2 reads across lanes and multiple files
+	#for L in $(seq 99)
+	#do
+#		for i in ${DIR}/*_R1_*0${L}*fastq.gz
+#		do
+#			if [ -e $i ]
+#			then
+#				echo "Combining $i"
+#				COMBINED=${i%_*0${L}.fastq.gz}.fastq.gz
+#				R2=${i//_R1_/_R2_}
+#				#rm $COMBINED > /dev/null 2> /dev/null
+#				cat $i >> $COMBINED
+#				rm $i
+#				if [ -e $R2 ]
+#				then
+#					echo "Combining R2: $R2"
+#					cat $R2 >> ${COMBINED//_R1/_R2}
+#					rm $R2
+#				fi
+#			fi
+#		done
+#	done
+	# now lets align and analyze
+	for i in $( ls ${DIR}/*_R1*.fastq.gz )
+	do
+		start_time="$(date -u +%M)"
+		R1=$i
+		R2=${i/_R1/_R2}
+		#echo $R2
+		PREFIX=${R1%_R1*}
+		if [ -e $R2 ]
+		then
+			echo "Processing paired reads: $R1 and $R2 using genome $GENOME and outputing to $PREFIX"
+			STAR --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
+		else
+			echo "Processing single-end reads: $R1 using genome $GENOME and outputing to $PREFIX"
+			STAR --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --readFilesIn $R1 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
+		fi
+		end_time="$(date -u +%M)"
+		elapsed="$((10#$end_time-10#$start_time))"
+		echo "Took $elapsed minutes to align $PREFIX"
+	done
+	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null
+	rm Aligned.out.sam
+	rm -rf *_tmp *_STARtmp
+fi

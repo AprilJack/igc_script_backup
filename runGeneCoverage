@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: runGeneCoverage [org, eg. mm10] [folder with unsorted/sorted bams]"
+else
+	for i in $2/*.bam
+	do
+		echo "Processing coverage for $i"
+		#P=$(ls -s $i| cut -d' ' -f1)
+		#P=$(bc -l <<< "1000/$P")
+		#if [ $P -eq 0 ]
+		#then
+		#	$P=0.001
+	#	fi
+	#	echo "Probability of keeping read during sampling: $P"
+		picard DownsampleSam I=$i O=${i}_sampled.bam P=0.01
+		samtools sort -@ 24 -O bam -T sorted ${i}_sampled.bam > ${i}_sampled_sorted.bam
+		samtools index ${i}_sampled_sorted.bam
+	done
+	python /home/maxsh/nfs_data/maxsh/programs/RSeQC-2.6/scripts/geneBody_coverage.py -r ~/nfs_data/maxsh/genomes/${1}/${1}*.HouseKeepingGenes.bed -i $2 -o $2/geneCoverage
+	rm ${2}/*_sampled*bam*
+fi

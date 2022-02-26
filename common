@@ -1,0 +1,18 @@
+#!/bin/bash
+
+word1="$1"
+word2="$2"
+if [ ${#word1} -lt ${#word2} ]
+then
+        word1="$2"
+        word2="$1"
+fi
+for ((i=${#word2}; i>0; i--)); do
+        for ((j=0; j<=${#word2}-i; j++)); do
+                if [[ $word1 =/sanger ${word2:j:i} ]]
+                then
+                        echo ${word2:j:i}
+                        exit
+                fi
+        done
+done

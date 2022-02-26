@@ -1,0 +1,5 @@
+#!/bin/bash
+while read -r -e  line
+do
+	echo $line
+done < $@

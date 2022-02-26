@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Useage: backupFastqsToAWS FastqDIR1 [fastqDIR2] ..."
+	echo "See igc wiki for more info on restoration of backed up files"
+else
+	for i in $@
+	do
+		unset exists
+		exists=$(aws s3 ls s3://igcbackup/illumina/fastq/${i}.tar.gz)
+		if [[ -z $exists ]]
+		then
+	        	echo "${i} does not exist in the cloud... backing it up"
+			if [[ -e /gpfs/data/${i}.tar.gz ]]
+			then
+				echo "tar.gz already exists in /gpfs/data/ ... skipping"
+			else
+ 	                	time tar -h -c --use-compress-program=pigz -f /gpfs/data/${i}.tar.gz ${i}/
+			fi
+			aws s3 cp /gpfs/data/${i}.tar.gz s3://igcbackup/illumina/fastq/ --storage-class DEEP_ARCHIVE 
+			unset exists
+			exists=$(aws s3 ls s3://igcbackup/illumina/fastq/${i}.tar.gz)
+			if [[ -z $exists ]]
+			then
+				rm /gpfs/data/${i}.tar.gz
+				echo "Finished uploading $i to AWS Glacier"
+			else
+				echo "$i doesn't seem to exist on AWS Glacier, so the tar gz was not deleted from /gpfs/data"
+			fi
+			
+		else
+			echo "${i} already stored on glacier"
+		fi
+	done
+fi

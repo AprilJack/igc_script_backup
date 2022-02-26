@@ -1,0 +1,1878 @@
+2016-06-07.13:06:33 /home/maxsh/nfs_data/maxsh/scripts   734  cd scripts/
+2016-06-07.13:06:40 /home/maxsh/nfs_data/maxsh/scripts   735  javac *.java
+2016-06-07.14:43:08 /home/maxsh/nfs_data/maxsh/scripts   735  javac *.java
+2016-06-07.15:31:37 /home/maxsh/nfs_data/maxsh/scripts   736  ls -trl
+2016-06-07.15:31:55 /home/maxsh/nfs_data/maxsh/scripts   737  cp GTFVenn SNPcompare
+2016-06-07.15:32:16 /home/maxsh/nfs_data/maxsh/scripts   738  vi SNPcompare
+2016-06-07.15:32:23 /home/maxsh/nfs_data/maxsh/scripts   739  javac *.jav
+2016-06-07.15:32:35 /home/maxsh/nfs_data/maxsh/scripts   740  javac *.java
+2016-06-07.16:44:35 /home/maxsh/nfs_data/maxsh/scripts   740  javac *.java
+2016-06-07.21:36:58 /home/maxsh/nfs_data/maxsh/scripts   740  javac *.java
+2016-06-10.10:38:35 /home/maxsh/nfs_data/maxsh/scripts  1163  cd scripts/
+2016-06-10.10:38:41 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-13.10:31:16 /home/maxsh/nfs_data/maxsh/scripts   772  cd scripts/
+2016-06-13.10:31:25 /home/maxsh/nfs_data/maxsh/scripts   773  javac *.java
+2016-06-13.11:29:07 /sanger/nfs_data/maxsh/scripts  1028  cd scripts/
+2016-06-13.11:29:13 /sanger/nfs_data/maxsh/scripts  1029  javac *.java
+2016-06-13.11:38:37 /sanger/nfs_data/maxsh/scripts  1029  javac *.java
+2016-06-14.12:17:47 /sanger/nfs_data/maxsh/scripts  1036  cd scripts
+2016-06-14.12:17:53 /sanger/nfs_data/maxsh/scripts  1037  javac *.java
+2016-06-14.13:45:51 /sanger/nfs_data/maxsh/scripts  1050  cd scripts/
+2016-06-14.13:45:55 /sanger/nfs_data/maxsh/scripts  1051  javac *.java
+2016-06-14.14:10:35 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:13:55 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:16:09 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:19:07 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:19:07 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:22:01 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:23:50 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:25:24 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:27:03 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:29:32 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:30:27 /home/maxsh/nfs_data/maxsh/scripts  1164  javac *.java
+2016-06-14.14:48:53 /home/maxsh/nfs_data/maxsh/scripts  1165  igc2
+2016-06-14.14:48:53 /home/maxsh/nfs_data/maxsh/scripts  1165  igc2
+2016-06-14.15:18:39 /home/maxsh/nfs_data/maxsh/scripts  1001  cd nfs_data/maxsh/scripts/
+2016-06-14.15:18:46 /home/maxsh/nfs_data/maxsh/scripts  1002  javac *.java
+2016-06-14.15:25:34 /home/maxsh/nfs_data/maxsh/scripts  1003  annotatePeaks.pl
+2016-06-15.15:51:24 /home/maxsh/nfs_data/maxsh/scripts  1003  annotatePeaks.pl
+2016-06-15.15:52:40 /home/maxsh/nfs_data/maxsh/scripts  1004  findMotifsGenome.pl
+2016-06-15.16:39:13 /home/maxsh/nfs_data/maxsh/scripts  1005  findPeaksGenome
+2016-06-15.16:39:14 /home/maxsh/nfs_data/maxsh/scripts  1005  findPeaksGenome
+2016-06-15.16:39:20 /home/maxsh/nfs_data/maxsh/scripts  1006  findMotifsGenome.pl 
+2016-06-15.17:37:47 /home/maxsh/nfs_data/maxsh/scripts  1166  ssh igc2.snl.salk.edu
+2016-06-16.15:46:59 /home/maxsh/nfs_data/maxsh/scripts   991  cd scripts/
+2016-06-16.15:47:03 /home/maxsh/nfs_data/maxsh/scripts   992  javac *.java
+2016-06-20.11:26:39 /home/maxsh/nfs_data/maxsh/scripts  1573  cd scripts/
+2016-06-20.11:26:40 /home/maxsh/nfs_data/maxsh/scripts  1574  ks
+2016-06-20.11:26:41 /home/maxsh/nfs_data/maxsh/scripts  1575  ls
+2016-06-20.11:26:49 /home/maxsh/nfs_data/maxsh/scripts  1576  javac *.java
+2016-06-20.12:10:10 /home/maxsh/nfs_data/maxsh/scripts  1576  javac *.java
+2016-06-21.12:44:57 /home/maxsh/nfs_data/maxsh/scripts  1576  javac *.java
+2016-06-21.16:44:30 /home/maxsh/nfs_data/maxsh/scripts  1577  cp grabGTF GTFsubtractor
+2016-06-21.16:44:57 /home/maxsh/nfs_data/maxsh/scripts  1578  vi GTFsubtractor
+2016-06-21.16:45:32 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-21.16:54:50 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-21.17:02:06 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-21.17:06:34 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-21.17:10:10 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-22.10:08:21 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-22.10:15:05 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-22.12:21:40 /home/maxsh/nfs_data/maxsh/scripts  1579  javac *.java
+2016-06-22.14:10:27 /home/maxsh/nfs_data/maxsh/scripts  1006  cd scripts/
+2016-06-22.14:10:27 /home/maxsh/nfs_data/maxsh/scripts  1007  ls
+2016-06-22.14:10:30 /home/maxsh/nfs_data/maxsh/scripts  1008  ls -trlhs
+2016-06-22.14:10:35 /home/maxsh/nfs_data/maxsh/scripts  1009  ls -trl 
+2016-06-22.14:11:08 /home/maxsh/nfs_data/maxsh/scripts  1010  vi RunRiboseq
+2016-06-22.14:11:20 /home/maxsh/nfs_data/maxsh/scripts  1012  cd scripts/
+2016-06-22.14:13:18 /home/maxsh/nfs_data/maxsh/scripts  1013  scp -i ~/nfs_data/maxsh/Saghatelian/pbla-key-2.pem *Riboseq* ec2-user@ec2-52-41-80-192.us-west-2.compute.amazonaws.com:/bin
+2016-06-22.14:13:49 /home/maxsh/nfs_data/maxsh/scripts  1014  scp -i ~/nfs_data/maxsh/Saghatelian/pbla-key-2.pem *Riboseq* ec2-user@ec2-52-41-80-192.us-west-2.compute.amazonaws.com
+2016-06-22.14:14:41 /home/maxsh/nfs_data/maxsh/scripts  1015  scp -i ~/nfs_data/maxsh/Saghatelian/pbla-key-2.pem *Riboseq* ec2-user@ec2-52-41-80-192.us-west-2.compute.amazonaws.com:/home/ec2-user
+2016-06-22.14:25:59 /home/maxsh/nfs_data/maxsh/scripts  1016  scp -i ~/nfs_data/maxsh/Saghatelian/pbla-key-2.pem /boll/cellar/illumina/fastq/160606-SE50-L5/Sagtelian_Thomas/*.fastq.gz ec2-user@ec2-52-41-80-192.us-west-2.compute.amazonaws.com:/mnt/RiboseqTest
+2016-06-22.15:51:23 /home/maxsh/nfs_data/maxsh/scripts  1580  STAR --version
+2016-06-24.09:33:14 /home/maxsh/nfs_data/maxsh/scripts  1581  ls
+2016-06-24.09:33:25 /home/maxsh/nfs_data/maxsh/scripts  1582  ll /boll/cellar/illumina/fastq
+2016-06-24.09:33:35 /home/maxsh/nfs_data/maxsh/scripts  1583  ll /boll/cellar/illumina/fastq/160606-SE50
+2016-06-24.09:33:40 /home/maxsh/nfs_data/maxsh/scripts  1584  ll /boll/cellar/illumina/fastq/160606-SE50/Ayres_Alex/
+2016-06-24.09:33:51 /home/maxsh/nfs_data/maxsh/scripts  1585  ll /boll/cellar/illumina/fastq/
+2016-06-24.09:34:45 /home/maxsh/nfs_data/maxsh/scripts  1586  sudo su illumina
+2016-06-24.09:35:37 /home/maxsh/nfs_data/maxsh/scripts  1587  sudo vi /etc/group
+2016-06-24.09:35:40 /home/maxsh/nfs_data/maxsh/scripts  1588  ll /boll/cellar/illumina/fastq/
+2016-06-24.09:36:10 /home/maxsh/nfs_data/maxsh/scripts  1589  sudo su illumina
+2016-06-24.09:36:50 /home/maxsh/nfs_data/maxsh/scripts  1590  sudo vi /etc/group
+2016-06-24.09:36:56 /home/maxsh/nfs_data/maxsh/scripts  1591  ls
+2016-06-24.09:37:03 /home/maxsh/nfs_data/maxsh/scripts  1592  ll /boll/cellar/illumina/fast
+2016-06-24.09:37:04 /home/maxsh/nfs_data/maxsh/scripts  1593  ll /boll/cellar/illumina/fastq
+2016-06-24.09:37:07 /home/maxsh/nfs_data/maxsh/scripts  1594  ll /boll/cellar/illumina/
+2016-06-24.09:37:11 /home/maxsh/nfs_data/maxsh/scripts  1595  cd fastq
+2016-06-24.09:37:22 /home/maxsh/nfs_data/maxsh/scripts  1595  cd fastq
+2016-06-24.09:37:27 /home/maxsh/nfs_data/maxsh/scripts  1596  ll
+2016-06-24.09:37:33 /home/maxsh/nfs_data/maxsh/scripts  1597  ll /boll/cellar/illumina/fastq
+2016-06-24.09:37:37 /home/maxsh/nfs_data/maxsh/scripts  1598  ll /boll/cellar/illumina/
+2016-06-24.09:37:45 /home/maxsh/nfs_data/maxsh/scripts  1599  whoami
+2016-06-24.09:37:54 /home/maxsh/nfs_data/maxsh/scripts  1600  more /etc/group
+2016-06-24.09:38:51 /home/maxsh/nfs_data/maxsh/scripts  1601  groups
+2016-06-28.12:21:59 /home/maxsh/nfs_data/maxsh/scripts  1060  cd ~/nfs_data/maxsh/scripts/
+2016-06-28.12:22:13 /home/maxsh/nfs_data/maxsh/scripts  1061  javac *.java
+2016-06-30.09:50:52 /home/maxsh/nfs_data/maxsh/scripts  1061  javac *.java
+2016-06-30.10:59:06 /home/maxsh/nfs_data/maxsh/scripts  1061  javac *.java
+2016-06-30.13:37:14 /home/maxsh/nfs_data/maxsh/scripts  1062  ls
+2016-07-07.17:10:24 /home/maxsh/nfs_data/maxsh/scripts  1088  cd scripts/
+2016-07-07.17:10:32 /home/maxsh/nfs_data/maxsh/scripts  1089  javac *.java
+2016-07-12.12:30:20 /home/maxsh/nfs_data/maxsh/scripts  1089  javac *.java
+2016-07-13.10:43:41 /home/maxsh/nfs_data/maxsh/scripts  1089  javac *.java
+2016-07-15.16:43:30 /home/maxsh/nfs_data/maxsh/scripts  1070  cd scripts/
+2016-07-15.16:43:31 /home/maxsh/nfs_data/maxsh/scripts  1071  ls
+2016-07-15.16:43:42 /home/maxsh/nfs_data/maxsh/scripts  1072  javac *.java
+2016-07-15.16:44:22 /home/maxsh/nfs_data/maxsh/scripts  1073  cp grabLines filterPairedFastqs
+2016-07-15.16:45:33 /home/maxsh/nfs_data/maxsh/scripts  1074  vi filterPairedFastqs 
+2016-07-15.16:45:39 /home/maxsh/nfs_data/maxsh/scripts  1075  filterPairedFastqs 
+2016-07-15.17:07:01 /home/maxsh/nfs_data/maxsh/scripts  1076  javac *.java
+2016-07-15.17:07:18 /home/maxsh/nfs_data/maxsh/scripts  1077  vi filterPairedFastqs 
+2016-07-15.17:07:22 /home/maxsh/nfs_data/maxsh/scripts  1078  filterPairedFastqs 
+2016-07-15.17:12:06 /home/maxsh/nfs_data/maxsh/scripts  1078  filterPairedFastqs 
+2016-07-15.17:12:12 /home/maxsh/nfs_data/maxsh/scripts  1079  javac *.java
+2016-07-15.17:12:42 /home/maxsh/nfs_data/maxsh/scripts  1079  javac *.java
+2016-07-15.17:13:43 /home/maxsh/nfs_data/maxsh/scripts  1079  javac *.java
+2016-07-18.08:51:35 /home/maxsh/nfs_data/maxsh/scripts  1089  javac *.java
+2016-07-18.09:26:22 /home/maxsh/nfs_data/maxsh/scripts  1089  javac *.java
+2016-07-18.10:10:47 /home/maxsh/nfs_data/maxsh/scripts  1090  more ~/nfs_data/maxsh/genomes/hg19/hg19.gtf 
+2016-07-18.10:14:05 /home/maxsh/nfs_data/maxsh/scripts  1091  more ~/nfs_data/maxsh/genomes/HSV1/hsv1.gbk 
+2016-07-18.10:25:37 /home/maxsh/nfs_data/maxsh/scripts  1092  vi ~/nfs_data/maxsh/genomes/HSV1/hsv1.gbk 
+2016-07-18.10:32:35 /home/maxsh/nfs_data/maxsh/scripts  1093  more ~/nfs_data/maxsh/genomes/HSV1/hsv1.gbk 
+2016-07-18.10:41:07 /home/maxsh/nfs_data/maxsh/scripts  1094  javac *.java
+2016-07-18.10:41:08 /home/maxsh/nfs_data/maxsh/scripts  1095  ls
+2016-07-18.10:41:28 /home/maxsh/nfs_data/maxsh/scripts  1096  cp readTrimmer gbk2gtf
+2016-07-18.10:41:51 /home/maxsh/nfs_data/maxsh/scripts  1097  vi gbk2gtf
+2016-07-18.10:42:05 /home/maxsh/nfs_data/maxsh/scripts  1097  vi gbk2gtf
+2016-07-18.10:42:10 /home/maxsh/nfs_data/maxsh/scripts  1098  gbk2gtf
+2016-07-18.10:46:26 /home/maxsh/nfs_data/maxsh/scripts  1098  gbk2gtf
+2016-07-18.10:46:32 /home/maxsh/nfs_data/maxsh/scripts  1099  javac *.java
+2016-07-18.10:51:38 /home/maxsh/nfs_data/maxsh/scripts  1099  javac *.java
+2016-07-18.11:18:16 /home/maxsh/nfs_data/maxsh/scripts  1099  javac *.java
+2016-07-18.11:55:34 /home/maxsh/nfs_data/maxsh/scripts  1099  javac *.java
+2016-07-20.16:02:42 /home/maxsh/nfs_data/maxsh/scripts  1100  :q
+2016-07-22.10:46:40 /home/maxsh/nfs_data/maxsh/scripts  1101  ssh igc2.snl.salk.edu
+2016-08-01.16:58:57 /home/maxsh/nfs_data/maxsh/scripts  1303  cd scripts/
+2016-08-01.16:59:05 /home/maxsh/nfs_data/maxsh/scripts  1304  javac *.java
+2016-08-02.12:38:10 /home/maxsh/nfs_data/maxsh/scripts  1483  cd scripts/
+2016-08-02.12:38:22 /home/maxsh/nfs_data/maxsh/scripts  1484  javac *.java
+2016-08-02.15:03:20 /home/maxsh/nfs_data/maxsh/scripts  1484  javac *.java
+2016-08-02.15:04:03 /home/maxsh/nfs_data/maxsh/scripts  1484  javac *.java
+2016-08-02.16:52:00 /home/maxsh/nfs_data/maxsh/scripts  1494  cd scripts/
+2016-08-02.16:52:05 /home/maxsh/nfs_data/maxsh/scripts  1495  javac *.java
+2016-08-05.12:03:55 /home/maxsh/nfs_data/maxsh/scripts  1484  javac *.java
+2016-08-11.17:43:00 /home/maxsh/nfs_data/maxsh/scripts  1495  javac *.java
+2016-08-12.17:19:19 /home/maxsh/nfs_data/maxsh/scripts  1484  javac *.java
+2016-08-17.16:03:14 /home/maxsh/nfs_data/maxsh/scripts  1496  findMotifsGenome.pl 
+2016-08-18.11:06:22 /home/maxsh/nfs_data/maxsh/scripts  1485  ssh igc2.snl.salk.edu
+2016-08-19.09:40:51 /home/maxsh/nfs_data/maxsh/scripts  1497  annotatePeaks
+2016-08-19.09:40:54 /home/maxsh/nfs_data/maxsh/scripts  1498  annotatePeaks.pl
+2016-08-19.09:41:17 /home/maxsh/nfs_data/maxsh/scripts  1498  annotatePeaks.pl
+2016-08-19.09:43:05 /home/maxsh/nfs_data/maxsh/scripts  1486  annotatePeaks.pl
+2016-08-22.12:24:02 /home/maxsh/nfs_data/maxsh/scripts  1487  more ~/2nfs_data/
+2016-08-22.12:24:02 /home/maxsh/nfs_data/maxsh/scripts  1488  ls
+2016-08-26.16:07:50 /home/maxsh/nfs_data/maxsh/scripts  1652  cd scripts/
+2016-08-26.16:07:51 /home/maxsh/nfs_data/maxsh/scripts  1653  ls
+2016-08-26.16:08:02 /home/maxsh/nfs_data/maxsh/scripts  1654  javac *.java
+2016-08-26.16:08:23 /home/maxsh/nfs_data/maxsh/scripts  1655  cp gbk2gtf gff2gtf
+2016-08-26.16:08:41 /home/maxsh/nfs_data/maxsh/scripts  1656  vi gff2gtf
+2016-08-26.16:08:51 /home/maxsh/nfs_data/maxsh/scripts  1657  GFFtoGTF
+2016-08-29.09:30:49 /home/maxsh/nfs_data/maxsh/scripts  1658  ls
+2016-08-29.09:30:56 /home/maxsh/nfs_data/maxsh/scripts  1661  cd scripts/
+2016-08-29.09:30:57 /home/maxsh/nfs_data/maxsh/scripts  1662  ls
+2016-08-29.09:30:58 /home/maxsh/nfs_data/maxsh/scripts  1663  ls -trl
+2016-08-29.09:31:04 /home/maxsh/nfs_data/maxsh/scripts  1664  ./gff2gtf 
+2016-08-29.09:44:13 /home/maxsh/nfs_data/maxsh/scripts  1678  cd scripts/
+2016-08-29.09:44:18 /home/maxsh/nfs_data/maxsh/scripts  1679  javac *.java
+2016-08-29.16:22:35 /home/maxsh/nfs_data/maxsh/scripts  1517  cd scripts/
+2016-08-29.16:22:40 /home/maxsh/nfs_data/maxsh/scripts  1518  javac *.java
+2016-08-31.21:57:32 /home/maxsh/nfs_data/maxsh/scripts  1713  cd scripts/
+2016-08-31.21:57:35 /home/maxsh/nfs_data/maxsh/scripts  1714  javac *.java
+2016-08-31.21:58:42 /home/maxsh/nfs_data/maxsh/scripts  1714  javac *.java
+2016-09-07.16:53:37 /home/maxsh/nfs_data/maxsh/scripts  1715  ls
+2016-09-07.16:53:40 /home/maxsh/nfs_data/maxsh/scripts  1716  more runCufflinks
+2016-09-07.16:53:46 /home/maxsh/nfs_data/maxsh/scripts  1717  more GTFtoFasta
+2016-09-07.17:11:10 /home/maxsh/nfs_data/maxsh/scripts  1718  javac *.java
+2016-09-08.09:36:29 /home/maxsh/nfs_data/maxsh/scripts  1718  javac *.java
+2016-09-09.11:44:39 /sanger/nfs_data/maxsh/scripts  1622  cd scripts/
+2016-09-09.11:44:39 /sanger/nfs_data/maxsh/scripts  1623  ls
+2016-09-09.11:45:23 /sanger/nfs_data/maxsh/scripts  1624  cp /sanger/nfs_data/bin/homer/bin/getDiffExpression.pl .
+2016-09-09.11:46:20 /sanger/nfs_data/maxsh/scripts  1625  vi getDiffExpression.pl 
+2016-09-09.11:46:24 /sanger/nfs_data/maxsh/scripts  1626  which getDiffExpression.pl
+2016-09-09.11:46:44 /sanger/nfs_data/maxsh/scripts  1627  ls
+2016-09-12.10:36:16 /home/maxsh/nfs_data/maxsh/scripts  1719  bismark
+2016-09-14.12:31:32 /home/maxsh/nfs_data/maxsh/scripts  1720  makeBigWig
+2016-09-15.12:58:17 /home/maxsh/nfs_data/maxsh/scripts  1771  cd scripts
+2016-09-15.12:58:39 /home/maxsh/nfs_data/maxsh/scripts  1772  javac *.java
+2016-09-15.14:59:08 /home/maxsh/nfs_data/maxsh/scripts  1721  javac *.java
+2016-09-19.11:26:38 /home/maxsh/nfs_data/maxsh/scripts  1008  cd scripts/
+2016-09-19.11:26:39 /home/maxsh/nfs_data/maxsh/scripts  1009  ls
+2016-09-19.11:27:08 /home/maxsh/nfs_data/maxsh/scripts  1010  cp fpkmCluster countSummary
+2016-09-19.11:27:25 /home/maxsh/nfs_data/maxsh/scripts  1011  vi countSummary
+2016-09-21.09:57:55 /home/maxsh/nfs_data/maxsh/scripts  1012  cd .
+2016-09-27.14:16:19 /home/maxsh/nfs_data/maxsh/scripts  1209  cd scripts
+2016-09-27.14:16:20 /home/maxsh/nfs_data/maxsh/scripts  1210  ls
+2016-09-27.14:16:30 /home/maxsh/nfs_data/maxsh/scripts  1211  more fastqScreen
+2016-09-28.11:09:43 /home/maxsh/nfs_data/maxsh/scripts  1593  cd scripts/
+2016-09-28.11:09:44 /home/maxsh/nfs_data/maxsh/scripts  1594  ls
+2016-09-28.11:10:29 /home/maxsh/nfs_data/maxsh/scripts  1595  vi fastqScreen
+2016-09-28.11:10:30 /home/maxsh/nfs_data/maxsh/scripts  1596  ls
+2016-09-30.10:06:26 /home/maxsh/nfs_data/maxsh/scripts  1006  cd scripts
+2016-09-30.10:06:27 /home/maxsh/nfs_data/maxsh/scripts  1007  ls
+2016-09-30.10:06:46 /home/maxsh/nfs_data/maxsh/scripts  1008  vi fpkmCluster
+2016-09-30.10:08:12 /home/maxsh/nfs_data/maxsh/scripts  1009  which R
+2016-09-30.15:22:11 /home/maxsh/nfs_data/maxsh/scripts  1001  cd nfs_data/maxsh/scripts/
+2016-09-30.15:22:19 /home/maxsh/nfs_data/maxsh/scripts  1002  javac *.java
+2016-10-04.08:55:16 /home/maxsh/nfs_data/maxsh/scripts  1002  javac *.java
+2016-10-05.09:53:44 /home/maxsh/nfs_data/maxsh/scripts  1003  ssh igc2.snl.salk.edu
+2016-10-05.09:55:01 /home/maxsh/nfs_data/maxsh/scripts  1003  ssh igc2.snl.salk.edu
+2016-10-13.09:19:30 /home/maxsh/nfs_data/maxsh/scripts  1195  cd scripts/
+2016-10-13.09:19:38 /home/maxsh/nfs_data/maxsh/scripts  1196  javac *.java
+2016-10-13.16:02:12 /home/maxsh/nfs_data/maxsh/scripts  1197  ls *.fastq.gz
+2016-10-26.09:53:29 /home/maxsh/nfs_data/maxsh/scripts  1008  cd scripts/
+2016-10-26.09:53:35 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.09:55:20 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.09:55:41 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.09:58:08 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.09:59:07 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.09:59:45 /home/maxsh/nfs_data/maxsh/scripts  1009  Rscript ILMNtoRefseq.R 
+2016-10-26.10:01:48 /home/maxsh/nfs_data/maxsh/scripts  1010  cd scripts/
+2016-10-26.10:01:54 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:02:09 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:05:50 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:06:26 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:44:38 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:45:13 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:45:34 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:46:29 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:56:45 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.10:57:03 /home/maxsh/nfs_data/maxsh/scripts  1011  Rscript ILMNtoRefseq.R 
+2016-10-26.11:01:03 /home/maxsh/nfs_data/maxsh/scripts  1012  vi ILMNtoRefseq 
+2016-10-26.11:01:13 /home/maxsh/nfs_data/maxsh/scripts  1013  mv ILMNtoRefseq ILMNtoSymbol
+2016-10-26.11:01:23 /home/maxsh/nfs_data/maxsh/scripts  1014  chmod 775 ILMNtoSymbol
+2016-10-26.11:01:36 /home/maxsh/nfs_data/maxsh/scripts  1015  ILMNtoSymbol
+2016-10-26.11:06:59 /home/maxsh/nfs_data/maxsh/scripts  1016  ls
+2016-10-26.11:07:02 /home/maxsh/nfs_data/maxsh/scripts  1017  more summarizeSTAR 
+2016-10-26.11:29:29 /home/maxsh/nfs_data/maxsh/scripts  1018  Rscript pcaFPKM.R
+2016-10-26.11:29:50 /home/maxsh/nfs_data/maxsh/scripts  1019  cp fpkmCluster fpkmPCA
+2016-10-26.11:30:12 /home/maxsh/nfs_data/maxsh/scripts  1020  vi fpkmPCA 
+2016-10-26.14:48:44 /home/maxsh/nfs_data/maxsh/scripts  1021  ls
+2016-10-26.14:49:22 /home/maxsh/nfs_data/maxsh/scripts  1022  vi runSTAR
+2016-10-26.14:49:24 /home/maxsh/nfs_data/maxsh/scripts  1023  ls
+2016-10-27.11:52:57 /sanger/nfs_data/maxsh/scripts  1184  cd /sanger/nfs_data/maxsh/scripts
+2016-10-27.11:52:58 /sanger/nfs_data/maxsh/scripts  1185  ls
+2016-10-27.11:53:25 /sanger/nfs_data/maxsh/scripts  1186  HiCStructure
+2016-10-27.11:53:44 /sanger/nfs_data/maxsh/scripts  1187  HiCChrImages
+2016-10-27.11:53:59 /sanger/nfs_data/maxsh/scripts  1188  HiCEntropy 
+2016-10-27.12:04:29 /sanger/nfs_data/maxsh/scripts  1189  HiCMapCombiner 
+2016-10-28.16:56:18 /sanger/nfs_data/maxsh/scripts  1189  HiCMapCombiner 
+2016-11-04.10:32:40  1259  cd scripts/
+2016-11-04.10:32:40  1260  ls
+2016-11-04.10:32:55  1261  vi processFindGO
+2016-11-04.10:34:02  1262  sed -i -- 's/~/\/sanger/g' *
+2016-11-04.10:34:08  1263  ls
+2016-11-04.10:34:13  1264  more filterORFs
+2016-11-04.12:24:44  1265  R
+2016-11-04.12:24:45  1266  ls
+2016-11-04.12:24:53  1267  whic R
+2016-11-04.12:24:53  1268  which R
+2016-11-09.17:07:51  1174  cd scripts/
+2016-11-09.17:07:51  1175  ls
+2016-11-09.17:08:00  1176  more GTFtoFasta
+2016-11-09.17:08:40  1177  more runCufflinks 
+2016-11-09.17:08:47  1178  GTFtoFasta
+2016-11-09.17:08:59  1179  javac *.java
+2016-11-09.17:09:02  1180  GTFtoFasta
+2016-11-10.09:03:28  1181  ls
+2016-11-14.15:33:16  1338  cd ~/nfs_data/maxsh/scripts/
+2016-11-14.15:33:17  1339  ls
+2016-11-14.15:34:11  1340  vi getOrderedDiffExpression
+2016-11-14.15:34:17  1341  getOrderedDiffExpression 
+2016-11-14.15:35:47  1342  R
+2016-11-14.15:35:49  1343  getOrderedDiffExpression 
+2016-11-14.15:36:05  1343  getOrderedDiffExpression 
+2016-11-17.09:27:15  1375  cd scripts/
+2016-11-17.09:27:25  1376  javac *.java
+2016-11-22.15:35:24  1377  man tr
+2016-11-30.15:41:30  1005  cd scripts/
+2016-11-30.15:41:36  1006  javac *.java
+2016-11-30.15:41:42  1007  ls
+2016-11-30.15:42:01  1008  cp GTFvsGTF GCSkew
+2016-11-30.15:42:19  1009  vi GCSkew
+2016-11-30.15:53:16  1010  javac *.java
+2016-11-30.15:54:17  1011  vi GCSkew.java 
+2016-11-30.15:54:22  1012  javac *.java
+2016-11-30.16:01:41  1012  javac *.java
+2016-11-30.16:10:13  1012  javac *.java
+2016-12-01.14:44:39  1005  cd scripts/
+2016-12-01.14:44:42  1006  ls
+2016-12-01.14:45:16  1007  cp sra2fastq linkFastqs 
+2016-12-01.14:59:51  1008  vi linkFastqs 
+2016-12-07.16:24:53  1089  cd scripts/
+2016-12-07.16:24:58  1090  javac *.java
+2016-12-07.16:29:16  1090  javac *.java
+2016-12-07.16:31:09  1090  javac *.java
+2016-12-07.16:33:07  1090  javac *.java
+2016-12-08.15:42:12  1091  ls
+2016-12-08.15:42:32  1092  cp GTFvsGTF pos2start
+2016-12-08.15:42:52  1093  vi pos2start 
+2016-12-08.15:43:00  1094  pos2start
+2016-12-08.15:43:08  1095  javac *.java
+2016-12-08.15:43:58  1095  javac *.java
+2016-12-08.15:44:01  1096  pos2start
+2016-12-08.15:44:05  1097  ls
+2016-12-08.15:45:46  1098  javac *.java
+2016-12-20.16:45:36  1004  cd scripts/
+2016-12-20.16:45:47  1005  javac *.java
+2016-12-20.16:46:34  1005  javac *.java
+2017-01-09.11:03:28  1021  cd scripts/
+2017-01-09.11:03:28  1022  ls
+2017-01-09.11:03:53  1023  cp justSTAR doChIP
+2017-01-09.11:10:28  1024  vi doChIP 
+2017-01-09.11:10:36  1025  mv doChIP ChIPSTAR
+2017-01-09.11:10:40  1026  ChIPSTAR 
+2017-01-18.15:35:52   229  cd scripts/
+2017-01-18.15:35:52   230  ls
+2017-01-18.15:38:54   215  cd /dev/gpfs/tools/scripts/
+2017-01-18.15:38:55   216  ls
+2017-01-18.15:42:56   217  vi startDemultiplexer.sh 
+2017-01-18.15:44:25   226  cd scripts
+2017-01-18.15:44:26   227  ls
+2017-01-18.15:44:33   228  source .bash-history.log 
+2017-01-18.15:44:43   229  source ~/.bash_profile 
+2017-01-18.15:44:48   230  which startDemultiplexer.sh 
+2017-01-18.15:46:41   231  vi /dev/gpfs/tools/scripts/startDemultiplexer.sh
+2017-01-19.09:14:21   221  cd /dev/gpfs/tools/scripts/
+2017-01-19.09:14:22   222  ls
+2017-01-19.09:17:13   223  vi startDemultiplexer.sh 
+2017-01-19.09:17:55   224  ls
+2017-01-19.09:52:09   225  ssh igc2.snl.salk.edu
+2017-01-19.09:52:11   226  ls
+2017-01-19.10:05:19   273  cd scripts/
+2017-01-19.10:05:19   274  ls
+2017-01-19.10:06:55   275  vi startDemultiplexer.sh 
+2017-01-19.10:06:55   276  ls
+2017-01-19.10:56:13   460  cd scripts/
+2017-01-19.10:56:14   461  ls
+2017-01-19.10:56:47   462  vi startDemultiplexer.sh 
+2017-01-19.10:56:48   463  ls
+2017-02-03.10:59:52   765  cd scripts/
+2017-02-03.10:59:52   766  ls
+2017-02-03.10:59:54   767  ls -trlhs
+2017-02-06.10:25:41   789  cd /dev/gpfs/tools/scripts/
+2017-02-15.09:12:46  1015  cd /dev/gpfs/tools/scripts/
+2017-02-15.09:12:48  1016  ls -trlhs
+2017-02-15.09:14:13  1016  ls -trlhs
+2017-02-15.09:14:23  1017  unzip Luisa_amaral-smart-85d590a04475.zip 
+2017-02-15.09:14:27  1018  ls -trlhs
+2017-02-15.09:14:41  1019  mv Luisa_amaral-smart-85d590a04475 ../SMART
+2017-02-15.09:14:42  1020  ls
+2017-02-15.09:14:45  1021  rm *.zip
+2017-02-15.09:20:43  1041  cd scripts/
+2017-02-15.09:20:43  1042  ls
+2017-02-15.09:20:56  1043  more grabERCC
+2017-02-15.09:21:15  1044  more tablejoin
+2017-02-15.09:23:36  1044  more tablejoin
+2017-02-15.09:26:40  1045  sed -i 's/~\/nfs_data\/maxsh\/scripts/\/dev\/gpfs\/tools\/scripts/g' tablejoin
+2017-02-15.09:26:44  1046  more tablejoin
+2017-02-15.09:26:54  1047  sed -i 's/~\/nfs_data\/maxsh\/scripts/\/dev\/gpfs\/tools\/scripts/g' *
+2017-02-15.09:27:07  1048  more trimPolyA 
+2017-02-15.09:27:09  1049  qls
+2017-02-15.09:27:09  1050  ls
+2017-02-15.09:27:20  1051  more saveUMI
+2017-02-15.09:27:45  1052  more gff2gtf 
+2017-02-15.09:28:14  1053  sed -i 's/\/home\/maxsh\/nfs_data\/maxsh\/scripts/\/dev\/gpfs\/tools\/scripts/g' *
+2017-02-15.09:28:20  1054  more gff2gtf 
+2017-02-15.09:28:51  1055  ls -trlhs
+2017-02-15.09:28:57  1056  more MAPS
+2017-02-15.09:29:44  1057  sed -i 's/\/sanger\/nfs_data\/maxsh\/scripts/\/dev\/gpfs\/tools\/scripts/g' *
+2017-02-15.09:29:46  1058  more MAPS
+2017-02-16.16:41:40  1248  cd /dev/gpfs/tools/scripts/
+2017-02-16.16:41:41  1249  ls
+2017-02-16.16:42:12  1250  more justSTAR
+2017-02-16.16:42:13  1251  ;s
+2017-02-16.16:42:14  1252  ls
+2017-02-16.16:42:15  1253  ls -trlhs
+2017-02-16.16:42:34  1254  chgrp bioinformatics hg19Ad5Pipe.sh 
+2017-02-16.16:42:36  1255  ls -trlhs
+2017-02-16.16:42:41  1256  more hg19Ad5Pipe.sh 
+2017-02-16.16:43:03  1257  chmod 774 hg19Ad5Pipe.sh 
+2017-02-16.16:43:07  1258  hg19Ad5Pipe.sh 
+2017-02-16.16:43:37  1259  vi hg19Ad5Pipe.sh 
+2017-02-16.16:43:39  1260  hg19Ad5Pipe.sh 
+2017-02-17.09:48:10  1422  cd scripts/
+2017-02-17.09:48:11  1423  ls
+2017-02-17.09:48:19  1424  ls -trlhs
+2017-02-17.09:49:41  1425  vi samToSortedIndexedBam 
+2017-02-17.09:52:14  1426  vi cleanSAMs 
+2017-02-17.10:53:51  1427  ls
+2017-02-23.09:35:31   745  cd scripts/
+2017-02-23.09:35:31   746  ls
+2017-02-23.09:37:01   747  wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
+2017-02-23.09:37:06   748  more bedGraphToBigWig 
+2017-02-23.09:37:15   749  ./bedGraphToBigWig
+2017-02-23.09:37:18   750  ls -trlhs
+2017-02-23.09:37:27   751  ls -l bedGraphToBigWig 
+2017-02-23.09:37:36   752  chmod 774 bedGraphToBigWig 
+2017-02-23.09:37:46   753  chmod 775 bedGraphToBigWig 
+2017-02-23.09:37:50   754  ./bedGraphToBigWig 
+2017-02-23.09:38:38   755  wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa
+2017-02-23.09:38:57   756  http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit
+2017-02-23.09:39:09   757  wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit
+2017-02-23.09:39:11   758  ls -trlhs
+2017-02-23.09:39:17   759  chmod 775 faToTwoBit 
+2017-02-23.09:39:22   760  chmod 775 twoBitToFa 
+2017-02-23.09:39:26   761  twoBitToFa 
+2017-02-23.17:26:25  1089  cd scripts/
+2017-02-23.17:26:25  1090  ls
+2017-02-23.17:27:00  1091  cp MAPS ProcessBiorad
+2017-02-23.17:27:37  1092  vi ProcessBiorad
+2017-02-23.17:28:10  1093  javac ProcessBiorad.java
+2017-02-23.17:28:14  1094  ProcessBiorad
+2017-02-23.17:28:30  1095  vi ProcessBiorad
+2017-02-23.17:28:38  1096  ProcessBiorad
+2017-02-24.16:02:21  1001  cd /dev/gpfs/tools/scripts/
+2017-02-24.16:02:28  1002  javac *.java
+2017-02-24.16:08:04  1002  javac *.java
+2017-02-24.16:10:37  1002  javac *.java
+2017-02-27.10:27:21  1001  cd /dev/gpfs/tools/scripts/
+2017-02-27.10:27:27  1002  javac *.java
+2017-02-27.10:30:01  1002  javac *.java
+2017-02-27.10:41:21  1002  javac *.java
+2017-02-27.10:43:47  1002  javac *.java
+2017-02-27.12:35:00  1002  javac *.java
+2017-02-27.12:38:40  1002  javac *.java
+2017-02-28.09:48:48  1002  javac *.java
+2017-03-01.10:50:31  1106  cd tools/scripts/
+2017-03-01.10:50:36  1107  javac *.java
+2017-03-01.17:07:20  1108  ssh illumina@igc2.salk.edu
+2017-03-01.17:08:05  1109  ssh igc2.salk.edu
+2017-03-01.17:08:27  1110  ssh illumina@igc2.salk.edu
+2017-03-01.17:09:21  1111  ssh igc2.salk.edu
+2017-03-01.17:09:41  1112  ssh illumina@igc2.salk.edu
+2017-03-02.10:33:43  1112  ssh illumina@igc2.salk.edu
+2017-03-02.10:33:50  1113  javac *.java
+2017-03-02.11:46:28  1113  javac *.java
+2017-03-02.11:54:59  1113  javac *.java
+2017-03-05.15:29:24  1044  cd /dev/gpfs/tools/scripts/
+2017-03-05.15:29:49  1045  scp maxsh@igc2.snl.salk.edu:/home/maxsh/DedupBiorad.java .
+2017-03-05.15:30:12  1046  scp maxsh@igc2.snl.salk.edu:/home/maxsh/scripts/DedupBiorad.java .
+2017-03-05.15:30:17  1047  ls
+2017-03-05.15:30:28  1048  cp ProcessBiorad DedupBiorad
+2017-03-05.15:30:42  1049  vi DedupBiorad
+2017-03-05.15:30:48  1050  javac *.java
+2017-03-23.16:53:03  1008  cd tools/scripts/
+2017-03-23.16:53:04  1009  ls
+2017-03-23.16:53:06  1010  ls -trlhs
+2017-03-23.16:53:11  1011  javac processFindGO.java
+2017-03-23.16:53:18  1012  more processFindGO
+2017-03-23.16:53:39  1013  vi processFindGO
+2017-04-05.14:37:43  1011  cd scripts/
+2017-04-05.14:37:45  1012  ls
+2017-04-17.12:01:05  1011  cd scripts 
+2017-04-17.12:01:06  1012  ls
+2017-04-17.12:01:08  1013  ls -trlhs
+2017-04-17.12:01:54  1016  cd scripts/
+2017-04-17.12:01:54  1017  ls
+2017-08-07.17:25:28  1384  cd /dev/gpfs/tools/scripts/
+2017-08-07.17:25:46  1385  zip Javas08-05-2017.zip *.java
+2017-08-07.17:26:00  1386  javac *.java
+2017-08-07.17:28:30  1386  javac *.java
+2017-08-07.17:28:36  1387  MAPS
+2017-08-08.22:50:01  1000  cd /gpfs/tools/scripts/
+2017-08-08.22:50:02  1001  ls
+2017-08-08.22:50:09  1002  javac *.java
+2017-08-09.10:20:58  1003  man grep
+2017-08-09.10:55:44  1004  javac *.java
+2017-08-09.10:59:24  1004  javac *.java
+2017-08-09.15:16:36  1005  annotatePeaks.pl
+2017-08-09.15:49:29  1006  ls
+2017-08-10.12:34:03  1007  man grep
+2017-08-10.12:34:11  1008  javac *.java
+2017-08-14.11:09:07  1008  javac *.java
+2017-08-14.11:10:50  1009  java -version
+2017-08-14.11:14:31  1017  cd scripts/
+2017-08-14.11:14:37  1018  javac *.java
+2017-08-14.11:27:00  1018  javac *.java
+2017-08-14.11:27:10  1019  which java
+2017-08-14.11:27:16  1020  java -version
+2017-08-14.11:27:54  1021  javac -version
+2017-08-14.11:29:40  1027  cd scripts/
+2017-08-14.11:29:44  1028  javac *.java
+2017-08-14.14:57:25  1028  javac *.java
+2017-08-14.15:22:41  1028  javac *.java
+2017-08-14.15:22:52  1029  cp GTFvsGTF FastaVsFasta
+2017-08-14.15:23:27  1030  vi FastaVsFasta
+2017-08-14.15:23:32  1031  FastaVsFasta 
+2017-08-14.15:31:10  1031  FastaVsFasta 
+2017-08-14.15:31:15  1032  javac *.java
+2017-08-23.11:55:58  1032  javac *.java
+2017-08-23.14:14:03  1032  javac *.java
+2017-08-28.09:55:13  1026  cd scripts/
+2017-08-28.09:55:14  1027  ls
+2017-08-28.09:56:15  1028  more makeSTARgenome 
+2017-09-01.14:51:53  1033  wget http://igc2.salk.edu/illumina/runs/170830_SE51/Hargreaves_Josephine/11C2_S51_R1_001.fastq.gz
+2017-09-02.18:21:08  1035  cd scripts/
+2017-09-02.18:21:18  1036  wget https://github.com/pfurio/bed2gtf/blob/master/bed2gtf.py
+2017-09-02.18:21:20  1037  ls
+2017-09-02.18:21:24  1038  ls -trlhs
+2017-09-02.18:21:31  1039  python bed2gtf.py 
+2017-09-02.18:22:55  1040  wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bedToGenePred
+2017-09-02.18:22:57  1041  ls
+2017-09-02.18:22:59  1042  ls -trlhs
+2017-09-02.18:23:04  1043  rm bed2gtf.py 
+2017-09-02.18:27:47  1044  scp maxsh@igc2.snl.salk.edu:/home/maxsh/bedTo* .
+2017-09-02.18:27:56  1045  scp maxsh@igc2.snl.salk.edu:/home/maxsh/GenePred* .
+2017-09-02.18:28:05  1046  scp maxsh@igc2.snl.salk.edu:/home/maxsh/genePred* .
+2017-09-02.18:28:10  1047  ls -trlhs
+2017-09-02.18:28:19  1048  chmod +x bedToGenePred 
+2017-09-02.18:28:24  1049  chmod +x genePredToGtf 
+2017-09-02.18:28:39  1050  ls -trlhs
+2017-09-02.18:28:43  1051  bedToGenePred 
+2017-09-07.18:35:06  1052  makeUCSCfile
+2017-10-12.10:13:05  1577  cd tools/scripts/
+2017-10-12.10:13:05  1578  ls
+2017-10-12.10:14:06  1579  getAllOverlappingGenes
+2017-10-12.10:47:34  1580  more getAllOverlappingGenes.java 
+2017-10-12.11:26:22  1581  more /gpfs/genomes/hg19/hg19_refseq.gtf 
+2017-10-12.11:29:32  1582  more /gpfs/analyses/maxsh/Emerson/mergedHMEC3way.txt 
+2017-10-12.11:34:40  1583  grep NM_001135036 /gpfs/genomes/hg19/hg19_refseq.gtf 
+2017-10-12.14:31:03  1584  ls
+2017-10-13.11:32:34  1585  more /gpfs/genomes/hg19/hg19_refseq.gtf 
+2017-10-18.16:22:44  1138  cd /gpfs/tools/scripts/
+2017-10-18.16:22:45  1139  ls
+2017-10-18.16:23:12  1140  cp runSTAR runSTAR-bedGraph
+2017-10-18.16:33:55  1141  vi runSTAR-bedGraph 
+2017-10-18.16:34:37  1142  more /gpfs/analyses/maxsh/Belmonte/Masa/171012/*.tagDirectory.log
+2017-10-18.16:34:38  1142  more /gpfs/analyses/maxsh/Belmonte/Masa/171012/*.tagDirectory.log
+2017-10-18.16:34:55  1143  ls
+2017-10-25.17:25:08  1080  cd tools/scripts/
+2017-10-25.17:25:10  1081  ls
+2017-10-25.17:25:10  1082  ls -trlhs
+2017-10-25.17:26:55  1083  ls -a ~/
+2017-10-25.17:32:55  1084  vi backupToOracleCloud 
+2017-11-03.15:34:13   567  cd /gpfs/tools/scripts
+2017-11-03.15:34:38   568  vi bisulfitePipe
+2017-11-03.15:35:06   569  pwd
+2017-11-03.15:35:08   570  ll
+2017-11-03.15:37:55   571  vi runSTAR
+2017-11-03.15:40:04   571  vi runSTAR
+2017-11-03.16:29:16   572  vi run2STAR
+2017-11-03.16:29:27   573  run HiC
+2017-11-03.16:29:50   574  runHiC
+2017-11-03.16:29:50   574  runHiC
+2017-11-03.16:30:01   575  vi runHiC 
+2017-11-03.16:30:37   576  vi runSTAR-bedGraph
+2017-11-03.16:31:40   576  vi runSTAR-bedGraph
+2017-11-06.12:44:43   864  cd /dev/gpfs/tools/scripts
+2017-11-06.12:44:45   865  ll
+2017-11-06.12:45:49   866  vi FPKMtoCluster.R
+2017-11-06.12:46:57   867  vi /dev/gpfs/tools/scripts/fpkmCluster
+2017-11-06.16:32:08   868  analyzeRepeats.pl 
+2017-11-14.14:13:46  1011  cd scripts/
+2017-11-14.14:13:47  1012  ll
+2017-11-27.09:24:00  1009  cd scripts/
+2017-11-27.09:24:01  1010  ll
+2017-11-27.09:30:16  1011  pwd
+2017-11-27.09:31:28  1012  vi fpkmPCA 
+2017-12-20.15:26:00  1006  cd scripts/
+2017-12-20.15:26:01  1007  ll
+2017-12-20.15:26:05  1008  pwd
+2018-01-03.15:07:05  1125  cd tools/scripts/
+2018-01-03.15:07:06  1126  ls
+2018-01-04.11:12:45  1127  vi $(which runSTAR)
+2018-01-04.14:43:07  1128  ls
+2018-01-04.14:43:08  1129  ls -trlhs
+2018-01-04.14:43:54  1130  cp batchRename getDiffR
+2018-01-04.14:44:32  1131  vi getDiffR
+2018-01-04.14:44:48  1132  getDiffR
+2018-01-04.14:51:30  1133  vi getDiffR.R 
+2018-01-04.14:52:18  1133  vi getDiffR.R 
+2018-01-09.14:00:28  1391  cd /gpfs/tools/scripts/
+2018-01-09.14:00:29  1392  ls
+2018-01-09.14:00:33  1393  addColumns
+2018-01-09.14:00:56  1394  addCounts 
+2018-01-09.14:01:56  1395  vi addCounts 
+2018-01-09.14:01:58  1396  ls
+2018-01-09.14:02:10  1397  more analyzeChIA-PET 
+2018-01-09.14:02:27  1398  analyzeChIA-PET 
+2018-01-09.14:02:49  1399  analyzeDamID 
+2018-01-09.14:03:06  1400  analyzeDifferentialPeaks 
+2018-01-09.14:03:55  1401  ls
+2018-01-09.14:04:05  1402  analyzePeaks 
+2018-01-09.14:04:34  1403  averageBedGraph
+2018-01-09.14:04:48  1404  backupbashprofile 
+2018-01-09.14:04:56  1405  more backupbashprofile 
+2018-01-09.15:52:28  1406  cd backupDir 
+2018-01-09.15:52:31  1407  more backupDir 
+2018-01-09.15:52:42  1408  backupDir
+2018-01-09.15:53:00  1409  backupToOracleCloud 
+2018-01-09.15:53:21  1410  bamtobai
+2018-01-09.15:53:30  1411  bamTobai 
+2018-01-09.15:53:46  1412  bashProfileHeader 
+2018-01-09.15:53:52  1413  more bashProfileHeader 
+2018-01-09.15:54:09  1414  bedGraphToBigWig 
+2018-01-09.15:54:35  1415  bedToGenePred 
+2018-01-09.15:55:52  1416  bismarkBedgraphReads 
+2018-01-09.15:55:57  1417  more bismarkBedgraphReads 
+2018-01-09.15:56:24  1418  bisulfitePipe 
+2018-01-09.15:57:08  1419  vi bisulfitePipe 
+2018-01-09.15:57:11  1420  bisulfitePipe 
+2018-01-09.15:57:44  1421  buildGenome 
+2018-01-09.15:57:47  1422  more buildGenome 
+2018-01-09.15:58:12  1423  checkStrand 
+2018-01-09.15:58:32  1424  ChIPSTAR 
+2018-01-09.15:58:44  1425  cleanSAMs 
+2018-01-09.15:58:57  1426  clusterAnnotations
+2018-01-09.15:58:58  1426  clusterAnnotations
+2018-01-09.15:59:19  1427  clusterGO
+2018-01-09.15:59:29  1428  more clusterGO
+2018-01-09.15:59:37  1429  more clusterGO.R
+2018-01-09.16:01:41  1430  combineColumns
+2018-01-09.16:01:54  1431  combinePeaks
+2018-01-09.16:02:05  1432  common
+2018-01-09.16:02:10  1433  more common
+2018-01-09.16:02:37  1434  commonSubstring 
+2018-01-09.16:02:42  1435  more commonSubstring 
+2018-01-09.16:02:53  1436  countSummary
+2018-01-09.16:02:57  1437  more countSummary
+2018-01-09.16:03:22  1438  more countSummary.R 
+2018-01-09.16:03:55  1439  countTagsInRegions
+2018-01-09.16:04:07  1440  DedupBiorad 
+2018-01-09.16:04:53  1441  diffExpression 
+2018-01-09.16:05:31  1442  more enrichment
+2018-01-09.16:05:35  1443  enrichment
+2018-01-09.16:05:54  1444  FastaVsFasta 
+2018-01-09.16:06:17  1445  FastqDownsampler
+2018-01-09.16:07:21  1446  fastqSplitter
+2018-01-09.16:07:45  1447  fastqSummary 
+2018-01-09.16:07:53  1448  more fastqSummary 
+2018-01-09.16:08:19  1449  fastqToBam 
+2018-01-09.16:08:25  1450  more fastqToBam 
+2018-01-09.16:09:00  1451  fetchChromSizes 
+2018-01-09.16:09:11  1452  filterBed
+2018-01-09.16:09:22  1453  filterORFs
+2018-01-09.16:09:52  1454  filterPairedFastqs 
+2018-01-09.16:10:54  1455  filterTagDir
+2018-01-09.16:11:28  1456  filterTags
+2018-01-09.16:11:40  1457  findBoundaries
+2018-01-09.16:11:50  1458  flux
+2018-01-09.16:12:22  1459  fpkmPCA
+2018-01-09.16:13:30  1460  GCSkew
+2018-01-09.16:13:51  1461  genePredToGtf 
+2018-01-09.16:14:04  1462  getAllOverlappingGenes
+2018-01-09.16:14:55  1463  getDiffMaps 
+2018-01-09.16:15:07  1464  getERCCcounts 
+2018-01-09.16:15:18  1465  getGenome
+2018-01-09.16:15:22  1466  more getGenome 
+2018-01-09.16:15:44  1467  getOrderedDiffExpression
+2018-01-09.16:16:34  1468  grabEnrichmentCategories 
+2018-01-09.16:16:56  1469  grabERCC
+2018-01-09.16:17:01  1470  more grabERCC
+2018-01-09.16:17:19  1471  vi grabERCC
+2018-01-09.16:17:21  1472  grabERCC
+2018-01-09.16:17:30  1473  more grabERCC.java
+2018-01-09.16:17:36  1474  more grabERCC.class
+2018-01-09.16:18:02  1475  javac *.java
+2018-01-09.16:18:10  1476  grabERCC
+2018-01-09.16:18:29  1477  grabFasta
+2018-01-09.16:18:41  1478  grabGTF 
+2018-01-09.16:18:49  1479  grabLines 
+2018-01-09.16:19:13  1480  grabSRAs 
+2018-01-09.16:19:26  1481  gtfFixer
+2018-01-09.16:19:30  1482  more gtfFixer
+2018-01-09.16:19:53  1483  more gtfFixer.java
+2018-01-09.16:20:30  1484  GTFsubtractor
+2018-01-09.16:20:45  1485  GTFVenn
+2018-01-09.16:20:55  1486  GTFvsGTF
+2018-01-09.16:21:07  1487  HiCChrImages 
+2018-01-09.16:21:17  1488  HiCEntropy
+2018-01-09.16:21:28  1489  HiCInteractions 
+2018-01-09.16:21:31  1490  more HiCInteractions 
+2018-01-09.16:21:48  1491  rm HiCInteractions 
+2018-01-09.16:21:57  1492  HiCMapCombiner
+2018-01-09.16:22:11  1493  HiCStructure
+2018-01-09.16:22:29  1494  ILMNto
+2018-01-09.16:27:47  1495  ILMNtoSymbol
+2018-01-09.16:28:18  1496  justsTAR
+2018-01-09.16:28:21  1497  justSTAR
+2018-01-09.16:28:43  1498  justSTAR-unmapped 
+2018-01-09.16:29:22  1499  vi justSTAR-unmapped 
+2018-01-09.16:29:34  1500  rm justSTAR-unmapped 
+2018-01-09.16:29:36  1501  ls
+2018-01-09.16:29:51  1502  keepBestPsl 
+2018-01-09.16:30:06  1503  keepUniqueUMIs
+2018-01-09.16:30:39  1504  list
+2018-01-09.16:30:45  1505  more list
+2018-01-09.16:31:49  1506  makeSTARgenome 
+2018-01-09.16:33:19  1507  MAPS
+2018-01-09.16:33:34  1508  mergeInteractions 
+2018-01-09.16:33:47  1509  picard
+2018-01-09.16:34:29  1510  plotDomains
+2018-01-09.16:34:41  1511  pos2start
+2018-01-09.16:34:46  1512  more pos2start
+2018-01-09.16:35:04  1513  vi pos2start
+2018-01-09.16:35:06  1514  pos2start
+2018-01-09.16:35:27  1515  predictORFs
+2018-01-09.16:35:31  1516  more predictORFS 
+2018-01-09.16:35:42  1517  predictORFs
+2018-01-09.16:35:45  1518  predictORFS 
+2018-01-09.16:36:03  1519  prepareForClustering 
+2018-01-09.16:36:31  1520  ProcessBiorad 
+2018-01-09.16:37:13  1521  processFindGO
+2018-01-09.16:37:47  1522  processMergedInteractions
+2018-01-09.16:37:53  1523  more processMergedInteractions
+2018-01-09.16:39:04  1524  vi processMergedInteractions
+2018-01-09.16:39:20  1525  processMergedInteractions
+2018-01-09.16:39:47  1526  ProjectEstimator
+2018-01-09.16:39:51  1527  more ProjectEstimator
+2018-01-09.16:40:11  1528  vi ProjectEstimator
+2018-01-09.16:40:13  1529  ProjectEstimator
+2018-01-09.16:40:29  1530  quantifyReadthrough
+2018-01-09.16:40:47  1531  vi quantifyReadthrough
+2018-01-09.16:40:51  1532  quantifyReadthrough
+2018-01-09.16:41:20  1533  readme
+2018-01-09.16:41:23  1534  more readme
+2018-01-09.16:41:35  1535  rm readme 
+2018-01-09.16:41:43  1536  readTrimmer 
+2018-01-09.16:42:01  1537  vi readTrimmer 
+2018-01-09.16:42:07  1538  readTrimmer 
+2018-01-09.16:42:23  1539  removePeakTags
+2018-01-09.16:42:40  1540  vi removePeakTags
+2018-01-09.16:42:44  1541  removePeakTags
+2018-01-09.16:42:59  1542  removeSubstring 
+2018-01-09.16:43:13  1543  renameFiles 
+2018-01-09.16:43:37  1544  more renameFiles 
+2018-01-09.16:43:51  1545  run2STAR 
+2018-01-09.16:44:09  1546  vi run2STAR
+2018-01-09.16:44:12  1547  rm run2STAR 
+2018-01-09.16:44:21  1548  vi runBedCoverageBias 
+2018-01-09.16:44:35  1548  vi runBedCoverageBias 
+2018-01-09.16:44:38  1549  runBedCoverageBias 
+2018-01-09.16:45:09  1550  runcuffdiff 
+2018-01-09.16:45:18  1551  runCufflinks 
+2018-01-09.16:45:27  1552  runEnrichment 
+2018-01-09.16:45:43  1553  runFindGO 
+2018-01-09.16:45:54  1554  runGeneCoverage 
+2018-01-09.16:46:10  1555  more runHiC 
+2018-01-09.16:46:32  1556  runHiC
+2018-01-09.16:47:10  1557  runLenientCufflinks 
+2018-01-09.16:47:23  1558  more RunRiboseq
+2018-01-09.16:47:27  1559  RunRiboseq
+2018-01-09.16:47:46  1560  RunRiboseqNoTrim 
+2018-01-09.16:47:56  1561  runSTAR-HIC 
+2018-01-09.16:48:39  1562  vi runSTAR-HIC 
+2018-01-09.16:48:58  1563  rm runSTAR-HIC 
+2018-01-09.16:49:04  1564  runSTARUMI 
+2018-01-09.16:49:11  1565  more runSTARUMI 
+2018-01-09.16:51:34  1566  ShortStackRenamer 
+2018-01-09.16:52:11  1567  vi ShortStackRenamer 
+2018-01-09.16:52:12  1568  :q
+2018-01-09.16:52:14  1569  SMART
+2018-01-09.16:52:55  1570  SNPcompare
+2018-01-09.16:53:04  1571  sra2fastq 
+2018-01-09.16:53:15  1572  stripExt 
+2018-01-09.16:53:20  1573  more stripExt 
+2018-01-09.16:54:19  1574  tablejoin
+2018-01-09.16:54:32  1575  join
+2018-01-09.16:54:47  1576  trimPolyA 
+2018-01-09.16:55:16  1577  typeSizes
+2018-01-09.16:55:20  1578  more typeSizes
+2018-01-09.16:55:37  1579  vi typeSizes
+2018-01-09.16:55:44  1580  typeSizes
+2018-01-09.16:56:03  1581  more typeSizes.java 
+2018-01-09.16:56:32  1582  ucscTorefseq 
+2018-01-09.16:56:41  1583  vi ucsc2refseq.
+2018-01-09.16:56:45  1584  vi ucsc2refseq
+2018-01-09.16:57:16  1585  vi ucscTorefseq 
+2018-01-09.16:57:22  1586  ucscTorefseq 
+2018-01-09.16:57:42  1587  unlockUser
+2018-01-09.16:58:57  1588  vi updateHome 
+2018-01-09.16:58:59  1589  rm updateHome 
+2018-01-09.16:59:38  1590  cd .
+2018-01-22.09:51:43  1005  cd scripts/
+2018-01-22.09:51:44  1006  ll
+2018-01-22.09:52:30  1007  pwd
+2018-02-13.15:37:08  1010  cd scripts/
+2018-02-13.15:37:10  1011  ll
+2018-02-13.15:37:27  1012  vi summarizeSTAR 
+2018-02-13.15:37:43  1013  vi runSTAR
+2018-02-13.15:37:51  1014  vi countSummary
+2018-02-13.15:38:22  1015  vi /dev/gpfs/tools/scripts/countSummary.R
+2018-02-20.10:44:15  1004  cd scripts/
+2018-02-20.10:44:16  1005  ll
+2018-02-20.10:44:46  1006  vi runSTAR
+2018-02-20.10:44:53  1007  vi countSummary
+2018-02-20.10:45:40  1008  cp /dev/gpfs/tools/scripts/countSummary.R /gpfs/analyses/galina/scripts
+2018-02-22.08:29:45   967  cd scripts/
+2018-02-22.08:29:46   968  ls
+2018-03-14.14:14:47  1018  cd scripts
+2018-03-14.14:14:51  1019  ll
+2018-03-14.14:14:55  1020  ls -l | bis
+2018-03-14.14:15:03  1021  ls -l | grep bis
+2018-03-14.14:16:27  1022  vi bisulfitePipe 
+2018-03-14.14:16:32  1023  bismark
+2018-04-10.09:55:41  1000  cd /gpfs/tools/scripts
+2018-04-10.09:56:18  1001  scp illumina@red.salk.edu:/home/illumina/startDemultiplexer.sh .
+2018-04-10.09:56:32  1002  vi startDemultiplexer.sh 
+2018-04-10.09:56:37  1003  ll startDemultiplexer.sh 
+2018-04-10.09:57:45  1004  sudo chgrp ngscore startDemultiplexer.sh 
+2018-04-10.09:57:53  1005  ll startDemultiplexer.sh 
+2018-04-10.10:00:03  1006  sudo su illumina
+2018-04-17.09:37:38  1014  cd scripts
+2018-04-17.09:37:39  1015  ll
+2018-05-08.16:23:42  1007  cd /gpfs/tools/scripts
+2018-05-08.16:23:43  1008  ls
+2018-05-08.16:29:50  1009  more getDiffR.R
+2018-05-15.11:22:26  1128  cd /gpfs/tools/scripts
+2018-05-15.11:22:27  1129  ls
+2018-05-15.11:22:34  1130  ls *ATAC*
+2018-05-15.11:23:34  1131  more ChIPSTAR 
+2018-05-15.11:35:59  1132  makeBigWig
+2018-05-15.11:38:22  1133  vi $(which makeBigWig)
+2018-05-15.11:38:36  1133  vi $(which makeBigWig)
+2018-05-15.11:42:05  1133  vi $(which makeBigWig)
+2018-05-15.12:10:21  1133  vi $(which makeBigWig)
+2018-05-15.12:10:22  1134  ls
+2018-05-15.12:11:24  1134  ls
+2018-05-15.12:13:17  1135  vi $(which makeBigWig)
+2018-05-15.12:13:46  1135  vi $(which makeBigWig)
+2018-05-15.12:17:13  1135  vi $(which makeBigWig)
+2018-05-15.12:21:01  1135  vi $(which makeBigWig)
+2018-05-15.16:11:12  1015  cd /gpfs/tools/scripts/
+2018-05-15.16:11:14  1016  ls
+2018-05-15.16:16:43  1017  vi makeBigWig 
+2018-05-21.14:55:31  1029  cd scripts
+2018-05-21.14:55:32  1030  ll
+2018-05-21.16:09:19  1371  cd /gpfs/tools/scripts
+2018-05-21.16:09:20  1372  ls
+2018-05-21.16:09:34  1373  cp fastqBlast fastqBlast2
+2018-05-21.16:10:09  1374  sudo cp fastqBlast fastqBlast2 
+2018-05-21.16:10:14  1375  vi fastqBlast2
+2018-05-21.16:10:20  1376  chmod 777 fastqBlast2
+2018-05-21.16:10:26  1377  sudo chmod 775 fastqBlast2
+2018-05-21.16:10:31  1378  vi fastqBlast2
+2018-05-21.16:11:58  1379  sudo vi fastqBlast2
+2018-05-22.13:00:24  1030  ll
+2018-07-10.17:10:52  1147  cd /gpfs/tools/scripts
+2018-07-10.17:10:53  1148  ls -trlhs
+2018-07-10.17:11:03  1149  ls Enrichment
+2018-07-10.17:11:43  1150  cp rlog enrichment
+2018-07-10.17:11:55  1151  vi enrichment
+2018-07-10.17:12:03  1152  enrichment
+2018-07-10.17:12:57  1152  enrichment
+2018-07-10.17:15:00  1152  enrichment
+2018-07-10.17:15:54  1152  enrichment
+2018-07-10.17:16:09  1152  enrichment
+2018-07-10.17:16:11  1152  enrichment
+2018-07-10.17:17:12  1152  enrichment
+2018-07-10.17:28:42  1153  ls
+2018-07-13.14:21:22  1009  cd scripts
+2018-07-13.14:21:25  1010  ll
+2018-07-13.14:21:39  1011  getDiffR.R
+2018-07-13.14:22:10  1012  Rscript getDiffR.R
+2018-07-16.10:38:18  1013  vi getDiffR.R
+2018-08-27.15:09:22  1005  cd scripts
+2018-08-27.15:09:24  1006  ll
+2018-08-27.15:10:42  1007  vi startDemultiplexer.sh
+2018-08-27.15:26:48  1007  vi startDemultiplexer.sh
+2018-09-11.09:51:05  2029  cd scripts
+2018-09-11.09:51:06  2030  ls
+2018-09-11.09:51:55  2031  javac *.java
+2018-09-11.09:52:52  2032  javac GTF2FastaMito.java SuperScanner.java
+2018-09-11.09:53:02  2033  javac -cp GTF2FastaMito
+2018-09-11.09:53:09  2034  java -cp GTF2FastaMito
+2018-09-11.09:53:13  2035  java -cp . GTF2FastaMito
+2018-09-11.09:53:33  2036  cp GTFtoFasta GTFtoFastaMito
+2018-09-11.09:53:48  2037  vi GTFtoFastaMito 
+2018-09-13.12:14:17  2074  cd tools/scripts
+2018-09-13.12:14:17  2075  ls
+2018-09-13.12:14:41  2076  vi GATK 
+2018-09-13.12:16:46  2077  ls
+2018-09-13.12:20:18  2089  cd tools/scripts
+2018-09-13.12:20:59  2090  vi GATK 
+2018-09-13.12:21:01  2091  GATK
+2018-09-13.12:21:20  2092  vi GATK 
+2018-09-13.12:21:23  2092  vi GATK 
+2018-09-13.12:21:33  2093  GATK
+2018-09-18.14:53:25  1005  cd scripts
+2018-09-19.10:16:12  1006  vi wgcna.R 
+2018-09-25.09:34:52   998  cd /gpfs/tools/scripts
+2018-09-25.09:34:53   999  ls
+2018-09-25.09:35:01  1000  ls -trlhs
+2018-09-25.09:35:11  1001  chmod +x gtfToGenePred 
+2018-09-25.09:35:14  1002  ./gtfToGenePred 
+2018-09-25.09:35:23  1003  rm gtfToGenePred 
+2018-09-25.11:36:47  1004  blastp
+2018-09-25.11:36:52  1005  blastp --help
+2018-09-25.11:36:57  1006  blastp -help
+2018-10-11.10:53:17  1544  cd /gpfs/tools/scripts
+2018-10-11.10:53:57  1545  vi Venn
+2018-10-11.10:54:01  1546  chmod +x Venn
+2018-10-11.10:54:05  1547  Venn
+2018-10-11.10:56:52  1547  Venn
+2018-10-11.10:57:36  1547  Venn
+2018-10-11.10:57:54  1547  Venn
+2018-11-04.12:28:01  1049  cd /gpfs/tools/scripts
+2018-11-04.12:28:06  1050  wget https://gist.github.com/informationsea/439d4fc53ea2b17cfb05#file-refflat2bed-py
+2018-11-04.12:28:09  1051  ls -trlhs
+2018-11-04.12:28:11  1051  ls -trlhs
+2018-11-04.12:28:15  1052  more 439d4fc53ea2b17cfb05 
+2018-11-04.12:28:15  1053  ls
+2018-11-04.12:28:17  1054  rm 439d4fc53ea2b17cfb05 
+2018-11-04.12:28:45  1055  vi refFlat2bed.py
+2018-11-04.12:28:53  1056  chmod +x refFlat2bed.py 
+2018-11-04.12:29:03  1057  python refFlat2bed.py 
+2018-11-08.16:39:13  1141  cd /gpfs/tools/scripts
+2018-11-08.16:39:25  1142  javac *.java
+2018-11-08.16:39:34  1143  ls -trlhs
+2018-11-08.16:40:18  1144  cp MAPS quantifyAllExons
+2018-11-08.16:42:21  1145  vi quantifyAllExons
+2018-11-08.16:42:25  1146  quantifyAllExons 
+2018-11-08.17:10:17  1147  javac *.java
+2018-11-08.17:10:58  1147  javac *.java
+2018-11-08.17:14:22  1147  javac *.java
+2018-11-09.11:08:29  1148  more /gpfs/analyses/maxsh/Karlseder/Damian/Combined/
+2018-11-09.11:08:35  1149  mdu -hgpfs/analyses/maxsh/Karlseder/Damian/Combined/
+2018-11-09.11:08:40  1150  mdu -h gpfs/analyses/maxsh/Karlseder/Damian/Combined/
+2018-11-09.11:08:45  1151  du -h gpfs/analyses/maxsh/Karlseder/Damian/Combined/
+2018-11-09.11:08:59  1152  du -h /gpfs/analyses/maxsh/Karlseder/Damian/Combined/
+2018-11-09.16:39:26  1227  cd /gpfs/tools/scripts
+2018-11-09.16:39:32  1228  javac *.java
+2018-11-09.16:41:35  1228  javac *.java
+2018-11-09.16:43:40  1228  javac *.java
+2018-11-12.10:31:23  1228  javac *.java
+2018-11-12.11:46:12  1228  javac *.java
+2018-11-15.15:03:21  1001  cd /gpfs/tools/scripts
+2018-11-15.15:03:26  1002  javac *.java
+2018-12-04.14:11:33  1008  cd scripts
+2018-12-04.14:11:34  1009  ll
+2018-12-04.14:11:43  1010  ls -l | grep motif
+2018-12-21.11:04:43  1001  cd scripts
+2018-12-21.11:04:48  1002  ls -l | grep create
+2018-12-21.11:04:50  1003  pwd
+2019-01-07.15:52:13  1011  cd scripts
+2019-01-07.15:52:15  1012  ll
+2019-01-07.15:52:24  1013  ls -l | grep blast
+2019-01-07.15:54:57  1013  ls -l | grep blast
+2019-01-07.15:56:57  1014  ls -l | grep Blast
+2019-01-07.15:57:03  1015  fastqBlast
+2019-01-16.15:07:51  1175  cd /gpfs/tools/scripts
+2019-01-16.15:08:12  1176  curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o dropbox_uploader.sh
+2019-01-16.15:08:12  1177  Then give the execution permission to the script and run it:
+2019-01-16.15:08:12  1177  Then give the execution permission to the script and run it:
+2019-01-16.15:08:25  1178  chmod _x dropbox_uploader.sh 
+2019-01-16.15:08:31  1179  chmod +x dropbox_uploader.sh 
+2019-01-16.15:13:55  1180  ./dropbox_uploader.sh 
+2019-01-21.12:42:16  1030  cd /gpfs/tools/scripts
+2019-01-21.12:42:17  1031  ls
+2019-02-08.09:45:05    27  cd /gpfs/tools/scripts/
+2019-02-08.09:45:07    28  ls
+2019-03-11.15:05:24  1025  cd /gpfs/tools/scripts
+2019-03-11.15:06:20  1026  javac ribORFCorrector.java
+2019-03-11.15:06:25  1027  ll
+2019-03-11.15:06:41  1028  cp tablejoin ribORFCorrector
+2019-03-11.15:07:04  1029  vi ribORFCorrector
+2019-03-11.15:07:13  1030  ribORFCorrector 
+2019-03-13.11:55:38  1127  cd /gpfs/tools/scripts/
+2019-03-13.11:55:39  1128  ls
+2019-03-13.11:55:48  1129  *jar
+2019-03-13.11:55:50  1130  ls *.jar
+2019-03-14.16:28:49  1175  cd /gpfs/tools/scripts
+2019-03-14.16:28:49  1176  ls
+2019-03-14.16:29:53  1177  javac MAPS.java SuperScanner.java Transcript.java SNP.java Filterable.java Exon.java ArgParser.java
+2019-03-14.16:30:07  1178  javac *.java
+2019-03-14.16:30:17  1179  MAPS
+2019-03-15.13:37:50  1180  runCufflinks
+2019-03-15.15:33:55  1012  cd /gpfs/tools/scripts
+2019-03-15.15:34:35  1013  vi ribORFCorrector.java 
+2019-03-15.15:34:49  1014  javac ribORFCorrector.java
+2019-03-18.10:46:30  1181  java -version
+2019-03-25.10:29:48  1777  cd /gpfs/tools/scripts
+2019-03-25.10:29:49  1778  ll 
+2019-03-25.10:47:20  1779  less bisulfitePipe 
+2019-03-25.10:47:22  1780  bismark_methylation_extractor
+2019-03-25.10:47:29  1781  bismark_methylation_extractor --help
+2019-03-25.16:30:41  1782  less /home/april/april/SHAW/eleanor/190318_eleanor/trimmed/*.txt
+2019-03-25.16:30:46  1783  ll /home/april/april/SHAW/eleanor/190318_eleanor/trimmed/*.txt
+2019-03-27.10:43:21  1784  less /home/april/april/SHAW/eleanor/190318_eleanor/trimmed/*.txt
+2019-03-27.10:43:23  1785  ll 
+2019-03-29.13:03:44  1009  cd scripts
+2019-03-29.13:03:45  1010  ll
+2019-03-29.13:13:18  1011  CD ..
+2019-04-30.19:54:35  1006  cd scripts
+2019-04-30.19:54:36  1007  ls
+2019-04-30.19:55:10  1008  nano .bashScript 
+2019-04-30.19:55:10  1008  nano .bashScript 
+2019-04-30.19:55:40  1009  mv .bashScript .bashScript_backup
+2019-04-30.19:55:55  1010  cp ../.bashTools .bashScript
+2019-04-30.19:56:00  1011  more .bashScript
+2019-04-30.19:56:41  1012  ll
+2019-08-02.13:07:13   244  cd scripts
+2019-08-02.13:07:15   245  ls
+2019-08-02.13:07:33   248  cd ..
+2019-08-02.13:07:56   249  less Enrichment.R 
+2019-08-22.12:38:06  1052  cd scripts
+2019-08-22.12:38:07  1053  ls
+2019-08-22.14:09:34  1054  vi grabFastq
+2019-08-22.14:09:40  1055  chmod +x grabFast
+2019-08-22.14:09:42  1056  chmod +x grabFastq
+2019-08-22.14:11:19  1057  vi grabFastq
+2019-08-22.14:12:12  1057  vi grabFastq
+2019-08-22.14:13:12  1057  vi grabFastq
+2019-08-22.14:13:42  1057  vi grabFastq
+2019-08-22.14:14:43  1057  vi grabFastq
+2019-08-22.14:14:47  1058  wc -c SRR039194
+2019-08-22.14:14:54  1059  echo SRR039194 | SRR039194
+2019-08-22.14:14:58  1060  echo SRR039194 | wc -
+2019-08-22.14:15:01  1061  echo SRR039194 | wc -c
+2019-08-22.14:15:09  1062  manwc
+2019-08-22.14:15:21  1063  man wc
+2019-08-22.14:15:23  1064  echo SRR039194 | wc -m
+2019-08-22.14:27:29  1065  ls
+2019-08-22.14:28:14  1066  man wc
+2019-08-22.14:49:07  1067  vi grabFastq
+2019-08-22.15:10:33  1067  vi grabFastq
+2019-08-22.15:13:09  1067  vi grabFastq
+2019-08-22.15:14:16  1067  vi grabFastq
+2019-08-22.15:14:32  1067  vi grabFastq
+2019-10-03.16:36:23  1035  cd scripts
+2019-10-03.16:37:09  1036  vi runFlair
+2019-10-03.16:37:18  1037  chmod +x runFlair 
+2019-10-17.11:38:20  1053  cd /gpfs/tools/scripts
+2019-10-17.11:38:21  1054  ls
+2019-10-17.11:38:23  1055  ls -trlhs
+2019-10-17.11:41:20  1056  q
+2019-10-17.11:41:20  1057  :q
+2019-10-17.11:41:27  1058  getAllOverlappingGenes
+2019-10-17.11:41:44  1059  vi getAllOverlappingGenes
+2019-10-17.11:41:47  1060  getAllOverlappingGenes
+2019-11-05.14:33:34  1068  cd scripts
+2019-11-05.14:33:35  1069  ls
+2019-11-05.14:34:46  1070  less samto
+2019-11-05.14:35:45  1071  less samToSortedIndexedBam
+2019-11-05.14:42:43  1071  less samToSortedIndexedBam
+2019-11-05.14:42:44  1071  less samToSortedIndexedBam
+2019-11-05.14:42:44  1071  less samToSortedIndexedBam
+2019-11-05.14:46:22  1072  less samToSortedBam
+2019-11-05.14:50:20  1072  less samToSortedBam
+2019-11-12.17:08:12  1047  cd /gpfs/tools/scripts
+2019-11-12.17:11:03  1048  cat MSeq087scripts/pp8nt*.sh > runMAPSeq.sh 
+2019-11-16.16:53:20  1049  vi runMAPSeq.sh 
+2019-11-17.14:29:24  1050  vi $(which RunRiboSeq)
+2019-11-20.11:43:02  1463  cd /gpfs/tools/scripts
+2019-11-20.11:43:12  1464  javac nmerGenerator.java 
+2019-11-20.11:45:42  1465  mkdir /gpfs/analyses/maxsh/Callaway ; java nmerGenerator 11 > /gpfs/analyses/maxsh/Callaway/11mers.fa
+2019-11-22.15:04:34  1325  cd scripts
+2019-11-22.15:04:35  1326  ls
+2019-11-22.15:04:36  1327  ls -trlhs
+2019-11-22.15:05:57  1328  javac ProjectEstimatorTime.java 
+2019-11-22.15:06:02  1329  java ProjectEstimatorTime
+2019-11-22.15:06:07  1330  java ProjectEstimatorTime .
+2019-11-22.15:09:49  1331  javac ProjectEstimatorTime.java 
+2019-11-22.15:09:51  1332  java ProjectEstimatorTime .
+2019-11-22.15:10:40  1333  java ProjectEstimatorTime /gpfs/analyses/maxsh/Almaden/
+2019-11-22.15:24:55  1334  ls
+2019-11-22.16:26:40  1004  cd /gpfs/tools/scripts
+2019-11-22.16:26:48  1005  javac ProjectEstimatorTime.java
+2019-11-22.16:27:09  1006  cp ProjectEstimator ProjectEstimatorTime
+2019-11-22.16:27:39  1007  vi ProjectEstimatorTime
+2019-11-26.17:30:02  1080  cd /gpfs/tools/scripts
+2019-11-26.17:30:09  1081  javac *.java
+2019-11-26.17:30:59  1082  rm saveUMI.java
+2019-11-26.17:31:03  1083  ls
+2019-11-26.17:31:14  1084  mv saveUMI extractUMI
+2019-11-26.17:31:29  1085  vi extractUMI
+2019-12-09.13:31:07  1086  cd tools/scripts/
+2019-12-09.13:31:07  1087  ls
+2019-12-09.13:31:23  1088  javac ParseZymeReads.java SuperScanner.java
+2019-12-09.13:31:33  1089  cp readTrimmer ParseZymeReads
+2019-12-09.13:32:00  1090  vi ParseZymeReads
+2019-12-09.13:32:07  1091  ParseZymeReads 
+2019-12-09.17:52:30  1092  javac ParseZymeReads.java SuperScanner.java
+2019-12-10.15:53:33  1092  javac ParseZymeReads.java SuperScanner.java
+2019-12-10.15:58:18  1403  cd /gpfs/tools/scripts/
+2019-12-10.15:58:18  1404  ls
+2019-12-10.15:58:23  1405  ls t-rlhs
+2019-12-10.15:58:24  1406  ls -trlhs
+2019-12-10.16:00:45  1407  vi runPBisoforms 
+2019-12-10.16:02:18  1092  javac ParseZymeReads.java SuperScanner.java
+2019-12-10.16:21:31  1092  javac ParseZymeReads.java SuperScanner.java
+2019-12-16.17:45:47  1363  cd scripts/
+2019-12-16.17:45:59  1364  javac fastqDictionary.java SuperScanner.java
+2019-12-16.17:46:36  1365  cp fastqSplitter fastqDictionary
+2019-12-16.17:46:53  1366  vi fastqDictionary
+2019-12-16.17:50:27  1367  javac fastqDictionary.java SuperScanner.java
+2019-12-19.19:15:53  1014  cd scripts/
+2019-12-19.19:15:54  1015  ls
+2019-12-19.19:16:03  1016  du -hs
+2019-12-19.19:16:17  1020  cd scripts/
+2019-12-19.19:16:18  1021  pwd
+2019-12-19.19:16:59  1022  ls
+2019-12-19.19:17:22  1023  more process10x.R
+2019-12-19.19:18:21  1024  ls
+2019-12-19.19:18:32  1025  cp process10x.R /versity/igc/
+2019-12-19.19:18:38  1026  sudo cp process10x.R /versity/igc/
+2019-12-19.22:33:01  1027  ls -alh /sanger/nfs_data/gpfs_analyses_backup/
+2019-12-20.20:31:16  1011  cd /gpfs/tools/scripts/
+2019-12-20.20:31:17  1012  ls
+2019-12-20.20:33:00  1013  ls -alh /versity/igc/
+2019-12-20.20:34:41  1017  cd scripts/
+2019-12-20.20:34:42  1018  ls
+2019-12-20.20:36:38  1023  cd scripts/
+2019-12-20.20:36:39  1024  ls
+2019-12-20.20:37:17  1025  cp process10x.R /versity/igc/
+2019-12-20.20:37:40  1026  sudo cp process10x.R /versity/igc/
+2020-01-15.18:06:46  1377  cd /gpfs/tools/scripts/
+2020-01-15.18:06:46  1378  ls
+2020-01-15.18:06:54  1379  backupToOracleCloud 
+2020-05-04.14:47:41  1003  cd /gpfs/tools/scripts/
+2020-05-04.14:47:42  1004  ls
+2020-05-04.14:52:45  1005  vi JasparToHomer.java
+2020-05-04.14:52:53  1006  javac JasparToHomer.java 
+2020-05-04.14:53:07  1007  cp MAPS JasparToHomer
+2020-05-04.14:53:41  1008  vi JasparToHomer
+2020-05-07.14:53:31  1134  cd scripts
+2020-05-07.14:54:10  1135  vi runATAC 
+2020-05-07.15:12:30  1136  htseq-count
+2020-05-07.15:12:58  1137  conda deactivate
+2020-05-07.15:13:16  1138  htseq-count
+2020-05-07.15:13:47  1139  htseq-count -h
+2020-05-08.10:26:43  1140  vi runATAC 
+2020-05-08.10:49:28  1140  vi runATAC 
+2020-05-08.10:59:28  1141  vi runATAC
+2020-05-08.10:59:30  1142  pwd
+2020-05-08.10:59:56  1143  ls
+2020-05-08.10:59:58  1144  ll
+2020-05-08.11:00:13  1145  ls
+2020-05-09.16:01:17  1146  which R
+2020-05-09.16:12:20  1147  sudo R
+2020-05-09.16:13:27  1147  sudo R
+2020-05-11.15:00:23  1148  vi runATAC
+2020-05-11.15:00:36  1149  cp /gpfs/analyses/yi/code/fragLength.R .
+2020-05-11.15:00:43  1150  more fragLength.R 
+2020-05-11.15:02:32  1151  vi fragLength.R 
+2020-05-11.15:07:24  1152  vi runATAC
+2020-05-11.15:07:32  1153  runATAC
+2020-05-11.15:07:51  1154  pwd
+2020-05-11.15:08:04  1155  vi runATAC
+2020-05-11.15:08:13  1156  vi /gpfs/tools/scripts/runATAC
+2020-05-11.15:08:18  1157  vi /fs/tools/scripts/runATAC
+2020-05-11.15:08:25  1158  /gpfs/tools/scripts/runATAC
+2020-05-11.15:08:35  1159  ls /gpfs/tools/scripts/runATAC
+2020-05-11.15:08:41  1160  ls -l /gpfs/tools/scripts/runATAC
+2020-05-11.15:08:53  1161  ./gpfs/tools/scripts/runATAC
+2020-05-11.15:09:05  1162  which runATAC
+2020-05-11.15:09:13  1163  vi runATAC 
+2020-05-11.15:09:22  1164  sh runATAC
+2020-05-11.15:10:13  1165  vi runATAC 
+2020-05-11.15:10:26  1166  bash runATAC
+2020-05-11.15:10:44  1167  vi runATAC 
+2020-05-11.15:10:45  1168  bash runATAC
+2020-05-11.15:11:21  1169  vi runATAC 
+2020-05-11.15:11:24  1170  ls /gpfs/genomes/*.bwa
+2020-05-11.15:11:30  1171  ls -1 /gpfs/genomes/*.bwa
+2020-05-11.15:11:34  1172  ls -1d /gpfs/genomes/*.bwa
+2020-05-11.15:11:48  1173  vi runATAC 
+2020-05-11.15:11:51  1174  bash runATAC
+2020-05-11.15:15:13  1175  vi runATAC 
+2020-05-11.15:15:14  1176  ls
+2020-05-11.15:15:20  1177  bash runATAC
+2020-05-13.18:01:14  1011  cd scripts/
+2020-05-13.18:01:14  1012  ls
+2020-05-13.18:02:38  1013  ./runATAC
+2020-05-13.18:02:40  1014  ll
+2020-05-13.18:02:41  1015  ls -trlhs
+2020-05-13.18:02:51  1016  chmod -x runATAC 
+2020-05-13.18:02:57  1017  ./runATAC
+2020-05-13.18:03:12  1018  chmod -R runATAC 
+2020-05-13.18:03:12  1018  chmod -R runATAC 
+2020-05-13.18:03:16  1019  chmod 775 runATAC 
+2020-05-13.18:03:20  1020  runATAC
+2020-05-13.18:03:27  1021  which runATAC
+2020-05-13.18:04:17  1022  runATAC
+2020-05-13.18:05:22  1022  runATAC
+2020-06-14.20:12:34  1110  cd scripts/
+2020-06-14.20:12:35  1111  ls
+2020-06-14.20:12:55  1112  less processFindGO
+2020-06-14.20:13:07  1113  ls processFindGO
+2020-06-14.20:13:18  1114  nano processFindGO
+2020-06-14.20:13:58  1115  ls processFindGO.class 
+2020-06-14.20:14:09  1116  nano processFindGO.class 
+2020-06-14.20:14:54  1116  nano processFindGO.class 
+2020-06-14.20:14:54  1116  nano processFindGO.class 
+2020-06-14.20:16:21  1117  less processFindGO.java 
+2020-07-02.22:38:25   740  cd /gpfs/tools/scripts/
+2020-07-02.22:39:00   741  vi synchBigWigs
+2020-07-02.22:39:08   742  chmod +x synchBigWigs 
+2020-07-02.22:39:13   743  synchBigWigs 
+2020-07-02.22:39:28   744  now
+2020-07-02.22:39:48   745  date
+2020-07-02.22:40:17   746  vi synchBigWigs 
+2020-07-02.22:40:21   747  which date
+2020-07-02.22:40:44   748  vi synchBigWigs 
+2020-07-02.22:41:22   749  sudo crontab -e
+2020-07-02.22:41:31   750  mv synchBigWigs syncBigWigs
+2020-07-20.21:15:48   999  cd /gpfs/tools/scripts
+2020-07-20.21:15:50  1000  ls
+2020-07-20.21:34:19  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:19  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:20  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:21  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:21  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:21  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:21  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:21  1001  more startDemultiplexer.sh 
+2020-07-20.21:34:44  1002  cat startDemultiplexer.sh | wc -l
+2020-07-21.21:46:51   998  cd /gpfs/tools/scripts
+2020-07-21.21:46:58   999  more startDemultiplexer.sh 
+2020-07-21.21:47:31  1000  view startDemultiplexer.sh 
+2020-07-21.22:41:10  1001  vim -r startDemultiplexer.sh 
+2020-07-21.22:41:31  1001  vim -r startDemultiplexer.sh 
+2020-07-22.18:59:54  1003  cd /gpfs/tools/scripts/
+2020-07-22.18:59:55  1004  ls
+2020-07-29.08:54:41   997  cd /gpfs/tools/scripts/
+2020-09-03.10:38:58  1170  cd /gpfs/tools/scripts/
+2020-09-03.10:39:35  1171  mv StartDemultiplexer_v2.sh startDemultiplexer_v2.txt
+2020-09-03.10:41:19  1172  vi startDemultiplexer_v2.txt 
+2020-09-03.10:41:25  1173  ll startDemultiplexer_v2.txt 
+2020-09-03.10:41:35  1174  chmod +x startDemultiplexer_v2.txt 
+2020-09-03.10:41:46  1175  ll
+2020-09-03.10:42:24  1176  mv startDemultiplexer_v2.txt startDemultiplexer_v2.sh
+2020-09-03.10:48:49  1177  more /gpfs/tools/.bashTools
+2020-09-03.13:55:30  1178  /gpfs/tools/R/R-3.6.1/bin/R
+2020-09-07.22:40:19  1001  cd /gpfs/tools/scripts
+2020-09-07.22:40:21  1002  ls
+2020-09-07.22:43:15  1002  ls
+2020-09-07.22:43:49  1003  ls -i .java
+2020-09-07.22:44:13  1004  ls -I ".java"
+2020-09-07.22:44:31  1005  ls -I "*.java"
+2020-09-07.22:44:35  1006  ls -I "*.java" | wc -l
+2020-09-07.22:44:56  1007  ls -I "*.java" -I ".class" | wc -l
+2020-09-07.22:45:08  1008  ls -I "*.java" -I "*.class" | wc -l
+2020-09-07.22:45:22  1009  ls -I "*.java" -I "*.class" 
+2020-09-07.22:45:59  1010  ls -I "*.java" -I "*.class" "*.sh"
+2020-09-07.22:46:13  1011  ls -I "*.java" -I "*.class" | ls  "*.sh"
+2020-09-07.22:46:19  1012  ls -I "*.java" -I "*.class" | ls "*.sh"
+2020-09-07.22:46:26  1013  ls "*.sh"
+2020-09-07.22:46:36  1014  ls *.sh
+2020-09-09.15:49:44  1003  cd /gpfs/tools/scripts
+2020-09-09.15:49:46  1004  ls
+2020-09-09.15:50:13  1005  ls -I "*.java" -I "*.class"
+2020-09-09.15:50:20  1006  ls -I "*.java" -I "*.class" | wc -l
+2020-09-09.15:55:08  1007  [-i
+2020-09-09.15:55:15  1008  more [-i
+2020-09-09.15:55:23  1009  more [\-i
+2020-09-09.15:55:34  1010  more \[-i
+2020-09-09.15:55:36  1011  more \[\-i
+2020-09-09.15:55:51  1012  more wgcna.R
+2020-09-09.15:55:52  1012  more wgcna.R
+2020-09-09.15:56:04  1013  wgcna.R
+2020-09-09.15:56:10  1014  ls
+2020-09-09.15:56:16  1015  getDiffR
+2020-09-09.15:56:17  1015  getDiffR
+2020-09-09.15:56:17  1015  getDiffR
+2020-09-09.15:56:17  1015  getDiffR
+2020-09-09.15:56:17  1015  getDiffR
+2020-09-09.15:56:17  1015  getDiffR
+2020-09-09.15:56:53  1016  a.r
+2020-09-09.15:57:00  1017  more a.r
+2020-09-09.15:57:13  1018  more getInsertSizes
+2020-09-09.15:58:26  1019  ls -I "*.java" -I "*.class" | wc -l
+2020-09-09.15:58:29  1020  ls -I "*.java" -I "*.class" 
+2020-09-09.16:59:00  1001  cd /gpfs/tools/scripts
+2020-09-09.16:59:05  1002  addColumns
+2020-09-09.16:59:50  1003  more addColumns
+2020-09-09.17:00:24  1004  ls 
+2020-09-09.17:00:28  1005  ls 0alh
+2020-09-09.17:00:30  1006  ls -alh
+2020-09-09.17:01:49  1007  more addColumns.java
+2020-09-09.17:01:49  1007  more addColumns.java
+2020-09-09.17:01:49  1007  more addColumns.java
+2020-09-09.17:01:49  1007  more addColumns.java
+2020-09-09.17:01:49  1007  more addColumns.java
+2020-09-09.17:57:22  1001  cd /gpfs/tools/scripts/
+2020-09-09.17:57:23  1002  ls
+2020-09-09.17:57:42  1003  analyzeDamID
+2020-09-09.17:58:03  1004  ls analyzeDamID
+2020-09-09.17:58:07  1005  ls -alh analyzeDamID
+2020-09-09.17:58:48  1006  bashProfileHeader
+2020-09-09.17:58:55  1007  more bashProfileHeader
+2020-09-09.17:59:07  1008  ls -alh bashProfileHeader
+2020-09-09.17:59:24  1009  ls -alh analyzeDifferentialPeaks
+2020-09-09.17:59:41  1010  ls -alh analyzePeaks
+2020-09-09.17:59:56  1011  ls -alh backupbashprofile
+2020-09-09.18:00:10  1012  ls -alh backupDir
+2020-09-09.18:00:48  1013  ls -alh backupToOracleCloud
+2020-09-09.18:01:08  1014  ls -alh bamTobai
+2020-09-09.18:01:38  1015  ls -I "*.java'
+2020-09-09.18:01:41  1016  ls -I "*.java"
+2020-09-09.18:01:56  1017  ls -I "*.java" -I "*.class"
+2020-09-09.18:02:03  1018  ls -I "*.java" -I "*.class" -alh
+2020-09-09.18:09:29  1019  ls -I "*.java" -I "*.class" -al 
+2020-09-09.18:09:34  1020  ls -I "*.java" -I "*.class" -l 
+2020-09-09.18:35:50  1021  checkStrand 
+2020-09-09.18:35:56  1022  more checkStrand
+2020-09-09.18:36:41  1023  clusterGO
+2020-09-09.18:36:47  1024  more clusterGO
+2020-09-09.18:36:51  1025  more clusterGO.R
+2020-09-09.18:37:46  1026  clusterGO
+2020-09-09.18:38:40  1027  common
+2020-09-09.18:38:55  1028  more common
+2020-09-09.18:39:13  1029  common one onetwo
+2020-09-09.18:39:33  1030  commonSubstring
+2020-09-09.18:39:44  1031  countSummary
+2020-09-09.18:39:53  1032  more countSummary
+2020-09-09.18:39:57  1033  more countSummary.R
+2020-09-09.18:40:48  1034  countTagsInRegions
+2020-09-09.18:41:27  1035  diffExpression
+2020-09-09.18:42:13  1036  fastqscreen
+2020-09-09.18:42:18  1037  fastqScreen
+2020-09-09.18:42:35  1038  faToTwoBit
+2020-09-09.18:43:02  1039  filterTags
+2020-09-09.18:43:18  1040  more filterTags
+2020-09-09.18:43:24  1041  more FilterTags
+2020-09-09.18:43:59  1042  ls Filter*
+2020-09-09.18:44:08  1043  more FilterTags.java
+2020-09-09.18:44:27  1044  findBoundaries
+2020-09-09.18:44:33  1045  more findBoundaries
+2020-09-09.18:45:39  1046  more findBoundaries.java
+2020-09-09.18:45:42  1047  flux
+2020-09-09.18:45:48  1048  more flux
+2020-09-09.18:45:57  1049  flux-simulator
+2020-09-09.18:46:42  1050  flux-simulator -j
+2020-09-09.18:46:46  1051  flux-simulator -h
+2020-09-09.18:47:31  1052  fpkmCluster
+2020-09-09.18:47:43  1053  more fpkmCluster.R
+2020-09-09.18:47:45  1054  more fpkmCluster
+2020-09-09.18:48:17  1055  more FPKMtoCluster.R
+2020-09-09.18:48:17  1055  more FPKMtoCluster.R
+2020-09-09.18:48:18  1055  more FPKMtoCluster.R
+2020-09-09.18:48:18  1055  more FPKMtoCluster.R
+2020-09-09.18:48:35  1055  more FPKMtoCluster.R
+2020-09-09.18:48:36  1055  more FPKMtoCluster.R
+2020-09-09.18:48:59  1056  more fpkmPCA
+2020-09-09.18:49:24  1057  more pcaFPKM.R
+2020-09-09.18:49:24  1057  more pcaFPKM.R
+2020-09-09.18:49:26  1058  GATK
+2020-09-09.18:49:55  1059  gbk2gtf
+2020-09-09.18:50:30  1060  getERCCcounts
+2020-09-09.18:50:33  1061  more getERCCcounts
+2020-09-09.18:50:45  1062  getGenome
+2020-09-09.18:50:46  1062  getGenome
+2020-09-09.18:50:46  1062  getGenome
+2020-09-09.18:50:46  1062  getGenome
+2020-09-09.18:50:55  1063  more getGenome
+2020-09-09.18:52:04  1064  gff2gtf
+2020-09-09.18:52:19  1065  grabEnrichmentCategories
+2020-09-09.18:52:24  1066  more grabEnrichmentCategories
+2020-09-09.18:52:46  1067  grabERCC
+2020-09-09.18:52:56  1068  more grabERCC.java
+2020-09-09.18:53:03  1069  more grabERCC
+2020-09-09.18:53:16  1070  ls grabERCC
+2020-09-09.18:53:33  1071  grabFasta
+2020-09-09.18:53:40  1072  more grabFasta
+2020-09-09.18:53:44  1073  more grabFasta.java
+2020-09-09.18:55:24  1074  grabGTF
+2020-09-09.18:55:28  1075  more grabGTF
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:38  1076  more GrabGTF.java
+2020-09-09.18:55:57  1077  grabSRAs
+2020-09-09.18:56:01  1078  more grabSRAs
+2020-09-09.18:56:39  1079  gtfFixer
+2020-09-09.18:56:44  1080  more gtfFixer
+2020-09-09.18:57:02  1081  more gtfFixer.java
+2020-09-09.18:57:02  1081  more gtfFixer.java
+2020-09-09.18:57:02  1081  more gtfFixer.java
+2020-09-09.18:57:02  1081  more gtfFixer.java
+2020-09-09.18:57:02  1081  more gtfFixer.java
+2020-09-09.18:57:03  1081  more gtfFixer.java
+2020-09-09.18:57:03  1081  more gtfFixer.java
+2020-09-09.18:57:03  1081  more gtfFixer.java
+2020-09-09.18:57:03  1081  more gtfFixer.java
+2020-09-09.18:57:07  1082  gtfFixer
+2020-09-09.18:57:24  1083  more gtfFixer.java
+2020-09-09.18:57:25  1084  HiCEntropy
+2020-09-09.18:57:49  1085  ILMNtoSymbol
+2020-09-09.18:58:03  1086  more ILMNtoSymbol
+2020-09-09.18:58:06  1087  more ILMNtoSymbol.R
+2020-09-09.18:59:59  1088  keepUniqueUMIs
+2020-09-09.19:00:17  1089  linkFastqs
+2020-09-09.19:00:29  1090  list
+2020-09-09.19:00:35  1091  more list
+2020-09-09.19:00:53  1092  makeBigWig
+2020-09-09.19:01:06  1093  mergeInteractions
+2020-09-09.19:01:15  1094  more mergeInteractions
+2020-09-09.19:01:54  1095  more MergeInteractions.java
+2020-09-09.19:01:54  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:01:55  1095  more MergeInteractions.java
+2020-09-09.19:02:12  1096  picard
+2020-09-09.19:02:32  1097  plotDomains
+2020-09-09.19:02:33  1097  plotDomains
+2020-09-09.19:02:38  1098  more plotDomains
+2020-09-09.19:02:52  1099  more plotDomains.java
+2020-09-09.19:03:06  1100  picard -v
+2020-09-09.19:03:12  1101  picard -version
+2020-09-09.19:03:16  1102  picard --help
+2020-09-09.19:03:25  1103  PicardCommandLine --help
+2020-09-09.19:03:40  1104  which picard
+2020-09-09.19:03:56  1105  renameFiles
+2020-09-09.19:04:02  1106  more renameFiles
+2020-09-09.19:04:40  1107  runcuffdiff
+2020-09-09.19:04:44  1108  more runcuffdiff
+2020-09-09.19:05:26  1109  runFindGO
+2020-09-09.19:05:35  1110  runFindGO mouse
+2020-09-09.19:05:58  1111  more runFindGO
+2020-09-09.19:06:03  1112  findGO
+2020-09-09.19:06:19  1113  runGeneCoverage
+2020-09-09.19:06:31  1114  more runGeneCoverage
+2020-09-09.19:07:40  1115  runHiC
+2020-09-09.19:07:42  1116  more runHiC
+2020-09-09.19:08:41  1117  runSTAR
+2020-09-09.19:09:20  1118  runSTAR-bedGraph
+2020-09-09.19:09:34  1119  runSTARUMI
+2020-09-09.19:09:37  1120  more runSTARUMI
+2020-09-09.19:10:11  1121  sam2bam
+2020-09-09.19:10:17  1122  more sam2bam
+2020-09-09.19:11:12  1123  samToSortedIndexedBam
+2020-09-09.19:11:25  1124  saveUMI
+2020-09-09.19:11:28  1125  more saveUMI
+2020-09-09.19:11:47  1126  ShortStackRenamer
+2020-09-09.19:11:52  1127  more ShortStackRenamer
+2020-09-09.19:12:26  1128  SNPcompare
+2020-09-09.19:12:29  1129  more SNPcompare
+2020-09-09.19:16:03  1130  more SNPcompare.java
+2020-09-09.19:16:03  1130  more SNPcompare.java
+2020-09-09.19:16:04  1131  sra2fastq
+2020-09-09.19:16:29  1132  stripExt
+2020-09-09.19:16:39  1133  more stripExt
+2020-09-09.19:17:26  1134  summarizeSTAR
+2020-09-09.19:17:31  1135  more summarizeSTAR
+2020-09-09.19:18:37  1136  twoBitToFa
+2020-09-09.19:18:57  1137  typeSizes
+2020-09-09.19:19:01  1138  more typeSizes
+2020-09-09.19:19:20  1139  more typeSizes.java
+2020-09-09.19:19:20  1139  more typeSizes.java
+2020-09-09.19:19:20  1139  more typeSizes.java
+2020-09-09.19:19:20  1139  more typeSizes.java
+2020-09-09.19:19:20  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:21  1139  more typeSizes.java
+2020-09-09.19:19:32  1140  untar
+2020-09-09.19:19:34  1141  more untar
+2020-09-09.21:16:58  1001  cd /gpfs/tools/scripts
+2020-09-09.21:16:59  1002  appendFastaToPeaks
+2020-09-09.21:17:38  1003  a.r
+2020-09-09.21:17:44  1004  more a.r
+2020-09-09.21:18:04  1005  averageBedGraph
+2020-09-09.21:18:32  1006  bamToBedGraph
+2020-09-09.21:19:11  1007  bashProfileHeader
+2020-09-09.21:19:14  1008  more bashProfileHeader
+2020-09-09.21:19:27  1009  batchRename
+2020-09-09.21:19:43  1010  bismarkBedgraphReads
+2020-09-09.21:19:45  1011  more bismarkBedgraphReads
+2020-09-09.21:21:50  1012  bisulfitePipeApril
+2020-09-09.21:22:08  1013  buildGenome
+2020-09-09.21:22:30  1014  CalcNormFactor.R
+2020-09-09.21:23:23  1015  callMajorMethyl.pl
+2020-09-09.21:23:44  1016  more callMajorMethyl.pl
+2020-09-09.21:23:46  1017  callMajorMethyl.pl
+2020-09-09.21:24:13  1018  more callMajorMethyl.pl
+2020-09-09.21:24:24  1019  clusterAnnotations.R
+2020-09-09.21:24:36  1020  clusterGA.R
+2020-09-09.21:24:51  1021  more clusterGA.R
+2020-09-09.21:25:12  1022  clusterR
+2020-09-09.21:25:38  1023  more Usage: clusterR homer_file [cluster samples?]
+2020-09-09.21:25:38  1023  more Usage: clusterR homer_file [cluster samples?]
+2020-09-09.21:26:05  1024  more clusterR.R
+2020-09-09.21:26:05  1024  more clusterR.R
+2020-09-09.21:26:52  1025  countSTAR
+2020-09-09.21:27:24  1026  dropbox_uploader.sh
+2020-09-09.21:27:25  1026  dropbox_uploader.sh
+2020-09-09.21:28:07  1027  more dropbox_uploader.sh
+2020-09-09.21:28:19  1028  extractUMI
+2020-09-09.21:28:40  1029  fastqBlast
+2020-09-09.21:28:56  1030  fastqBlastfastqBlast2
+2020-09-09.21:28:57  1031  fastqBlast2
+2020-09-09.21:29:13  1032  fastqBlast3
+2020-09-09.21:29:19  1033  fastqDictionary
+2020-09-09.21:29:39  1034  fastqsTrim
+2020-09-09.21:29:58  1035  fastqSummary
+2020-09-09.21:30:22  1036  fastqToBam
+2020-09-09.21:30:25  1037  more fastqToBam
+2020-09-09.21:30:37  1038  fastqTrim
+2020-09-09.21:30:56  1039  FeaturePlot.R
+2020-09-09.21:31:03  1040  more FeaturePlot.R
+2020-09-09.21:31:20  1041  flair
+2020-09-09.21:31:38  1042  FPKMtoCluster.R
+2020-09-09.21:33:02  1043  more FPKMtoCluster.R
+2020-09-09.21:33:03  1043  more FPKMtoCluster.R
+2020-09-09.21:33:03  1043  more FPKMtoCluster.R
+2020-09-09.21:33:40  1044  fragLength.R
+2020-09-09.21:33:48  1045  more fragLength.R
+2020-09-09.21:34:25  1046  gb2gtf.py
+2020-09-09.21:34:53  1047  gbk2gtf.py
+2020-09-09.21:35:23  1048  genbank2gtf.pl
+2020-09-09.21:36:33  1049  more genbank2gtf.pl
+2020-09-09.21:36:33  1049  more genbank2gtf.pl
+2020-09-09.21:36:35  1050  getDiffR
+2020-09-09.21:37:31  1051  grabEnrichmentCategories
+2020-09-09.21:37:50  1052  grabFastq
+2020-09-09.21:38:08  1053  grabFastqR1
+2020-09-09.21:38:34  1054  grabFastqs
+2020-09-09.21:38:54  1055  grabFastqX
+2020-09-09.21:39:10  1056  grabGenesFromHOMER
+2020-09-09.21:39:30  1057  more grabGenesFromHOMER
+2020-09-09.21:39:44  1058  GTFtoFasta
+2020-09-09.21:40:08  1059  GTFtoFastaMito
+2020-09-09.21:40:29  1060  helper.R
+2020-09-09.21:40:40  1061  hg19Ad5Pipe.sh
+2020-09-09.21:41:08  1062  ILMNtoRefseq.R
+2020-09-09.21:41:22  1063  JasparToHomer
+2020-09-09.21:41:41  1064  more JasparToHomer
+2020-09-09.21:41:54  1065  more JasparToHomer.java
+2020-09-09.21:41:54  1065  more JasparToHomer.java
+2020-09-09.21:41:54  1065  more JasparToHomer.java
+2020-09-09.21:41:54  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:41:55  1065  more JasparToHomer.java
+2020-09-09.21:42:10  1066  justHOMER
+2020-09-09.21:42:26  1067  justSTAR-Multimappers
+2020-09-09.21:42:50  1068  justSTARquant
+2020-09-09.21:43:22  1069  myImagePlot.R
+2020-09-09.21:43:37  1070  more /gpfs/tools/scripts/myImagePlot.R: line 2: syntax error near unexpected token `('
+2020-09-09.21:43:38  1070  more /gpfs/tools/scripts/myImagePlot.R: line 2: syntax error near unexpected token `('
+2020-09-09.21:43:52  1071  more myImagePlot.R
+2020-09-09.21:43:52  1071  more myImagePlot.R
+2020-09-09.21:43:53  1071  more myImagePlot.R
+2020-09-09.21:43:53  1071  more myImagePlot.R
+2020-09-09.21:43:53  1071  more myImagePlot.R
+2020-09-09.21:44:08  1072  normalizeRaw.R
+2020-09-09.21:44:29  1073  more normalizeRaw.R
+2020-09-09.21:44:29  1073  more normalizeRaw.R
+2020-09-09.21:44:29  1073  more normalizeRaw.R
+2020-09-09.21:44:29  1073  more normalizeRaw.R
+2020-09-09.21:44:30  1073  more normalizeRaw.R
+2020-09-09.21:44:30  1073  more normalizeRaw.R
+2020-09-09.21:44:33  1074  normalizeRaw.R
+2020-09-09.21:44:46  1075  normalizeTags
+2020-09-09.21:45:27  1076  ORA
+2020-09-09.21:46:26  1077  orfCombiner
+2020-09-09.21:46:46  1078  parseChIA-Pet.pe.pl
+2020-09-09.21:47:04  1079  more parseChIA-Pet.pe.pl
+2020-09-09.21:47:04  1079  more parseChIA-Pet.pe.pl
+2020-09-09.21:47:04  1079  more parseChIA-Pet.pe.pl
+2020-09-09.21:47:04  1079  more parseChIA-Pet.pe.pl
+2020-09-09.21:47:04  1079  more parseChIA-Pet.pe.pl
+2020-09-09.21:47:18  1080  ParseZymeReads
+2020-09-09.21:47:28  1081  more ParseZymeReads
+2020-09-09.21:47:39  1082  more ParseZymeReads.java
+2020-09-09.21:47:54  1083  pcaFPKM.R
+2020-09-09.21:48:09  1084  more /gpfs/tools/scripts/pcaFPKM.R: line 2: syntax error near unexpected token `('
+2020-09-09.21:49:07  1085  more pcaFPKM.R
+2020-09-09.21:49:08  1086  petags2bed.pl
+2020-09-09.21:49:11  1087  more petags2bed.pl
+2020-09-09.21:49:31  1088  ProjectEstimatorTime
+2020-09-09.21:49:54  1089  more QC_ChIP_replicates.R
+2020-09-09.21:50:40  1090  quantifyAllExons
+2020-09-09.21:50:50  1091  more Usage quantifyAllExons CPM_exon_file_from_HOMER.txt > genesWithAllExons_FPKM.txt
+2020-09-09.21:50:55  1092  more quantifyAllExons
+2020-09-09.21:51:14  1093  more quantifyAllExons.java
+2020-09-09.21:51:39  1094  Quantify_ChIP_Replicates.sh
+2020-09-09.21:52:14  1095  restartIGC2
+2020-09-09.21:52:28  1096  more restartIGC2
+2020-09-09.21:52:40  1097  ribORFCorrector
+2020-09-09.21:52:59  1098  more ribORFCorrector
+2020-09-09.21:53:04  1099  more ribORFCorrector.java
+2020-09-09.21:53:21  1100  runATAC
+2020-09-09.21:54:00  1101  runBlasr
+2020-09-09.21:54:49  1102  runPBisoforms
+2020-09-09.21:55:15  1103  runQC.sh
+2020-09-09.21:55:34  1104  runSTAR-Repeats
+2020-09-09.21:56:04  1105  SamQC
+2020-09-09.21:56:19  1106  more SamQC
+2020-09-09.21:56:48  1107  samToSortedBam
+2020-09-09.21:57:11  1108  saveUMI
+2020-09-09.21:57:24  1109  ScanAllMotifs
+2020-09-09.21:57:44  1110  sraStats
+2020-09-09.21:57:55  1111  more sraStats 
+2020-09-09.21:58:23  1112  STAR2Genomes
+2020-09-09.21:58:54  1113  syncBigWigs
+2020-09-09.21:59:10  1114  more syncBigWigs
+2020-09-09.21:59:38  1115  TryAgain.gff
+2020-09-09.21:59:41  1116  more TryAgain.gff
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:07  1117  undo
+2020-09-09.22:00:14  1118  more undo
+2020-09-09.22:00:52  1119  venn
+2020-09-09.22:01:02  1120  more Usage: venn list1 list2 > overlapSummary.txt
+2020-09-09.22:01:03  1120  more Usage: venn list1 list2 > overlapSummary.txt
+2020-09-09.22:01:08  1121  more venn
+2020-09-09.22:01:36  1122  Venn
+2020-09-09.22:02:02  1123  viper
+2020-09-09.22:02:02  1123  viper
+2020-09-09.22:02:02  1123  viper
+2020-09-09.22:02:13  1124  VlnPlot.R
+2020-09-09.22:02:26  1125  more VlnPlot.R
+2020-09-09.22:30:27  1126  RunRiboSeq
+2020-09-09.22:30:44  1127  RunRiboSeqRunRiboseqNoTrim
+2020-09-09.22:30:45  1128  RunRiboseqNoTrim
+2020-09-09.22:30:57  1129  RunRiboSeqFromOffsets
+2020-09-15.15:51:03  1195  cd /gpfs/tools/scripts/
+2020-09-15.15:51:13  1196  which RunRiboSeq
+2020-09-16.22:31:14  1176  cd scripts/
+2020-09-16.22:31:15  1177  ls
+2020-09-16.22:31:16  1178  TryAgain.gff
+2020-09-16.22:31:31  1179  more TryAgain.gff
+2020-09-16.22:32:40  1180  more keepUniqueUMIs
+2020-09-16.22:32:48  1181  keepUniqueUMIs
+2020-09-16.22:33:38  1182  more list
+2020-09-16.22:33:49  1183  list
+2020-09-16.22:34:12  1184  HiCEntropy
+2020-09-16.22:35:02  1185  grabERCC
+2020-09-16.22:35:18  1186  grabEnrichmentCategories
+2020-09-16.22:35:21  1186  grabEnrichmentCategories
+2020-09-16.22:35:21  1186  grabEnrichmentCategories
+2020-09-16.22:35:46  1187  fastqToBam
+2020-09-16.22:35:56  1188  commonSubstring
+2020-09-16.22:36:18  1189  common
+2020-09-16.22:36:29  1190  buildGenome
+2020-09-23.19:42:05  1000  cd /gpfs/tools/scripts/
+2020-09-23.19:42:07  1001  ls
+2020-09-23.19:42:32  1002  more diffExpression 
+2021-01-05.16:30:38  1064  cd /gpfs/tools/scripts
+2021-01-05.16:30:38  1065  ls
+2021-01-05.16:30:57  1067  cd scripts/
+2021-01-05.16:30:58  1068  ls
+2021-02-08.14:22:51   999  cd /gpfs/tools/scripts/
+2021-02-08.14:22:56  1000  javac orfCombiner.java 
+2021-02-08.14:23:03  1001  MicroproteinCombiner
+2021-04-07.15:12:02  1393  cd /gpfs/tools/scripts/
+2021-04-07.15:12:05  1394  wget https://github.com/jts/nanopore-rna-analysis/blob/master/nanopore_transcript_abundance.py
+2021-04-07.15:12:17  1395  vi nanopore_transcript_abundance.py 
+2021-04-07.15:12:21  1396  rm nanopore_transcript_abundance.py 
+2021-04-07.15:12:36  1397  wget https://github.com/jts/nanopore-rna-analysis/archive/refs/heads/master.zip
+2021-04-07.15:12:40  1398  unzip master.zip 
+2021-04-07.15:12:42  1399  ls
+2021-04-12.13:01:53  1475  cd /gpfs/tools/scripts/
+2021-04-12.13:02:01  1476  cp ribORFCorrector ribORFCorrectorLenient
+2021-04-12.13:02:14  1477  vi ribORFCorrectorLenient 
+2021-04-12.13:02:30  1478  vi ribORFCorrector.java
+2021-04-12.13:02:31  1479  ls
+2021-04-12.13:02:34  1480  ls ribORF
+2021-04-12.13:02:38  1481  ls ribORFCorrector*
+2021-04-12.13:16:12   999  cd /gpfs/tools/scripts/
+2021-04-12.13:18:48  1482  javac ribORFCorrector.java
+2021-04-12.13:18:55  1483  javac ribORFCorrectorLenient.java 
+2021-05-05.13:42:31  1014  cd /gpfs/tools/scripts/
+2021-05-05.13:42:34  1015  ls
+2021-05-05.13:42:42  1016  wget https://github.com/10XGenomics/bamtofastq/releases/download/v1.3.5/bamtofastq_linux
+2021-05-05.13:42:44  1017  ls
+2021-05-05.13:42:47  1018  ls bam*
+2021-05-05.13:42:59  1019  chmod a+x bamtofastq_linux
+2021-05-05.13:43:03  1020  bamtofastq_linux
+2021-05-05.13:43:12  1021  mv bamtofastq_linux bamtofastq
+2021-05-05.13:43:16  1022  bamtofastq
+2021-05-05.13:43:22  1023  bamtofastq -h
+2021-05-05.13:46:10   999  ls
+2021-05-05.14:50:56  1024  screen
+2021-06-23.20:04:57  1291  cd scripts/
+2021-06-23.20:04:58  1292  ls
+2021-06-24.11:22:59  1017  cd scripts/
+2021-06-24.11:23:00  1018  ls
+2021-06-24.11:23:15  1019  ls ChIPSTAR 
+2021-06-24.11:24:26  1020  nano ChIPSTAR 
+2021-06-24.11:25:47  1021  cd ~?g`
+\
+``
+/
+\\
+\
+///
+`
+2021-06-24.11:25:53  1022  cd ~?g
+2021-06-24.11:36:15  1025  cd scripts/
+2021-06-24.11:36:41  1026  nano ChIPSTAR 
+2021-06-24.11:37:01  1027  nano justSTAR
+2021-06-24.12:13:28  1027  nano justSTAR
+2021-06-25.19:25:40  1082  cd /gpfs/tools/scripts
+2021-06-25.19:25:41  1083  ls
+2021-06-25.19:26:44  1084  picard
+2021-06-25.19:28:12  1085  less picard 
+2021-06-25.19:29:39  1094  cd /gpfs/tools/scripts/
+2021-06-25.19:29:40  1095  ls
+2021-06-28.10:49:43  1333  cd scripts/
+2021-06-28.10:49:45  1334  ls
+2021-06-28.10:49:52  1335  ./predictORFs
+2021-06-28.10:49:55  1336  predictORFS 
+2021-06-28.10:50:11  1337  more predictORFS 
+2021-06-28.10:50:57  1338  TransDecoder.LongOrfs 
+2021-06-28.10:51:31  1339  /gpfs/tools/TransDecoder/TransDecoder-TransDecoder-v5.1.0/TransDecoder.Predict 
+2021-06-28.10:53:01  1340  ls
+2021-06-28.10:56:33  1341  GTFtoFsata
+2021-06-28.10:56:39  1342  GTFtoFasta
+2021-07-20.13:21:44  1000  cd scripts
+2021-07-20.13:23:11  1001  vim runATAC 
+2021-07-20.13:23:15  1002  which trim_glore
+2021-07-20.13:23:22  1003  which trim_galore
+2021-07-20.13:23:27  1004  trim_galore
+2021-08-25.14:52:02  1156  cd /gpfs/tools/scripts/
+2021-08-25.14:52:04  1157  ls -trlhs
+2021-08-25.14:52:18  1160  cd ..
+2021-08-25.14:52:49  1161  more hollernSTAR
+2021-08-25.14:53:26  1161  more hollernSTAR
+2021-08-25.14:53:26  1161  more hollernSTAR
+2021-08-30.12:31:05  1106  cd scripts/
+2021-08-30.12:31:12  1107  java -jar ena-file-downloader-v1.2.2.jar 
+2021-08-30.12:33:17  1108  java -jar ena-file-downloader-v1.2.2.jar -h
+2021-08-30.12:33:20  1109  java -jar ena-file-downloader-v1.2.2.jar -help
+2021-08-30.12:33:23  1110  java -jar ena-file-downloader-v1.2.2.jar --help
+2021-08-30.12:34:58  1111  ls -trlhs
+2021-08-30.12:35:00  1111  ls -trlhs
+2021-08-30.12:35:13  1112  wget https://github.com/enasequence/ena-ftp-downloader/releases/download/v1.2.2/ena-file-downloader-v1.2.2-with-runtime.zip
+2021-08-30.12:35:22  1113  unzip ena-file-downloader-v1.2.2-with-runtime.zip 
+2021-09-09.11:55:15  1193  cd /gpfs/tools/scripts/
+2021-09-09.11:55:20  1194  ls -trlhs
+2021-09-09.11:56:12  1195  ls
+2021-09-09.11:56:30  1196  df -h
+2021-09-09.12:08:35  1197  /gpfs/tools/homer/data/knownTFs/all/
+2021-09-09.12:08:39  1198  ls /gpfs/tools/homer/data/knownTFs/all/
+2021-09-09.12:08:45  1199  ls /gpfs/tools/homer/data/knownTFs/motifs/
+2021-09-13.14:09:48    11  source /gpfs/tools/.bashTools
+2021-09-13.14:10:24    12  conda 
+2021-09-13.14:11:42    13  pwd
+2021-09-13.14:21:10    71  cd /gpfs/tools/scripts
+2021-09-13.14:21:11    72  ls
+2021-09-13.14:22:10    73  cat runMAPSeq.sh
+2021-09-13.17:14:36  1212  cd /gpfs/tools/scripts/
+2021-09-14.10:38:21  1213  df -h
+2021-09-15.11:02:45   412  cd /gpfs/tools/scripts/
+2021-09-15.11:02:47   413  ls
+2021-09-15.11:03:00   414  more linkFastqs 
+2021-09-15.11:10:11   415  ls
+2021-09-21.16:06:08  1392  cd /gpfs/tools/scripts/
+2021-09-21.16:06:09  1393  ls
+2021-09-21.16:06:15  1394  ls -trlhs
+2021-09-21.16:10:17  1395  vi dataDeamon
+2021-09-21.16:10:29  1396  mv dataDeamon backupdata
+2021-09-21.16:17:44  1397  vi backupdata
+2021-09-21.16:18:19  1398  vi /gpfs/analyses/backupLocationList.txt
+2021-09-21.16:18:31  1399  chmod +x backupdata 
+2021-09-21.16:18:36  1400  backupdata
+2021-09-21.16:18:49  1401  vi /gpfs/analyses/backupLocationList.txt
+2021-09-21.16:18:51  1402  backupdata
+2021-09-21.16:29:40  1403  vi backupdata
+2021-09-21.16:29:42  1404  $(\ls -1dt ./*/ | head -n 1)
+2021-09-21.17:22:26  1405  vi backupdata
+2021-09-21.17:22:36  1406  backupdata
+2021-09-21.17:24:08  1407  vi backupdata
+2021-09-21.17:24:09  1408  backupdata
+2021-09-21.17:24:50  1409  vi backupdata
+2021-09-21.17:25:16  1410  backupdata
+2021-09-21.17:25:23  1411  vi backupdata
+2021-09-21.17:25:54  1412  backupdata
+2021-09-21.17:26:29  1413  vi backupdata
+2021-09-21.17:27:24  1414  backupdata
+2021-09-28.10:42:45   607  cd /gpfs/tools/scripts/
+2021-09-28.10:42:47   608  ls
+2021-09-28.10:42:59   609  runSleuth.R
+2021-09-28.10:55:06   610  wgcna.R
+2021-10-14.14:02:57  1019  cd scripts/
+2021-10-14.14:02:58  1020  ll 
+2021-10-19.15:24:13  1045  cd ../scripts/
+2021-10-19.15:24:14  1046  ls
+2021-10-19.15:25:03  1047  vim .bashScript
+2021-11-17.16:36:01  1021  cd scripts/
+2021-11-17.16:36:02  1022  ls
+2021-11-17.16:36:39  1023  less justSTAR
+2022-01-14.12:11:27  1157  cd /gpfs/tools/scripts/
+2022-01-14.12:11:28  1158  ls
+2022-01-14.12:48:35  1159  less justSTAR
+2022-01-14.12:48:35  1159  less justSTAR
+2022-01-14.12:48:36  1159  less justSTAR
+2022-01-14.12:48:36  1159  less justSTAR
+2022-01-14.12:48:36  1159  less justSTAR
+2022-01-14.12:48:48  1160  cd ~/g
+2022-01-24.11:13:36  1009  cd /gpfs/tools/scripts/
+2022-01-24.11:13:37  1010  ls
+2022-01-24.11:18:46  1011  less runSTAR
+2022-02-23.15:31:27  1497  cd /gpfs/tools/scripts
+2022-02-23.15:31:29  1498  ls
+2022-02-23.15:31:52  1499  ls -1 | grep -v '.'
+2022-02-23.15:31:57  1500  ls -1 * | grep -v '.'
+2022-02-23.15:32:16  1501  ls -1
+2022-02-23.15:32:26  1502  ls -1 | grep -v '.'
+2022-02-23.15:32:31  1503  ls -1 | grep -v '\.'
+2022-02-23.15:34:17  1504  makeMultiWigHub
+2022-02-23.15:34:19  1505  makeMultiWigHub.pl 
+2022-02-23.15:36:23  1506  runHiC
+2022-02-23.15:36:35  1507  more $(which runHiC)
+2022-02-23.15:37:03  1508  ls
+2022-02-23.15:40:27  1509  more $(which undo)
+2022-02-23.15:42:00  1510  more /gpfs/tools/.bashTools
+2022-02-23.15:42:30  1511  ls
+2022-02-23.15:44:29  1512  backup
+2022-02-23.15:44:35  1513  backupdata
+2022-02-23.15:47:52  1514  grabFastq
+2022-02-23.15:47:58  1515  grabFastqs
+2022-02-23.15:48:40  1516  grabFastqX
+2022-02-23.15:48:47  1519  cd scripts
+2022-02-23.15:48:47  1520  ls
+2022-02-23.15:48:53  1521  grabLines
+2022-02-23.15:49:59  1522  untar
+2022-02-23.15:50:05  1523  more $(which untar)
+2022-02-23.15:51:00  1524  grabGenesFromHOMER 
+2022-02-23.15:51:49  1525  more $(which grabLinesFromHOMER)
+2022-02-23.15:51:59  1526  more $(which grabGenesFromHOMER)
+2022-02-23.15:52:35  1527  ls
+2022-02-23.15:52:45  1528  ls -1 | grep -v '/'
+2022-02-23.15:52:48  1529  ls -1 | grep -v '\.'
+2022-02-23.15:52:53  1530  unlockUser
+2022-02-23.15:53:52  1530  unlockUser
+2022-02-23.15:53:58  1531  more $(which unlockUser)
+2022-02-23.15:54:18  1532  chage
+2022-02-23.15:55:53  1533  more $(which ScanAllMotifs)
+2022-02-23.15:57:13  1534  more $(which Venn)
+2022-02-23.15:58:01  1535  more /gpfs/tools/scripts/Venn.R
+2022-02-23.15:58:04  1536  fpkmCluster
+2022-02-23.15:59:26  1537  fpkmPCA 
+2022-02-23.16:01:45  1538  ls -trlhs
+2022-02-23.16:01:53  1539  runATAC
+2022-02-23.16:02:48  1540  more $(which runSTAR)
+2022-02-23.16:04:59  1541  more $(which runATAC)
+2022-02-23.16:07:03  1542  ls -trlhs
+2022-02-23.16:10:22  1543  fastqBlast2
+2022-02-23.16:10:33  1544  more $(which fastqBlast2)
+2022-02-23.16:10:45  1545  more $(which fastqBlast3)
+2022-02-23.16:11:23  1546  ls
+2022-02-23.16:11:32  1547  ls -trlhs
+2022-02-23.16:11:47  1548  annotateGTFwithBlast 
+2022-02-23.16:19:19  1549  justHOMER
+2022-02-23.16:20:03  1550  cols
+2022-02-23.16:20:06  1551  cols Venn.R
+2022-02-23.16:25:15  1552  processFindGO
+2022-02-23.16:27:32  1553  bisulfite
+2022-02-23.16:27:40  1554  bisulfitePipe
+2022-02-23.16:28:17  1555  bisulfitePipeApril 
+2022-02-23.16:28:26  1556  more $(which bisulfitePipeApril )
+2022-02-23.16:32:00  1557  ls
+2022-02-24.15:24:46  1139  cd scripts
+2022-02-24.15:28:04  1140  MicroproteinCombiner 
+2022-02-26.12:56:23  1147  cd /gpfs/tools/scripts/
+2022-02-26.12:56:24  1148  ll 
+2022-02-26.12:56:35  1149  cat viper 
+2022-02-26.12:57:40  1150  cat runLastPart 
+2022-02-26.12:57:47  1151  ll 
+2022-02-26.12:58:23  1152  less filterPairedFastqs
+2022-02-26.12:58:31  1153  cat TryAgain.gff
+2022-02-26.12:58:40  1154  rm -r TryAgain.gff 
+2022-02-26.12:58:56  1155  cat wgcna.R 
+2022-02-26.13:00:58  1156  git init -b main
+2022-02-26.13:01:08  1157  git add .

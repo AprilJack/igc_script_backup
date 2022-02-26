@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ $# -lt 1 ] 
+then
+	echo "Usage:removeSubstring subString"
+	echo "Removes the specified substring from each line in every sam file in current dir."
+else
+	if [ -e tmp ]
+	then
+		rm tmp
+	fi
+	for i in *.sam
+	do
+		echo "Trimming $1 from $i"
+		while read -r line	
+		do
+			#echo "$line"
+			echo "${line/$1}" >> tmp
+			#echo "$line" >> tmp
+		done < $i
+		mv tmp $i
+	done
+fi

@@ -1,0 +1,38 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: makeSTARgenome [gtf file?] fasta_files"
+else
+	unset GTF
+	if [[ $1 == *.gtf ]]
+	then
+		GTF=$1
+		shift 1
+	fi
+		
+	SIZE=0
+	for i in $@
+	do
+		COUNT=$(wc -c $i | cut -f 1 -d' ')
+		SIZE=$(($SIZE+$COUNT))
+	done
+	if [ $SIZE -gt 1000000000 ]
+	then
+		bases=14
+	else
+		bases=4 
+#		bases=$(echo "l(${SIZE})/l(2)" | bc -l)
+#		bases=${bases%.*}
+#		bases=$((bases/2))
+#		bases=$((bases-1))
+	fi
+	echo "Genome size was approximately: $SIZE"
+	if [ -z "$GTF" ]
+	then
+		echo "Running genome generate using genomeSAindexNbases equal to $bases"
+		STAR --runMode genomeGenerate --genomeDir . --genomeSAindexNbases $bases --genomeFastaFiles $@ --genomeChrBinNbits 16 --runThreadN 28 --limitGenomeGenerateRAM=78682198741
+	else
+		echo "Running genome generate using genomeSAindexNbases equal to $bases using the GTF file $GTF"
+		STAR --sjdbGTFfile $GTF --runMode genomeGenerate --genomeDir . --genomeSAindexNbases $bases --genomeFastaFiles $@ --genomeChrBinNbits 16 --runThreadN 28 --limitGenomeGenerateRAM=78682198741
+	fi
+fi

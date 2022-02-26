@@ -1,0 +1,38 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: grabFastqX SRR_list.txt [ProcessPaired?]"
+	echo "Will use fasterq-dump to download an gzip and rename all files in SRR_list.txt"
+else
+	count=0
+	total=$(wc -l $1)
+	cat $1 | while read a; do
+		count=$((count+1))
+		echo "Processing $a (${count}/$total)"
+		if [ -e ${a}_R1.fastq.gz ]
+		then
+			echo "$a already downloaded. If you want to redownload, please delete the fastqs first"
+		else
+			fasterq-dump $a -e 16 -S -p 
+			echo "GZIPPING"
+			if [ $# -gt 1 ]
+			then
+				if [ -e ${a}_2.fastq ]
+				then
+					pigz -p 16 ${a}_2.fastq
+					mv ${a}_2.fastq.gz ${a}_R2.fastq.gz
+				fi
+			else
+				if [ -e ${a}_2.fastq ]
+				then
+					rm ${a}_2.fastq
+					pigz -p 16 ${a}_1.fastq 
+					mv ${a}_1.fastq.gz ${a}_R1.fastq.gz
+				else
+					pigz -p 16 ${a}.fastq
+					mv ${a}.fastq.gz ${a}_R1.fastq.gz
+				fi
+			fi
+		fi
+	done 
+fi

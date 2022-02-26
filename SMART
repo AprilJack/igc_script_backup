@@ -1,0 +1,2 @@
+#!/bin/bash
+Rscript /dev/gpfs/tools/SMART/microarrayDiff.R $@

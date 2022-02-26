@@ -1,0 +1,97 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "dirtyRNAseq will run some nice post-processing steps on your aligned datasets."
+	echo ""
+	echo "It will start out by making tagDirectories and bedGraph files. Then it will attempt to run geneCoverage, count up raw/fpkms, and perform differential gene expression and run enrichment"
+	echo "Usage: dirtyRNAseq [options]"
+	echo ""
+	echo "Options:"
+	echo -e "\t-p/--paired\t\t\tPaired End RNAseq"
+	echo -e "\t-d/--diffExpression\t\tRun differential gene expression analysis on the raw counts and run gene-list enrichment for GO and pathway terms"
+	echo -e "\t-g/--genome\t\t\tThe genome used for analysis (e.g. mm10 or hg19) [required]"
+	echo -e "\t-n/--name\t\t\tThe name prefix for output. [required]"
+	echo ""
+else
+	
+	while [[ $# > 1 ]]
+	do
+		key="$1"
+
+		case $key in
+    		-p|--paired)
+   		PAIRED=1
+  		;;
+		-d|--diffExpression)
+    		DIFF=1
+    		;;
+    		-g|--genome)
+    		GENOME="$2"
+    		shift
+    		;;
+    		-n|--name)
+    		PREFIX="$2"
+    		shift
+    		;;
+   		--default)
+    		DEFAULT=YES
+    		shift
+    		;;
+    		*)
+       		# unknown option
+    		;;
+		esac
+		shift
+	done
+	echo "Genome = $GENOME, Name= $NAME, Paired? = $PAIRED, Diff Exp?=$DIFF." 
+	echo "Processing:"
+	ls *.sam
+	
+	for i in $( ls *.sam ); do
+		if [[ $PAIRED == 1 ]]
+		then 
+			makeTagDirectory ./tags/${i} $i -format sam
+		else
+			makeTagDirectory ./tags/${i} $i -format sam -sspe
+		fi
+		head -n 2 ./tags/${i}/tagInfo.txt
+		makeUCSCfile ./tags/${i} -fragLength given -o auto -fsize 800000000 -strand separate
+	done
+	echo "Counting reads across genes for $GENOME"
+	analyzeRepeats.pl rna $GENOME -condenseGenes -count exons -d ./tags/*/ -fpkm -strand + -normMatrix 1000000 > ${PREFIX}_fpkm.txt
+	analyzeRepeats.pl rna $GENOME -condenseGenes -count exons -d ./tags/*/ -noadj -strand + > ${PREFIX}_raw.txt
+	echo "Running RSeQC genome coverage on current dir"
+	runGeneCoverage $GENOME . 
+	if [[ $GENOME == "mm"* ]]
+	then
+		ORG="mouse"
+	else
+		ORG="human"
+	fi
+	echo Done calculating gene expression rpkm and raw!
+	shift
+	shift
+	if [ $DIFF == 1 ]
+	then
+		shift
+		getDiffExpression.pl ${PREFIX}_raw.txt $@ -export ${PREFIX}_diff -AvsA > ${PREFIX}_AvsA.txt
+		echo Done differential expression counting
+		echo Removing empty diff files
+		for i in ${PREFIX}_diff*.txt
+		do
+			COUNT=$(wc -l $i|cut -d' ' -f1)
+			if [ $COUNT -lt 2 ]
+			then
+				echo "$i was empty so it will be removed"
+				rm $i
+			else
+				echo "Calculating enrichment for $i using ORGANISM: $ORG"
+				findGO.pl $i $ORG ${i}_enrichment -cpu 24
+			fi
+		done
+	else
+		echo "Differential expression and enrichment part of the pipeline was not carried out. "
+	fi
+
+fi
+

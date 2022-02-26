@@ -1,0 +1,20 @@
+#!/bin/bash
+
+for i in $(find /gpfs/tools -maxdepth 2 -type d)
+do
+        PATH=$i:$PATH
+done
+PATH=$PATH:/gpfs/tools/TrimGalore-0.4.5
+PATH=$PATH:/gpfs/tools/scripts
+PATH=$PATH:$HOME/bin
+PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+PATH=/gpfs/tools/anaconda/bin:$PATH
+PATH=/gpfs/tools/STAR/STAR-2.5.3a/bin/Linux_x86_64:$PATH
+
+export TMP=/gpfs/tmp
+export TEMP=/gpfs/tmp
+export TMPDIR=/gpfs/tmp
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(history 1)" >> $(pwd)/.bash-history.log 2>/dev/null; fi'
+export PATH
+export BLASTDB=/gpfs/genomes/blast_databases
+

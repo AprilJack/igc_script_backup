@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: uploadToLiverAgingBox DirOnBox file1 [file2] ... [filen]"
+	echo "Will upload files to directory on LiverAgingP01 Box folder."
+	echo "If DirOnBox does not exist, will ask if you want to create"
+else
+	DirOnBox=${1%/}
+	shift 1
+	for file in $@
+	do
+		echo "Uploading $file to $DirOnBox"
+		curl -s -S --stderr - -u liveraging@salk.edu:Pass4L1ver@ging -T $file ftp://ftp.box.com/${DirOnBox}/ | grep 'curl:' > temp
+		out=$(wc -l temp | cut -f 1 -d ' ' )
+		#echo "OUT is $out"
+		if [[ $out -gt 0 ]]
+		then
+			read -p "$DirOnBox did not exist... do you want to create?" -n 1 -r
+			echo
+			if [[ $REPLY =~ ^[Yy]$ ]]
+			then
+			    curl -u liveraging@salk.edu:Pass4L1ver@ging -T $file --ftp-create-dirs ftp://ftp.box.com/${DirOnBox}/ 
+			fi
+		fi
+		echo "Finished uploading $file to $DirOnBox"
+		#rm temp
+	done
+fi

@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Backup a dir to a location using rsync, keeping original dates, and only copying the new/updated files"
+	echo ""
+	echo "backupDir DIR_TO_BACKUP LOCATION_OF_BACKUP [gzOnly?]"
+else
+	FROM=$1
+	TO=$2
+	shift 2
+	echo "Starting recursive backup from $FROM to $TO ignoring existing, and preserving mod times. GZIPPED: $@"
+	echo ""
+	if [ $# -eq 0 ]
+	then
+		rsync -h -v -r --progress -t -o -g --ignore-existing $FROM $TO 
+	else
+		rsync -h -v -r --progress -t -o -g --ignore-existing --include='*.gz' --include='*/' --exclude='*'  $FROM $TO
+	fi
+fi

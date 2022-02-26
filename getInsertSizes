@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Will calculate average and sd insert sizes for each sam/bam file provided and spit out a nice summary you can put into a GEO metadata sheet or something"
+	echo "Usage: getInsertSizes File1.sam [File2.bam] ... > result.txt 
+else
+	echo -e "File\tMean Insert Length\tSD Insert Length"
+	for i in $@
+	do
+		picard CollectInsertSizeMetrics I=$i O=temp H=temp2 > /dev/null
+		echo -e "${i}\t$(tail -n +8 temp | head -n 1 | cut -f 5,6)"
+	done
+fi

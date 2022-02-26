@@ -1,0 +1,44 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR aligment and outputs to current directory. Also makes tag dirs, produces stranded or unstranded bedGraphs for visualization"
+	echo "Usage: runSTAR-bedGraph genomeDir dirWithFastq.gz [star commands]"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	shift 2
+	justSTAR $GENOME $DIR $@
+	for i in *.sam
+	do
+		if [[ -e ${i%Aligned.out.sam}*_R2* ]]
+		then
+			echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+		else
+			echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+		fi
+		STRANDED=$(grep "strand specific" ${i%Aligned.out.sam}.tagDirectory.log | wc -l)
+		if [ $STRANDED -lt 0 ]
+		then
+			echo "${i%Aligned.out.sam} is unstranded! Generating unstranded bedGraph"
+			makeUCSCFile tags/${i%Aligned.out.sam} -fragLength given -strand both -o ${i%Aligned.out.sam}.bedGraph
+		else
+			echo "${i%Aligned.out.sam} is stranded! Generating stranded bedGraph"
+			makeUCSCFile tags/${i%Aligned.out.sam} -fragLength given -strand + -o ${i%Aligned.out.sam}_plus.bedGraph
+			makeUCSCFile tags/${i%Aligned.out.sam} -fragLength given -strand - -o ${i%Aligned.out.sam}_minus.bedGraph
+		fi
+	done 
+	summarizeSTAR
+ 	countSummary	
+	cleanSAMs .
+	echo "done aligning, building tag dirs, quantifying, and making sorted indexed bams"
+	rm -rf *_tmp *_STARtmp
+fi

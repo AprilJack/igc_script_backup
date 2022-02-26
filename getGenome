@@ -1,0 +1,24 @@
+#!/bin/bash
+echo "Downloading genome: $1 from UCSC"
+#wget ftp://ftp.ncbi.nlm.nih.gov/genomes/$1/Assembled_chromosomes/seq/$2*.fa.gz
+wget ftp://hgdownload.cse.ucsc.edu/goldenPath/$1/chromosomes/chr?.fa.gz
+wget ftp://hgdownload.cse.ucsc.edu/goldenPath/$1/chromosomes/chr??.fa.gz
+echo "Unpacking..."
+gzip -fd *.gz
+rm *.gz
+if [ -e $i.fa ]
+then
+	rm $i.fa
+fi
+#echo "Replacing first line with filename in fastas and stitching"
+echo stitching!
+for i in *.fa ;
+do
+	#echo '>'$i >> $1.fa
+	#sed '1d' $i > tmpfile
+	#cat tmpfile >> $1.fa
+	cat *.fa >> $1.fa
+	echo Done with file $i
+done
+#rm tmpfile
+echo "Finished!"

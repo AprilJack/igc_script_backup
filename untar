@@ -1,0 +1,20 @@
+#!/bin/bash
+
+for file in $@
+do
+	if [[ ${file} == *".gz" ]]
+	then
+		echo "Detected gzipped tar"
+		tar xvzf $file
+	else
+		if [[ ${file} == *".bz"* ]]
+		then
+			echo "Detected bzipped tar"
+			tar xvjf $file
+		else
+			echo "Trying regular tar"
+			tar xvf $file
+		fi
+	fi
+echo "Done processing $file"
+done

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Grabbing enriched kegg terms from folder $1"
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then
+	echo "dirtyRNAseq will make tagDirs, UCSC files bedGraphs, count genes in terms of rpkm and total counts, and do DiffEpxression"
+	echo "Usage dirtyRNAseq genome_name(e.g. mm10 or hg19) exp_prefix diffExpOptions(e.g. -repeats ctrl drug ctrl drug -batch 1 1 2 2)"
+else
+
+	for i in $( ls $2*.sam ); do
+		makeTagDirectory ./tags/${i} $i -format sam
+		makeUCSCfile ./tags/${i} -fragLength given -o auto
+	done
+	analyzeRepeats.pl rna $1 -condenseGenes -count exons -d ./tags/$2*/ -rpkm > $2_rpkm.txt
+	analyzeRepeats.pl rna $1 -condenseGenes -count exons -d ./tags/$2*/ -noadj > $2_raw.txt
+	echo Done counting!
+	PREFIX=$2
+	shift
+	shift
+	getDiffExpression.pl $PREFIX_raw.txt $@ > $PREFIX_diff.txt
+	echo Done differential expression counting
+
+fi
+

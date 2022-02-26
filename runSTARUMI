@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory"
+	echo "Usage: runSTAR genomeDir dirWithFastqs"
+else
+	if [ -e $2/fastq.list ]
+	then
+		cp $2/fastq.list $2/fastq.back
+	fi
+	fqgroup $2 > $2/fastq.list 
+	WC=$(wc -l $2/fastq.list | cut -d' ' -f1)
+	if [ "$WC" -eq "0" ]
+	then
+		cp $2/fastq.back $2/fastq.list
+	fi
+	echo "Running STAR"
+	date
+	cat $2/fastq.list
+	for i in $( cat $2/fastq.list );
+	do
+		STAR --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outReadsUnmapped Fastx --genomeDir $1 --runThreadN 24 --readFilesIn $i --outFileNamePrefix $i
+	done
+	sam2bam
+	#samtools view -bS *.sam | samtools sort -@ 24 -	
+	echo "done sorting and output to bam"
+	rm -r *_tmp
+fi

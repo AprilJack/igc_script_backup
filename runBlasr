@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage runBlasr subreads.bam genome/location/genome.sa"
+	echo "Will run alignment of subreads to genome.sa index using parameters optimized for mammalian"
+	echo "First run sawriter to generate the sa genome index"
+	echo "assumes your genome fasta is genome.fa instead of sa in the same dir"
+else
+	echo "Starting blasr on $1 using $2"
+	blasr $1 ${2%.sa}.fa --useccs --sa $2 --maxAnchorsPerPosition 500 --nproc 16 --hitPolicy randombest --out ${1%.bam}.aligned.bam --bam
+fi

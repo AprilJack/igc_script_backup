@@ -1,0 +1,36 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: cleanSAMs dir1 [dir2] [dir3] ... "
+	echo "Finds all sam files and checks if there is a bam file with the same name. If yes, then it will delete the sam. Otherwise, it will convert to a sorted, indexed, bam and then delete the sam"
+else
+	echo "Started cleanSAMs on $(date)" >> .cleanSAMs.log
+	for i in $@
+	do
+		REMOVED=0
+		echo "cleaning $(find $i -name "*.sam" -type f | wc -l ) SAMs in $i"
+		for sam in $(find $i -name "*.sam" -type f)
+		do
+			if [ -f ${sam%.sam}*.bam ]
+			then
+				echo "Deleting $sam" >> .cleanSAMs.log
+				rm $sam
+				REMOVED=$((REMOVED+1))
+			else
+				echo "Converting $sam to sorted indexed bam" >> .cleanSAMs.log
+				echo "Converting $sam to sorted indexed bam" 
+				samtools view -bhS -@ 12 $sam | samtools sort - -@ 12 > ${sam%.sam}_sorted.bam 2>> .cleanSAMs.log
+				samtools index -b ${sam%.sam}_sorted.bam 
+				if [ -f ${sam%.sam}_sorted.bam ]
+				then
+					echo "Deleted after converting: $sam" >> .cleanSAMs.log
+					rm $sam
+					REMOVED=$((REMOVED+1))
+				else
+					echo "Converting $sam to sorted index bam failed... sam was not deleted"
+				fi
+			fi
+		done
+		echo "Finished cleaning SAMs in $i, removed a total of $REMOVED sam files"
+	done
+fi

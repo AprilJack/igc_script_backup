@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -e $2 ]
+then
+else
+	echo Making a new dir for the STAR indexed genome $1
+	mkdir $1
+fi
+STAR --runMode genomeGenerate --genomeDir $2 --genomeFastaFiles $1 --runThreadN 24

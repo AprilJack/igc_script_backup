@@ -1,0 +1,4 @@
+2021-04-07.15:12:49  1400  cd nanopore-rna-analysis-master/
+2021-04-07.15:12:49  1401  ls
+2021-04-07.15:12:55  1402  more nanopore_transcript_abundance.py 
+2021-04-07.15:12:58  1403  python nanopore_transcript_abundance.py 

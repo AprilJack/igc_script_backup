@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Reruns commands from the current directory's .bash_history file"
+	echo "rerun 1000 1002 1010 will rerun those commands only"
+else
+	for i in $@
+	do
+		x=$(awk $2 == $i .bash_history)
+	done
+fi

@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: appendFastaToPeaks HOMER_peak_file Fasta"
+	echo "Will read in the IDs from the first column of the HOMER peak file and append a new column containing the corresponding fasta strings"
+	exit 1
+fi
+count=0
+while IFS= read -r line
+do
+ 	if [ $count -gt 0 ]
+  	then
+  		id=$(echo $line | cut -f 1 -d' ')
+  		seq=$(grep -A 1 $id $2 | tail -n 1)
+  		echo -e "${line}\t${seq}"
+  		#echo $id
+  		#exit 0
+	else
+		echo -e "${line}\t$2"
+	fi
+	count=$((count+1))
+done < $1

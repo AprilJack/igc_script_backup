@@ -1,0 +1,40 @@
+#!/bin/bash
+# Will restore data backed up with backupdata using .backup file
+if [[ -e ".backup" ]]
+then
+	while IFS= read -r line
+	do
+		#echo "line is $line"
+		HASH=$(echo -e $line | tr -s ' ' |cut -f 1 -d' ')
+		LOC=$(echo -e $line | tr -s ' '|cut -f 4 -d' ')
+		echo "HASH is $HASH"
+		echo "LOC is $LOC"
+		backup=$(find $LOC -name "*${HASH}*")
+		echo "backup is $backup"
+		if [[ -e $backup ]]
+		then
+			echo "Restoring $backup"
+			mv $backup . 
+			tar --use-compress-program=pigz --keep-newer-files -xvf *${HASH}*.gz
+			RES=$?
+			if [[ $RES -eq 0 ]]
+			then
+				echo "Restored $backup successfully!"
+				rm *${HASH}*.gz
+			fi
+		else
+			echo "There is no backup with the hash $HASH in $LOC" 
+			echo "Let's check the tape backup"
+			#NEED TO IMPLEMENT
+			echo -e $line >> .backup2
+		fi
+	done < ".backup"
+	if [[ -e .backup2 ]]
+	then
+		mv .backup2 .backup
+	else
+		rm .backup
+	fi
+else
+	echo "There is no .backup file here... you may need to look for your backup in the secondary backup locations manually"
+fi

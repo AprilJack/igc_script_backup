@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then
+	echo "Usage: runcuffdiff <gtf file> <Prefix1> <Prefix2>"
+else
+	GTF=$1
+	BAM1=$(echo $2*.bam|tr -s '[:blank:]' ',')
+	BAM2=$(echo $3*.bam|tr -s '[:blank:]' ',')
+	COMMON=$(common $2 $3)
+	echo "Running cuffdiff on $BAM1 $BAM2 and outputing to cuffdiff_$COMMON"
+	cuffdiff -o cuffdiff_$COMMON -p 24 -library-norm-method classic-fpkm $1 $BAM1 $BAM2
+fi

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]
+then
+	echo "Usage: grabLinesFromHOMER fileWithGenes HOMERAnnotateFile > FilteredHOMERFile"
+else
+	head -n 1 $2
+	cut -f 1 $1 | sed '/^$/d' | sed 's/$/|/' | sed 's/^/\t/' > atemp.txt
+	grep -F -f atemp.txt $2
+	rm atemp.txt
+fi

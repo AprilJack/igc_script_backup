@@ -1,0 +1,24 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Will find all differential peaks between the tag directories specified using default settings then output stats"
+	echo "Usage: analyzeDifferentialPeaks tagdir1 tagdir2 [tagdir3] [... ]"
+else
+	rm allPeaks.txt
+	for i in $@
+	do
+		i=${i%/}
+		shift 1
+		for j in $@
+		do
+			j=${j%/}
+			echo "Finding differential peaks in $i vs $j"
+			findPeaks $i -i $j -style factor > ${i}vs${j}_peaks.txt
+			findPeaks $j -i $i -style factor > ${j}vs${i}_peaks.txt
+			echo ${i}vs${j}_peaks.txt >> allPeaks.txt
+			echo ${j}vs${i}_peaks.txt >> allPeaks.txt
+		done
+	done
+	mergePeaks -file allPeaks.txt -matrix mergeMatrix -venn mergeVenn -prefix mergePrefix > mergeOut.txt
+	echo "Finished!"	
+fi

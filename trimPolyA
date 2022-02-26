@@ -1,0 +1,55 @@
+#!/bin/bash
+
+if [[ $# -lt 1 ]]
+then
+	echo "Usage: trimPolyA file.fastq [LEN=9999] [MIN=20]"
+	echo "Handles unpaired only for now"
+	echo "Trims up to LEN A's from ends of reads and remove reads less than MIN bases"
+else
+	LEN=9999
+	MIN=20
+	if [[ $# -gt 1 ]]
+	then
+		LEN=$2
+		echo "LEN set to $LEN"
+	fi
+	if [[ $# -gt 2 ]]
+	then
+		MIN=$3
+		echo "MIN set to $MIN"
+	fi
+	if [[ -e $1 ]]
+	then
+		exec 5< $1
+		echo $TOTAL_LINES
+		while read NAME <&5 ; do
+			read SEQ <&5
+			read THIRD <&5
+			read QUAL <&5
+			T_SEQ=$SEQ
+			T_LEN=$(echo ${#T_SEQ})
+			while [ $T_LEN -ge $MIN ]
+			do
+				if [[ $T_SEQ == *"A" ]]
+				then
+					T_SEQ=${T_SEQ%A}
+					let T_LEN-=1
+				else
+					break
+				fi
+			done
+			T_QUAL=${QUAL:0:$T_LEN}
+			if [ $T_LEN -ge $MIN ]
+			then
+				echo "$NAME"
+				echo "$T_SEQ"
+				echo "$THIRD"
+				echo "$T_QUAL"
+			fi	
+			#echo "SEQ=$SEQ TSEQ=$T_SEQ QUAL=$QUAL TQUAL=$T_QUAL"
+		done
+	else
+		echo "$1 doesn't exist!"
+	fi
+	
+fi

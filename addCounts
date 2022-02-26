@@ -1,0 +1,21 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: addCounts raw.txt readsToAdd"
+else
+	re='^[0-9]+([.][0-9]+)?$'
+	tab=$'\t'
+	while read line; do
+		#echo "word = $word"
+		for word in $line; do
+			if  [[ $word =/sanger $re ]] ; then
+				CUT=$("echo $word | cut -d'.' -f1")
+				num=$(($CUT + $2))
+				echo -n ${num}$tab
+			else
+				echo -n ${CUT}$tab
+			fi	
+		done
+		echo ""
+	done <$1		
+fi

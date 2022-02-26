@@ -1,0 +1,15 @@
+#!/bin/bash
+check=$(curl -s -w "%{http_code}\n" -L "igc2.salk.edu/igcwiki/" -o /dev/null)
+if [[ $check != 200 ]]
+then
+	echo "Restarting wiki"
+	service mysqld start
+	service httpd reload
+fi
+check=$(curl -s -w "%{http_code}\n" -L "igc2.salk.edu:8090/" -o /dev/null)
+if [[ $check != 200 ]]
+then
+	echo "Restarting Galaxy"
+	source /gpfs/tools/.bashTools
+	/home/galaxy/galaxy/run.sh --daemon
+fi

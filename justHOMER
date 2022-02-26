@@ -1,0 +1,47 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Runs Makes tag dirs, produces fpkm and raw gene counts, and converts sam to sorted indexed bam"
+	echo "Usage: justHOMER HOMERgenome (e.g. mm10)"
+
+else
+	GENOME=$1
+	shift 1
+	#justSTAR $GENOME $DIR $@
+	for i in *.sam
+	do
+
+		paired=$(head -n 10000 $i | samtools view -S -f 0x1 - | wc -l)
+		if [[ $paired -gt 0 ]]
+		then
+			echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+		else
+			echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
+			makeTagDirectory tags/${i%Aligned.out.sam} $i -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+		fi
+	done 
+	analyzeRepeats.pl rna ${GENOME} -d tags/* -raw -count exons -condenseGenes -strand + -normMatrix > rawPlus.txt
+	analyzeRepeats.pl rna ${GENOME} -d tags/* -raw -count exons -condenseGenes -strand - -normMatrix > rawMinus.txt
+	plus=$(cat rawPlus.txt | cut -f 9 | tail -n +2 | paste -sd+ | bc)
+	minus=$(cat rawMinus.txt | cut -f 9 | tail -n +2 | paste -sd+ | bc)
+	comp=$(echo $plus'>'$minus | bc -l)
+	if [[ $comp -eq 1 ]]
+	then
+		mv rawPlus.txt raw.txt
+		analyzeRepeats.pl rna ${GENOME} -d tags/* -fpkm -count exons -condenseGenes -strand + -normMatrix > fpkm.txt
+		rm rawMinus.txt
+	else
+		echo "Looks like the reads are mapping to the opposite strand of genes, so using -strand -"
+		mv rawMinus.txt raw.txt
+		analyzeRepeats.pl rna ${GENOME} -d tags/* -fpkm -count exons -condenseGenes -strand - -normMatrix > fpkm.txt
+		rm rawPlus.txt
+	fi
+	summarizeSTAR
+	countSummary
+	fpkmCluster
+	fpkmPCA
+	cleanSAMs .
+	echo "done aligning, building tag dirs, quantifying, and making sorted indexed bams"
+	rm -rf *_tmp *_STARtmp
+fi

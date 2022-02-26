@@ -1,0 +1,6 @@
+2021-08-30.12:36:08  1125  cd app
+2021-08-30.12:36:09  1126  ls
+2021-08-30.12:36:24  1127  java -jar ena-file-downloaderv1.2.2.jar 
+2021-09-02.11:15:35  1128  vi $(which hollernSTAR)
+2021-09-02.11:18:13  1129  sudo vi $(which hollernSTAR)
+2021-09-02.11:46:22  1130  man sort

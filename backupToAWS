@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -lt 2 ] 
+then
+	echo "Useage: backupToAWS AWSdir file1 [file2] ... [fileN]"
+	echo "Example: backupToAWS igcStore alignment1.bam alignment2.bam analysis.txt"
+	echo "For file download see IGC admin wiki"
+else
+	DIR=$1
+	shift 1
+	for i in $@
+	do
+		aws s3 cp $i s3://igcbackup/$DIR --storage-class DEEP_ARCHIVE
+		echo "Stored $i in $DIR"
+	done
+	echo "Files in s3://igcbackup/$DIR :"
+	aws s3 ls s3://igcbackup/$DIR
+fi
+
+
+
+#aws s3 cp <folder_name> s3://igcbackup/illumina/fastq/ --storage-class DEEP_ARCHIVE --recursive --exclude "*" --include "*.fastq.gz"

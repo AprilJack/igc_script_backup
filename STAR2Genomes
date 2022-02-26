@@ -1,0 +1,41 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Runs STAR alignment and outputs to current directory. Unmapped reads are then mapped to second genome."
+	echo "Usage: STAR2Genomes genomeDir1 genomeDir2"
+	echo "Genome dirs available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME1=$1
+	GENOME2=$2
+	shift 2
+	for i in $( ls *_R1*.fastq.gz )
+	do
+		start_time="$(date -u +%M)"
+		R1=$i
+		R2=${i//_R1/_R2}
+		PREFIX=${R1%_R1*}
+		if [ -e $R2 ]
+		then
+			echo "Processing paired reads: $R1 and $R2 using genome $GENOME1 and outputing to $PREFIX"
+			STAR --outReadsUnmapped Fastx --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME1 --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX $@ --outSAMstrandField intronMotif > ${PREFIX}.log
+			echo "Processing paired reads: ${PREFIX}Unmapped.out.mate1 and ${PREFIX}Unmapped.out.mate2 using genome $GENOME2 and outputing to ${PREFIX}_2"
+			STAR --genomeDir /gpfs/genomes/$GENOME2 --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn ${PREFIX}Unmapped.out.mate1 ${PREFIX}Unmapped.out.mate2 --outFileNamePrefix ${PREFIX}_2 $@ --outSAMstrandField intronMotif > ${PREFIX}.log
+		else
+			echo "Processing single-end reads: $R1 using genome $GENOME1 and outputing to $PREFIX"
+			STAR --outReadsUnmapped Fastx --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /gpfs/genomes/$GENOME1 --runThreadN 24 --readFilesIn $R1 --outFileNamePrefix $PREFIX --outSAMstrandField intronMotif > ${PREFIX}.log
+			echo "Processing paired reads: ${PREFIX}Unmapped.out.mate1 and using genome $GENOME2 and outputing to ${PREFIX}_2"
+			STAR --genomeDir /gpfs/genomes/$GENOME2 --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn ${PREFIX}Unmapped.out.mate1 --outFileNamePrefix ${PREFIX}_2  --outSAMstrandField intronMotif > ${PREFIX}.log
+		fi
+		end_time="$(date -u +%M)"
+		elapsed="$((10#$end_time-10#$start_time))"
+		echo "Took $elapsed minutes to align $PREFIX"
+	done
+	rm Aligned.out.sam
+	rm -rf *_tmp *_STARtmp
+fi

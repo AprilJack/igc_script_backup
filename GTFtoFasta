@@ -1,0 +1,2 @@
+#!/bin/bash
+java -Xmx16G -cp /gpfs/tools/scripts GTFtoFasta $@

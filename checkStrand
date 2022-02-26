@@ -1,0 +1,7 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "Usage: checkStrand dirWithTagDirs > plusVsminus.txt"
+else
+	for i in $(find $1 -name tagAutocorrelation.txt); do x=$(tail -n 1 $i | cut -f 2); y=$(tail -n 1 $i | cut -f 3); echo -e "${i%/tagAutocorrelation.txt}\t$(bc -l <<< "scale=2; $x/$y")" ; done 
+fi

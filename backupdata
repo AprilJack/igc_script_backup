@@ -1,0 +1,291 @@
+#!/bin/bash
+#IGC backup and restore script. Can be run as a chron job or manually as needed to backup and restore backuped up locations
+
+LOGFILE="/gpfs/analyses/.backupLog"
+DIRLIST="/gpfs/analyses/backupLocationList.txt"
+TEMPLOC="/gpfs/analyses/"
+OLDDAYS=365
+TAPE="/versity/igc/backup/"
+VERBOSE=false
+MODE=1 #backup 2=restore
+DELTAPE=false #delete tape backup upon resore
+KEEPFILES=false #delete files that are backed up  (kinda the point but canbe turned off if deeded)
+USELIST=false # if the user sets -d then will read directories from the file one line at a time instead of arguments
+THEDATE=$(date +%F-%H-%M)
+
+isOld () {
+	if [ ! -z "$(ls $1)" ]
+	then
+		YCOUNT=$(find $1 -mtime -${OLDDAYS} -not -path '*/\.*' -type f -print | wc -l )
+		if [[ $YCOUNT -gt 0 ]]
+		then
+			if [ "$VERBOSE" = true ]; then echo "$1 is not old, seeing if we have old subdirectories that we can backup" ;fi
+			for dir in $(find $1 -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*') 
+	    		do
+				isOld $dir
+			done
+		else
+			echo "$1" >> "${TEMPLOC}/.old"
+			if [ "$VERBOSE" = true ]; then echo "$1 is old"; fi
+	 	fi	
+	fi
+}
+restoreDIR () {
+	if [[ -e "${1%/}/.backup" ]]
+	then
+	        while IFS= read -r line
+	        do
+	                #echo "line is $line"
+	                HASH=$(echo -e $line | tr -s ' ' |cut -f 1 -d' ')
+	                LOC=$(echo -e $line | tr -s ' '|cut -f 4 -d' ')
+	                if [ "$VERBOSE" = true ]; then echo "HASH is $HASH";fi
+	                if [ "$VERBOSE" = true ]; then echo "LOC is $LOC"; fi
+	                backup=$(find $LOC -name "*${HASH}*")
+	                if [ "$VERBOSE" = true ]; then echo "backup is $backup"; fi
+	                if [[ -e $backup ]]
+	                then
+	                        if [ "$VERBOSE" = true ]; then echo "Restoring $backup"; fi
+	                        mv $backup .
+	                        tar --use-compress-program=pigz --keep-newer-files -xvf *${HASH}*.gz
+	                        RES=$?
+	                        if [[ $RES -eq 0 ]]
+	                        then
+	                                if [ "$VERBOSE" = true ]; then echo "Restored $backup successfully!";fi
+					echo "${THEDATE}:Restored $backup successfully! DELTAPE=$DELTAPE" >> $LOGFILE 
+	                                rm *${HASH}*.gz
+					if [ "$DELTAPE" = true ]
+					then
+						rm $TAPE/*${HASH}*.gz
+						if [ "$VERBOSE" = true ]; then echo "Deleted the tape backup on $TAPE"; fi
+					fi
+	                        fi
+	                else
+	                        if [ "$VERBOSE" = true ]; then echo "There is no backup with the hash $HASH in $LOC, so we'll check the tape backup on $TAPE"; fi
+				backup=$(find $TAPE -name "*${HASH}*")
+	                        if [[ -e $backup ]]
+        	                then
+                                	if [ "$VERBOSE" = true ]; then echo "Restoring $backup"; fi
+                                	mv $backup .
+                                	tar --use-compress-program=pigz --keep-newer-files -xvf *${HASH}*.gz
+                                	RES=$?
+                                	if [[ $RES -eq 0 ]]
+                                	then
+                                	        if [ "$VERBOSE" = true ]; then echo "Restored $backup successfully!";fi
+                                        	rm *${HASH}*.gz
+						echo "${THEDATE}:Restored $backup successfully from tape" >> $LOGFILE 
+					else
+						if [ "$VERBOSE" = true ]; then echo "Restoration of $backup failed!"; fi
+						echo "${THEDATE}:Restoration of $backup failed!" >> $LOGFILE 
+						
+						echo -e $line >> "${1%/}/.backup2"
+					fi
+                        	else
+					if [ "$VERBOSE" = true ]; then echo "The backup ($backup) didn't exist on secondary storage OR tape. Maybe it was deleted or moved elsewhere"; fi
+					echo "${THEDATE}:Restoration of $backup failed: it doesn't exist on secondary or tape!" >> $LOGFILE 
+	       	                	echo -e $line >> "${1%/}/.backup2"
+        		       	fi
+			fi
+     	   	done < "${1%/}/.backup"
+     	   	if [[ -e "${1%/}/.backup2" ]]
+     	   	then
+     	   	        mv ${1%/}/.backup2 ${1%/}/.backup
+     	   	else
+     	   	        rm ${1%/}/.backup
+     	   	fi
+	else
+	        if [ "$VERBOSE" = true ]; then echo "There is no .backup file here... you may need to look for your backup in the secondary backup locations manually"; fi
+	fi
+}
+
+backupDIR () {
+	#Let's tarball the entire dir. 
+	if [ "$VERBOSE" = true ]; then echo "Compressing $1 and saving it to ${1%/}/.backup.tar.gz"; fi
+	CURRDIR=$(pwd)
+	if [[ -e $1 ]]
+	then
+		cd ${1%/}
+		tar --exclude=".*" -cpvf .backup.tar.gz  --use-compress-program=pigz --atime-preserve *
+		TARRETURN=$?
+		if [[ $TARRETURN -lt 1 && "$KEEPFILES" = false ]]
+		then
+			#for each file in the archive let's remove it and all empty dirs. 
+			for i in $(tar -tf .backup.tar.gz| tac); do if [[ $i == */ ]]; then rmdir --ignore-fail-on-non-empty $i ; else rm -f $i; fi; done
+		fi
+		cd "$CURRDIR"
+	fi
+	if [[ $TARRETURN -lt 1 ]]
+	then
+		if [ "$VERBOSE" = true ]; then echo "Compression for $1 finished without errors"; fi
+		cd ${1%/}
+		MDSUM=$(md5sum .backup.tar.gz| cut -f 1 -d ' ')
+		LOCATION=$(pwd| tr '/' '=')
+		SIZE=$(ls -1s .backup.tar.gz | cut -f 1 -d' ')
+		cd $CURRDIR
+		#LETS check if we have room to move this
+		#this is manual for now
+		for where in '/boll/cellar@/boll/cellar/backup' 'sanger01:/vol/nfs_data@/sanger/nfs_data/backup' 'sanger02:/vol/nfs_data_2@/sanger/nfs_data_2/backup' 'multilabna.salk.edu:/igc_data1@/multilab/data/backup' 'multilabna.salk.edu:/igc_data2@/multilab/data2/backup'
+		do
+			DRIVE=$(echo $where | cut -f 1 -d'@')
+			DLOC=$(echo $where | cut -f 2 -d'@')
+			AVAILABLE=$(df | grep $DRIVE | tr -s ' ' | cut -f 4 -d ' ') 
+			if [[ $AVAILABLE -gt $SIZE ]]
+			then
+				if [[ ! -e ${DLOC}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz ]]
+				then 
+					mv ${1%/}/.backup.tar.gz ${1%/}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz
+					chmod 660 ${1%/}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz
+					if [ "$VERBOSE" = true ]; then echo "Backing up to $TAPE"; fi
+					cp ${1%/}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz $TAPE 
+					if [ "$VERBOSE" = true ]; then echo "Backing up to $DLOC [$SIZE/$AVAILABLE]"; fi
+					mv ${1%/}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz $DLOC
+					echo -e "${MDSUM}\t${THEDATE}\t${LOCATION}\t${DLOC}" >> ${1%/}/.backup	
+					echo -e "${MDSUM}\t${THEDATE}\t${LOCATION}\t${DLOC}" >> ${LOGFILE}	
+					if [ "$VERBOSE" = true ]; then echo "Done backing up $1 to ${DLOC}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz"; fi
+					echo "$THEDATE:Done backing up $1 to ${DLOC}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz and to $TAPE" >> $LOGFILE
+					return 0
+				else
+					if [ "$VERBOSE" = true ]; then echo "Could not back up $1 to ${DLOC}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz because it was already there!"; fi
+					echo "$THEDATE:Could not back up $1 to ${DLOC}/${THEDATE}_${LOCATION}_${MDSUM}.backup.gz because it was already there!" >> $LOGFILE
+				fi
+			else
+				if [ "$VERBOSE" = true ]; then echo "Can't back up to $where [$SIZE/$AVAILABLE]... trying the next place on the list"; fi
+			fi
+		done
+		if [ "$VERBOSE" = true ]; then echo "Backup of $1 failed due to lack of space at all secondary backup locations!"; fi
+		echo "$THEDATE:Backup of $1 failed due to lack of space at all secondary backup locations!" >> $LOGFILE
+		return 1
+	else
+		if [ "$VERBOSE" = true ]; then echo "Tar failed with return status $TARRETURN on $1 so it wasn't backed up"; fi
+		echo "$THEDATE:Tar failed with return status $TARRETURN on $1 so it wasn't backed up" >> ${LOGFILE}
+	fi
+}
+	
+if [[ $# -lt 1 ]]
+then
+	echo "IGC's backup and restore script v0.2"
+	echo "------------------------------------"
+	echo "Used to backup and restore directories surpassing a specific age. Backs up as tar.gz to secondary storage and tape and leaves a placeholder .backup file. Backs up to versity tape as well."
+	echo "Can be used to restore backed up location(s) as well, and keeps a log file of all events. Secondary storage is selected as first with sufficient space among boll, nfs_data, and nfs_data_2. "
+	echo -e "\nUsage: backupdata [options] [location1] ... [locationN]\n"
+	echo -e "\t-a|--age\t\tDirectories with all files > this number of days will be backed up [$OLDDAYS]"
+	echo -e "\t-l|--log\t\tLogfile location. [$LOGFILE]"
+	echo -e "\t-d|--dirs\t\tFile with backup/restore locations listed. Will use instead of args. [$DIRLIST]"
+	echo -e "\t-t|--temp\t\tTemporary location used during backups. [$TEMPLOC]"
+	echo -e "\t-v|--verbose\t\tPrint status messages while running. [$VERBOSE]"
+	echo -e "\t-r|--restore\t\tRestore directories instead of backing them up. Age is ignored. [false]"
+	echo -e "\t-k|--keep-files\t\tDoes not delete backed up files. [$KEEPFILES]"
+	echo -e "\t--delete-tape\t\tWill delete copy of backup stored on tape upon restore. [$DELTAPE]"
+	echo -e "\n\nFor more information please refer to igcwiki or email the core."
+else
+	OLDLIST="${TEMPLOC}.old"
+	POSITIONAL=()
+	while [[ $# -gt 0 ]]; do
+  	key="$1"
+
+  	case $key in
+    	-a|--age)
+    	  OLDDAYS="$2"
+    	  shift # past argument
+    	  shift # past value
+    	  ;;
+    	-l|--log)
+    	  LOGFILE="$2"
+    	  shift # past argument
+    	  shift # past value
+     	 ;;
+    	-d|--dirs)
+      	DIRLIST="$2"
+	USELIST=true
+      	shift # past argument
+      	shift # past value
+      	;;
+    	-t|--temp)
+      	TEMPLOC="$2"
+	OLDLIST="${TEMPLOC%/}/.old"
+      	shift # past argument
+      	shift # past value
+      	;;
+    	-v|--verbose)
+      	VERBOSE=true
+      	shift # past argument
+      	;;
+    	-r|--restore)
+      	MODE=2
+      	shift # past argument
+      	;;
+    	-k|--keepfiles)
+      	KEEPFILES=true
+      	shift # past argument
+      	;;
+    	--delete-tape)
+      	DELTAPE=true
+      	shift # past argument
+      	;;
+    	*)    # unknown option
+      	POSITIONAL+=("$1") # save it in an array for later
+      	shift # past argument
+      	;;
+  	esac
+	done
+        set -- "${POSITIONAL[@]}" # restore positional parameters
+####################### RUN SCRIPT DEPENDING ON MODE	
+	echo $(date) > $OLDLIST
+	if [ "$MODE" = 1 ] #backup
+	then
+		SECONDS=0
+		if [ "$VERBOSE" = true ]; then echo "Backing up"; fi
+		if [ "$USELIST" = true ] 
+		then
+			for bigdir in $(cat $DIRLIST)
+			do
+				if [ "$VERBOSE" = true ]; then echo "Checking $bigdir in $DIRLIST"; fi
+				isOld $bigdir
+			done
+		else
+			if [ "$VERBOSE" = true ]; then echo "Will try to backup $@"; fi
+			for bigdir in $@
+			do
+				if [ "$VERBOSE" = true ]; then echo "Checking $bigdir"; fi
+				isOld $bigdir
+			done
+		fi
+		#Now we can go through and process the old files
+		runtime=$(echo "$(($SECONDS / 60)) m and $(($SECONDS % 60)) s.")
+		if [ "$VERBOSE" = true ]; then echo "There were $(tail -n +2 $OLDLIST | wc -l) old directories found (took $runtime)"; fi
+		for old in $(tail -n +2 $OLDLIST)
+		do
+			SECONDS=0
+			if [ "$VERBOSE" = true ]; then echo "Backing up old directory $old"; fi
+			backupDIR $old
+			runtime=$(echo "$(($SECONDS / 60)) m and $(($SECONDS % 60)) s.")
+			if [ "$VERBOSE" = true ]; then echo "Backup of $old took $runtime"; fi
+			
+		done
+		if [ "$VERBOSE" = true ]; then echo "LOG FILE: $LOGFILE";tail $LOGFILE; fi
+	else
+	if [ "$VERBOSE" = true ]; then echo "Restore mode"; fi
+	#RESTORE
+		if [ "$USELIST" = true ] 
+		then
+			for bigdir in $(cat $DIRLIST)
+			do
+				if [ "$VERBOSE" = true ]; then echo "Restoring $bigdir"; fi
+				SECONDS=0
+				restoreDIR $bigdir
+				runtime=$(echo "$(($SECONDS / 60)) m and $(($SECONDS % 60)) s.")
+				if [ "$VERBOSE" = true ]; then echo "Restoring $bigdir took $runtime"; fi
+			done
+		else
+			if [ "$VERBOSE" = true ]; then echo "Will try to restore $@"; fi
+			for bigdir in $@
+			do
+				if [ "$VERBOSE" = true ]; then echo "Restoring $bigdir"; fi
+				SECONDS=0
+				restoreDIR $bigdir
+				runtime=$(echo "$(($SECONDS / 60)) m and $(($SECONDS % 60)) s.")
+				if [ "$VERBOSE" = true ]; then echo "Restoring $bigdir took $runtime mins."; fi
+			done
+		fi
+		if [ "$VERBOSE" = true ]; then echo "LOG FILE: $LOGFILE"; tail $LOGFILE; fi
+	fi
+fi

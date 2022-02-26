@@ -1,0 +1,3 @@
+#!/bin/bash
+Rscript /gpfs/tools/scripts/FPKMtoCluster.R $@
+

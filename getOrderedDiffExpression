@@ -1,0 +1,3 @@
+#!/bin/bash
+Rscript /dev/gpfs/tools/scripts/getOrderedDiffExpression.R $@
+

@@ -1,0 +1,6 @@
+#!/bin/bash
+for i in $@
+do
+	cut $line -f1-3,5 >> ${i}_m_bedGraph
+	cut $line -f1-3,6 >> ${i}_u_bedGraph
+done

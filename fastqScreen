@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "Runs fastq-screen to check for contamination in your reads... will downsample the fastq first"
+	echo "ex: fastqScreen fastq1.fastq.gz fastq2.fastq.gz ..."
+else
+	for i in $@
+	do
+		echo "PROCESSING: $i"
+		zcat $i | head -n 400000 > ${i%fastq.gz}_sampled.fastq
+		fastq_screen ${i%fastq.gz}_sampled.fastq --aligner bowtie --subset 0
+		rm ${i%fastq.gz}_sampled.fastq
+		#Screen output postprocessing
+	done
+fi

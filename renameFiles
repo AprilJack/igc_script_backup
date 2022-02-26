@@ -1,0 +1,36 @@
+#!/bin/bash
+if [ $# -gt 0 ]
+then
+	if [ $# -gt 1 ]
+	then
+		files=$@
+		for file in $files
+		do
+		  echo "Rename $file to:?"
+		  read -r new_name
+		  mv "$file" "$new_name"
+		done
+	else	
+		ONECOUNT=$(cut $1 -f 1 | sort | uniq | wc -l)
+		TWOCOUNT=$(cut $1 -f 2 | sort | uniq | wc -l)
+		if [ $ONECOUNT -eq $TWOCOUNT ]
+		then
+			echo "Renaming files in column one to column two in $1 in 5 seconds. Please Ctr-Z to stop. "
+			sleep 5
+			while read line; do
+				INFILE=$(echo "$line" | cut -f 1)
+				OUTFILE=$(echo "$line" | cut -f 2)
+				if [ -e "$INFILE" ]
+				then
+					mv $INFILE $OUTFILE
+				else
+					echo "$INFILE does not exist... Skipping"
+				fi
+			done < $1
+		else
+			echo "Unequal number of input and output files specified in $1. Please check and make sure that $1 is a tab-separated file with unique names in both columns."
+		fi
+	fi
+else
+	echo "Prompts users to rename the files supplied one at a time or if 1 arg: rename column 1 in arg to column 2"
+fi

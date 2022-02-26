@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then
+	echo "Runs STAR alignment, makes tagDirs, and generates bigWig file links"
+	echo "Usage: ChIPSTAR genomeDir dirWith_R1.fastq.gz PREFIX [homerGenome]"
+	echo "Set homergenome if your genomeDir is not a recognized homer genome"
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*.star)
+	for i in $genomes
+	do
+		echo ${i##*/}
+	done
+else
+	GENOME=$1
+	DIR=$2
+	PREFIX=$3
+	shift 3
+	justSTAR $GENOME $DIR
+        if [ $# -gt 0 ]
+        then
+		echo "Using homer genome ${GENOME%.star}"
+                GENOME=$1
+        fi
+	rm -rf *_tmp *_STARtmp
+	### NOW WE WILL MAKE TAG DIRS
+	for i in *.sam
+	do
+		makeTagDirectory tags/${i%Aligned.out.sam} $i
+	done
+	### MAKING BIGWIG ####
+	makeBigWig -l $PREFIX -g ${GENOME%.star} -d tags/* -u -fragLength given
+	### samToBam ###
+	cleanSAMs .  
+fi

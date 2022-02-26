@@ -1,0 +1,24 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]
+then
+	echo "DON'T USE THIS. THIS DOESN'T PLAY WELL WITH HOMER! Applies a normalization factor to HOMER tag directories on a read level based on spikein counts or whatever"
+	echo "The user provides a file containing two columns: tagDir names and a multiplier in the other"
+	echo ""
+	echo "Usage: normalizeTags normalization_file.txt"
+	echo ""
+	echo "Normalization file looks like:"
+	echo "TagDir1 0.5"
+	echo "tagDir2 0.76"
+	echo "..."
+else
+	echo "Reading in the normalization table file: $1"
+	while IFS='' read line || [[ -n "$line" ]]; do
+    		dir=$(echo $line | cut -f1 -d' ')
+		factor=$(echo $line | cut -f2 -d' ')
+		echo "Applying factor: $factor to tags in $dir"
+		for i in ${dir%/}/*.tsv
+		do
+			awk '{$4=sprintf("%.2f",$4*a);print}' a=$factor OFS='\t' $i > tmp && mv tmp $i
+		done 
+	done < "$1"
+fi

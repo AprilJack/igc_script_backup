@@ -1,0 +1,27 @@
+#!/bin/bash
+ARGS=""
+TEMPSAMS=""
+for i in $@
+do
+	if [[ $i == *".bam" ]]
+	then
+		echo "Generating a sam file from $i"
+		time samtools view -h $i > ${i%.bam}.sam
+		ARGS="${ARGS} ${i%.bam}.sam"
+		TEMPSAMS="${TEMPSAMS} ${i%.bam}.sam" 
+	else
+		ARGS="${ARGS} $i"
+	fi
+done
+java -Xmx96G -cp /dev/gpfs/tools/scripts MAPS $ARGS
+#echo "cleaning up temporary generated sam files..."
+#for i in $TEMPSAMS
+#do
+#	if [[ $i == *".sam" ]]
+#	then
+#		rm $i
+#		echo "Deleted $i"
+#	fi
+#done
+echo "Done running MAPS!"
+

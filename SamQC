@@ -1,0 +1,17 @@
+!#/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage SamQC [Reflat] file1.sam file2.sam file3.sam ..."
+	echo ""
+	echo "Available Refflats:"
+	ls /gpfs/genomes/*/*.rf
+else
+	REFFLAT=$1
+	shift 1
+	for i in $@
+	do
+		echo "QCing $i"
+		picard CollectRnaSeqMetrics REF_FLAT=$REFFLAT I=$i CHART=${i%.sam}.pdf O=${i%.sam}_metrics.txt STOP_AFTER=10000000 QUIET=true STRAND=NONE
+	done
+	echo "Done!"
+fi

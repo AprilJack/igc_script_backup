@@ -1,0 +1,91 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Quantifies genes and outputs just the big count table. "
+	echo "Usage: countSTAR genomeDirWithAnnotation dirWith_R1.fastq.gz [count x reads, x=24000000]"
+	echo "Will only map the first 24 million reads by default."
+	echo "Genomes available:"
+
+	genomes=$(ls -d /gpfs/genomes/*)
+	for i in $genomes
+	do
+		if [ -e ${i}/sjdbList.out.tab ]
+		then
+			echo ${i##*/}
+		fi
+	done
+else
+	GENOME=$1
+	DIR=$2
+	COUNT=24000000
+	if [ $# -gt 2 ]
+	then
+		COUNT=$3	
+	fi
+	
+	STAR --genomeLoad LoadAndExit --genomeDir /gpfs/genomes/$GENOME
+	for i in $( ls ${DIR}/*_R1*.fastq.gz )
+	do
+		R1=$i
+		R2=${i/_R1/_R2}
+		PREFIX=${R1%_R1*}
+		if [ -e ${PREFIX}ReadsPerGene.out.tab ]
+		then 
+			echo "Already quantified $PREFIX skipping..."
+		else
+			if [ -e $R2 ]
+			then
+				echo "Processing paired reads: $R1 and $R2 using genome $GENOME outputing to $PREFIX"
+				STAR --genomeLoad LoadAndKeep --readMapNumber $COUNT --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN 20 --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX --outSAMtype None --quantMode GeneCounts
+				if [ $? -ne 0 ]
+				then
+					echo "Error sent to countSTAR.log"
+					echo "$i" >> countSTAR.log
+				fi
+				
+			else
+				echo "Processing single-end reads: $R1 using genome $GENOME and outputing to $PREFIX"
+				STAR --genomeLoad LoadAndKeep --readMapNumber $COUNT --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN 20 --readFilesIn $R1 --outFileNamePrefix $PREFIX --outSAMtype None --quantMode GeneCounts
+				if [ $? -ne 0 ]
+				then
+					echo "Error sent to countSTAR.log"
+					echo "$i">> countSTAR.log
+				fi
+			fi
+		fi
+	done
+	rm Aligned.out.sam
+	rm -rf *_tmp *_STARtmp
+	STAR --genomeLoad Remove --genomeDir /gpfs/genomes/$GENOME
+	echo "Combining the counts into one table called STARcounts.txt"
+	for i in $( ls ${DIR}/*ReadsPerGene.out.tab )
+	do
+		head -n 1000 $i | tail -n +5 > temp
+		echo ${i%ReadsPerGene.out.tab} > ${i%.tab}.count
+		TWO=$(awk '{s+=$3}END{print s}' temp)
+		THREE=$(awk '{s+=$4}END{print s}' temp)
+		THREE=$(( THREE + 1 ))
+		RATIO=$(echo ${TWO}/${THREE} | bc -l)
+		echo "Ratio for $i was $RATIO"
+		if echo "$RATIO > 2" | bc -l | grep -q 1
+		then
+			cat $i | cut -f 3 | tail -n +2 >> ${i%.tab}.count
+			echo "Printing column 3"
+		else
+			if echo "$RATIO < 0.5" | bc -l | grep -q 1
+			then
+
+				cat $i | cut -f 4 | tail -n +2 >> ${i%.tab}.count
+				echo "Printing column 4"
+			else
+				cat $i | cut -f 2 | tail -n +2 >> ${i%.tab}.count
+				echo "Printing column 2"
+			fi
+		fi
+		rm temp
+	done
+	cat $i | cut -f 1 > header
+	ls -1 *.count | split -l 1000 -d - lists; for list in lists*; do paste $(cat $list) > merge${list##lists}; done; paste header merge* > STARcounts.txt 
+	rm header
+
+fi

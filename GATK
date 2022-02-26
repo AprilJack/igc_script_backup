@@ -1,0 +1,2 @@
+#!/bin/bash
+python /gpfs/tools/gatk-4.0.8.1/gatk "$@"

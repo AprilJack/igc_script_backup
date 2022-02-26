@@ -1,0 +1,20 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: filterTagDirectory PEdir chr"
+	echo "Will create a new directory cotaining new tsv files that only have interactions to the chr specified"
+	echo "Interactions within the chr of interest will also be removed"
+	echo "Example: filterTagDirectory hg19ad5TCC ad5"
+else
+	echo "Will make a new tagDir called ${1}_only${2}"
+	sleep 3
+	echo "Generating filtered tags"
+	for i in $1/*.tsv 
+	do
+		grep $2 $i > ${i%.tsv}_filtered.tsv
+	done
+	grep chr $1/${2}.tags.tsv > $1/${2}.tags_filtered.tsv
+ 	makeTagDirectory ${1}_only${2} -t ${1}/*_filtered.tsv
+	rm ${1}/*_filtered.tsv
+	echo "Done!"	
+fi

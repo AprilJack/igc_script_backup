@@ -1,0 +1,5 @@
+#!/bin/bash
+for i in $@
+do
+	echo -e "${i}\t" ;awk '{print NF}' $i  | sort -nu | tail -n 1
+done

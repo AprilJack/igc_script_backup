@@ -1,0 +1,58 @@
+#!/bin/bash
+
+grep "Uniquely mapped reads %" *.final.out > grep.tmp
+grep "% of reads mapped to multiple loci" *.final.out > grep2.tmp
+grep "% of reads unmapped: too short" *.final.out > grep3.tmp
+grep "input reads" *.final.out > grep4.tmp
+
+if [ -e summary.csv ]
+then
+	rm summary.csv
+fi
+echo -n "Sample" > summary.csv
+while read -r i
+do
+	#echo $i
+	FIRST=`echo $i | cut -d' ' -f1 | cut -d'.' -f1`
+        echo -n ,$FIRST >> summary.csv
+done < grep.tmp
+echo "" >> summary.csv
+echo -n "Unique%" >> summary.csv
+while read -r i
+do
+       	SECOND=`echo $i | rev | cut -d' ' -f1 | rev | cut -d'%' -f1`
+	echo -n ,$SECOND >> summary.csv
+done < grep.tmp
+echo "" >> summary.csv
+echo -n "Multiple%"  >> summary.csv
+while read -r i
+do
+       	SECOND=`echo $i | rev | cut -d' ' -f1 | rev | cut -d'%' -f1`
+	echo -n ,$SECOND >> summary.csv
+done < grep2.tmp
+echo ""  >> summary.csv
+echo -n "Unmapped%"  >> summary.csv
+while read -r i
+do
+       	SECOND=`echo $i | rev | cut -d' ' -f1 | rev | cut -d'%' -f1`
+	echo -n ,$SECOND >> summary.csv
+done < grep3.tmp
+echo ""  >> summary.csv
+echo -n "Total Reads"  >> summary.csv
+while read -r i
+do
+       	SECOND=`echo $i | rev | cut -d' ' -f1 | rev | cut -d'%' -f1`
+	echo -n ,$SECOND >> summary.csv
+done < grep4.tmp
+echo "" >> summary.csv
+#echo -n "PosToMinusRatio" >> summary.csv
+#for i in tags/*/
+#do
+#	SECOND=`echo "scale=2; $(tail -n 1 ${i}tagAutocorrelation.txt | cut -f 2) / $(tail -n 1 ${i}tagAutocorrelation.txt | cut -f 3)" | bc`
+#	echo -n ,$SECOND >> summary.csv
+#done
+rm grep.tmp
+rm grep2.tmp
+rm grep3.tmp
+rm grep4.tmp
+#countSummary

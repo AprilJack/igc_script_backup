@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: predictORFs Transcripts.fasta"
+	echo "Takes fasta transcripts from e.g. Trinity and runs TransDecoder on it"
+else
+	TRANSCRIPTS=$1
+	echo "Finding orfs in $TRANSCRIPTS using TransDecoder"
+	TransDecoder.LongOrfs -t $TRANSCRIPTS -m 10
+	TransDecoder.Predict -t $TRANSCRIPTS --retain_long_orfs 200 
+	blat -q=dna -t=dna ~/nfs_data/maxsh/genomes/hg19/hg19.fa *.transdecoder.cds $TRANSCRIPTS.psl
+	keepBestPsl *.transdecoder.cds $TRANSCRIPTS.psl
+	echo "FINISHED!"
+	
+fi

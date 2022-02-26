@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "Usage: processFindGO dir_with_gene_list_files organism(e.g. mouse/human)"  
+	echo "Outputs enriched terms to enrichment.txt in tab format"
+else
+
+	DIR=$1
+	ORG=$2
+	shift 2
+	for i in $(ls $DIR/*)
+	do
+		echo "Finding enrichment for genes: $i"
+		findGO.pl $i $ORG ${i}_enrichment -cpu 24
+	done 
+	echo "Done... now processing enrichment"
+	java -cp ~/nfs_data/maxsh/scripts processFindGO $DIR > $DIR/enrichment.txt 
+	echo "Done running enrichment analysis for $DIR"
+fi

@@ -1,0 +1,145 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then
+	echo "MicroproteinCombiner HOMERGENOME OUTPREFIX RunRiboSeqDir1 [RunRiboSeqDir2] ... [RunRiboSeqDirN]"
+	echo "Will Combine all of the RiboSeq notInBlast results from each dir into a non-redundant table with HOMER annotation, peptide sequence, and nucleotide sequence"
+	echo "HOMERGENOME should be hg19, mm10, or similar corresponding to RiboSeq runs"
+else
+	GENOME=$1
+	OUT=$2
+	shift 2
+	STRING=""
+	PEP=""
+	NUC=""
+	RIBORFS=""
+	if [ -e gtf ]
+	then
+		rm gtf
+	fi
+	if [ -e ${OUT}.pep ]
+	then
+		rm ${OUT}.pep
+	fi
+	if [ -e ${OUT}.nuc ]
+	then
+		rm ${OUT}.nuc
+	fi
+	for i in $@
+	do
+		if [ -e ${i%/}/*notInBlast ]
+		then
+			echo "Found notInBlast for $i"
+			STRING="${i%/}/*notInBlast $STRING"
+		else
+			if [ -e ${i%/}/*notInBlast.orf ]
+			then
+				echo "Found notInBlast.orf list for $i"
+				STRING="${i%/}/*notInBlast.orf $STRING"
+			else
+				if [ -e ${i%/}/pred*unique.orf ]
+				then
+					echo "Found unique orf list for $i"
+					STRING="${i%/}/pred*unique.orf $STRING"
+				else
+					echo "Going to just use filtered ribORF results for $i"
+					STRING="${i%/}/pred*filtered.orf $STRING"
+				fi
+			fi
+		fi 
+		if [ -e ${i%/}/*notInBlast.fasta ]
+		then
+			echo "Found notInblast.fasta pep list for $i"
+			PEP="${i%/}/*notInBlast.fasta $PEP"
+		else
+			echo "Using assembly.pep for $i"
+			PEP="${i%/}/assembly.pep $PEP"
+		fi 
+		if [ -e ${i%/}/*notInBlast.nuc ]
+		then
+			echo "Found notInblast nuc list for $i"
+			NUC="${i%/}/*notInBlast.nuc $NUC"
+		else
+			echo "Using assembly nuc for $i"
+			NUC="${i%/}/assembly.nuc $NUC"
+		fi 
+		if [ -e ${i%/}/pred.pvalue.parameters.filtered.txt ]
+		then
+			cat "${i%/}/pred.pvalue.parameters.filtered.txt" | cut -f 1,15>> riborfs
+		fi
+	done
+	#echo "PEP: $PEP"
+	#echo "NUC: $NUC"
+	orfCombiner $STRING > table
+	tail -n +2 table | cut -f 1 | sort -k 1,1 > list
+	for i in $@
+	do
+		grabGTF ${i%/}/assembly.gtf* list >> gtf 
+	done
+	sort gtf | uniq > ${OUT}.gtf
+	#gtf2bed < ${OUT}.gtf > ${OUT}.bed
+	grep -P "\ttranscript\t" ${OUT}.gtf | convert2bed -i gtf - | sort -k 4,4 > ${OUT}.bed
+	#We would like to annotate the end of each microprotein since most are in 5'UTRs and are upstream of a known gene
+	bed2pos.pl ${OUT}.bed | cut -f 1-5 | sort -k 1,1 -u | awk '{ if ($5 =="+") {print $1 "\t" $2 "\t" ($4-1) "\t" $4 "\t" $5} else {print $1 "\t" $2 "\t" $3 "\t" ($3+1) "\t" $5}}'> pos #does not have header
+	#awk '{print $1 "\t" $2 "\t" $3 "\t" ($3+1) "\t" $5}' pos > posl
+	#awk '{print $1 "\t" $2 "\t" ($4-1) "\t" $4 "\t" $5}' pos > posr
+	echo "Generating HOMER annotation..."
+	annotatePeaks.pl pos $GENOME > an
+	#annotatePeaks.pl posr $GENOME > anr
+	echo "Associating PEP and NUC sequences with each unique microprotein"
+	COUNT=0
+	for i in $(cat list)
+	do
+		X=$(grep -F $i $PEP -A 1 --no-group-separator -h | head -n 2)
+		Y=$(grep -F $i $NUC -A 1 --no-group-separator -h | head -n 2)
+		ECOUNT=$(grep -F $i ${OUT}.gtf | grep exon | wc -l)
+		ESTARTS=$(grep -F $i ${OUT}.gtf | grep exon | cut -f 4 | tr '\n' ',')
+		EENDS=$(grep -F $i ${OUT}.gtf | grep exon | cut -f 5 | tr '\n' ',')
+		COORDS=$(grep -F $i ${OUT}.bed | awk '{print $6 $1 ":" ($2+1) "-" $3}')
+		if [ -z "$X" ] 
+		then
+			echo "$i did not have a peptide sequence in the corresponding fasta file! This will mess up your output table."
+			exit 1
+		fi
+		if [ -z "$Y" ] 
+		then
+			echo "$i did not have a nucleotide sequence in the corresponding nuc file! This will mess up your output table."
+			exit 1
+		fi
+		echo $X | tr " " "\n" >> ${OUT}.pep
+		echo $Y | tr " " "\n" >> ${OUT}.nuc
+		echo $ECOUNT >> ecounts
+		echo $ESTARTS >> estarts
+		echo $EENDS >> eends
+		grep -F -- "$COORDS" riborfs | sort -n -k 2,2 | tail -n 1 | cut -f 2 >> maxscores 
+		grep -F -- "$COORDS" riborfs | tr "\n" ";" | tr "\t" " " >> riborfscores
+		echo "" >> riborfscores
+		COUNT=$(($COUNT+1))
+		MOD=$(($COUNT % 100))
+		if [ "$MOD" -eq 0 ]
+		then
+			echo -e -n "."
+		fi
+                MOD=$(($COUNT % 1000))
+                if [ "$MOD" -eq 0 ]
+                then
+                        echo -e -n "|"
+                fi
+
+	done
+	
+	head -n 1 table > h1
+	tail -n +2 table | sort -k 1,1 > t1
+#	echo -e "smORF\tchr\tTSSl\tTSSr\tstrand" > h2
+	head -n 1 an | cut -f 8-19 > h2
+	tail -n +2 an | sort -k 1,1 | cut -f 8-19 > tp
+	awk '{if ( $1 ~/Promoter|5|TSS/ ){ print "uORF" } else { if ($1 ~/TTS|3/) {print "dORF"} else {if ($1 ~/exon|intron/) { print "overlapping"} else { if ($1 ~/Intergenic/ ) {print "intergenic"} else {print "other" }}}}}' tp > basic 
+	echo -e "Basic Annotation\tNuc\tPep\tLength\tExon#\tEstarts\tEends\tRibORFMax\tRiborfScores" > h3
+	paste h1 h2 h3 > ${OUT}.txt
+	grep -v '>' ${OUT}.nuc > nuc
+	grep -v '>' ${OUT}.pep > pep
+	awk '{ print length($0); }' pep >pepcount
+	paste t1 tp basic nuc pep pepcount ecounts estarts eends maxscores riborfscores >> ${OUT}.txt
+	echo "Cleaning up temp files"
+ 	rm h1 h2 h3 t1 table list pos an nuc pep gtf pepcount ecounts riborfscores riborfs maxscores tp basic estarts eends
+	
+fi

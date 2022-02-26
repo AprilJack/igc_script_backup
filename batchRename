@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage: batchRename renameFile.txt"
+	echo "Will read in renameFile.txt and rename files in current dir that are in column 1 with the corresponding names in column 2"
+else
+	while IFS='' read -r line || [[ -n "$line" ]]; do
+		old=$(echo -e "$line" | cut -f1 )
+		new=$(echo -e "$line" | cut -f2 )
+		echo "Old: $old New: $new"
+		mv $old $new
+	done < "$1"
+fi

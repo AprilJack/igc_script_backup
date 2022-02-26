@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in `/bin/ls -d -1 /gpfs/data/bigWigs/*`; do /bin/ln -s $i -t /srv/www/igc1.salk.edu/public_html/BigWig/ 2> /dev/null > /dev/null ; /bin/date > /srv/www/igc1.salk.edu/public_html/BigWig/lastUpdate.txt; done;

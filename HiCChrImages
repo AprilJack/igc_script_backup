@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo -e "\tUsage:HiCChrImages HiCTagDir [HiCTagDir2] [HiCTagDir3]..."
+	echo -e "\n\tWill generate raw images for each chr at 100k resolution and save them in the tag dirs." 
+else
+	for tagDir in $@
+	do
+		echo "Generating images for tagDir: $tagDir"
+		for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X
+		do
+			analyzeHiC $tagDir -chr chr${i} -res 100000 -raw > ${tagDir}/chr${i}_100k.txt
+			HiCEntropy ${tagDir}/chr${i}_100k.txt
+		done
+	done
+fi

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+	echo -e "Usage: linkFastqs fastqFiles\n\nWill create fastq sym links in current directory"
+else
+	for i in $@
+	do
+		ln -s $i ${i##*/} 
+	done
+fi

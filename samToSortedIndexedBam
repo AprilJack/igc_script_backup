@@ -1,0 +1,23 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+	echo "Usage samToSortedIndexBam dirWithSams1 [dirWithSams2] ..."
+else
+	for i in $@
+	do
+		echo "Processing directory: $i"
+		for j in ${i}/*.sam
+		do
+			echo "Processing $j"
+			samtools view -bS $j | samtools sort - -@ 12  > ${j%.sam}.bam
+			samtools index ${j%.sam}.bam
+			if [ -e ${j%.sam}.bam ]
+			then
+				echo "Removing $j"
+				rm $j
+			else
+				echo "Bam conversion failed for $j"
+			fi
+		done
+	done
+fi
