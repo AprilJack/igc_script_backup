@@ -7,7 +7,7 @@ then
 	echo "set 4th arg if you don't want to run sam to bam conversion at the end (e.g. if you want sams only)"
 	echo "Genomes available:"
 
-	genomes=$(ls -d /gpfs/genomes/*.star)
+	genomes=$(ls -d /usr/local/share/igc/genomes/*.star*)
 	for i in $genomes
 	do
 		echo ${i##*/}

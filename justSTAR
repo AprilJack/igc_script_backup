@@ -5,7 +5,7 @@ then
 	echo "Usage: runSTAR genomeDir dirWith_R1.fastq.gz [star commands]"
 	echo "Genomes available:"
 
-	genomes=$(ls -d /gpfs/genomes/*.star)
+	genomes=$(ls -d /usr/local/share/igc/genomes/*.star)
 	for i in $genomes
 	do
 		echo ${i##*/}
@@ -14,7 +14,7 @@ else
 	GENOME=$1
 	DIR=$2
 	shift 2
-	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null 2> /dev/null
+	STAR --genomeDir /usr/local/share/igc/genomes/$GENOME --genomeLoad Remove > /dev/null 2> /dev/null
 	# first lets combine all of the R1 and R2 reads across lanes and multiple files
 	#for L in $(seq 99)
 	#do
@@ -48,16 +48,16 @@ else
 		if [ -e $R2 ]
 		then
 			echo "Processing paired reads: $R1 and $R2 using genome $GENOME and outputing to $PREFIX"
-			STAR --readFilesCommand zcat --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
+			STAR --readFilesCommand zcat --genomeDir /usr/local/share/igc/genomes/$GENOME --runThreadN 24 --outFilterIntronMotifs RemoveNoncanonical --readFilesIn $R1 $R2 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
 		else
 			echo "Processing single-end reads: $R1 using genome $GENOME and outputing to $PREFIX"
-			STAR --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /gpfs/genomes/$GENOME --runThreadN 24 --readFilesIn $R1 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
+			STAR --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical  --genomeDir /usr/local/share/igc/genomes/$GENOME --runThreadN 24 --readFilesIn $R1 --outFileNamePrefix $PREFIX $@ --genomeLoad LoadAndKeep --outSAMstrandField intronMotif $@ > ${PREFIX}.log
 		fi
 		end_time="$(date -u +%M)"
 		elapsed="$((10#$end_time-10#$start_time))"
 		echo "Took $elapsed minutes to align $PREFIX"
 	done
-	STAR --genomeDir /gpfs/genomes/$GENOME --genomeLoad Remove > /dev/null
+	STAR --genomeDir /usr/local/share/igc/genomes/$GENOME --genomeLoad Remove > /dev/null
 	rm Aligned.out.sam
 	rm -rf *_tmp *_STARtmp
 fi

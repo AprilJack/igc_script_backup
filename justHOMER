@@ -8,19 +8,19 @@ else
 	GENOME=$1
 	shift 1
 	#justSTAR $GENOME $DIR $@
-	for i in *.sam
-	do
-
-		paired=$(head -n 10000 $i | samtools view -S -f 0x1 - | wc -l)
-		if [[ $paired -gt 0 ]]
-		then
-			echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
-			makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
-		else
-			echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
-			makeTagDirectory tags/${i%Aligned.out.sam} $i -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
-		fi
-	done 
+#	for i in *.sam
+#	do
+#
+#		paired=$(head -n 10000 $i | samtools view -S -f 0x1 - | wc -l)
+#		if [[ $paired -gt 0 ]]
+#		then
+#			echo "Making paired end tag dir: tags/${i%Aligned.out.sam}"
+#			makeTagDirectory tags/${i%Aligned.out.sam} $i -sspe -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+#		else
+#			echo "Making single end tag dir: tags/${i%Aligned.out.sam}"
+#			makeTagDirectory tags/${i%Aligned.out.sam} $i -flip 2> ${i%Aligned.out.sam}.tagDirectory.log
+#		fi
+#	done 
 	analyzeRepeats.pl rna ${GENOME} -d tags/* -raw -count exons -condenseGenes -strand + -normMatrix > rawPlus.txt
 	analyzeRepeats.pl rna ${GENOME} -d tags/* -raw -count exons -condenseGenes -strand - -normMatrix > rawMinus.txt
 	plus=$(cat rawPlus.txt | cut -f 9 | tail -n +2 | paste -sd+ | bc)
@@ -41,7 +41,7 @@ else
 	countSummary
 	fpkmCluster
 	fpkmPCA
-	cleanSAMs .
+#	cleanSAMs .
 	echo "done aligning, building tag dirs, quantifying, and making sorted indexed bams"
 	rm -rf *_tmp *_STARtmp
 fi
